@@ -1,0 +1,505 @@
+<html lang="en"><!--<![endif]--><head>
+    <meta charset="UTF-8">
+
+    <script type="text/javascript" nonce="">if (typeof module === 'object') {window.module = module; module = undefined;}</script><style type="text/css" nonce="">
+        .bgStyle {
+          background-image: url('https://massmutual.oktapreview.com/fs/bco/7/fs01c84mcw45zZt040h8')
+        }
+        .bgStyleIE8 {
+          filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='https://massmutual.oktapreview.com/fs/bco/7/fs01c84mcw45zZt040h8', sizingMethod='scale')
+        }
+        .copyright a:focus-visible, 
+        .privacy-policy a:focus-visible {
+          border-radius: 6px;
+          outline: rgb(84, 107, 231) solid 1px;
+          outline-offset: 2px;
+          text-decoration: none !important;
+        }
+    </style><title>MassMutual Preview Dev/QA - Sign In</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex,nofollow">
+
+    <meta http-equiv="origin-trial" content="AhfZY0hFLdcj+D4dn2m9Dt9fv4U5KFlC1SWMvHMwe8pMt2S0Ku0ctmSH2Y1mZ36BQo1fWx25gNfhST2x3e4SLg4AAACAeyJvcmlnaW4iOiJodHRwczovL29rdGFwcmV2aWV3LmNvbTo0NDMiLCJmZWF0dXJlIjoiRGlzYWJsZVRoaXJkUGFydHlTdG9yYWdlUGFydGl0aW9uaW5nIiwiZXhwaXJ5IjoxNzI1NDA3OTk5LCJpc1N1YmRvbWFpbiI6dHJ1ZX0=">
+    <script type="text/javascript" nonce="">window.cspNonce = 'IGGMNv1L7NlEVZQ0zvsFSA';</script><script src="https://massmutual.oktapreview.com/assets/js/sdk/okta-signin-widget/7.15.1/js/okta-sign-in.min.js" type="text/javascript" integrity="sha384-1qd8asn758eaIa9NEHdVHKOfuh0+K7/6oDj+FIjJLszuBLlF6+6QcRS31U50II7o" crossorigin="anonymous"></script>
+    <link href="https://massmutual.oktapreview.com/assets/js/sdk/okta-signin-widget/7.15.1/css/okta-sign-in.min.css" type="text/css" rel="stylesheet" integrity="sha384-YtU89lM0fecOULmzvCevpy8Mwpfa2V1C9JG+K57ceTle0dj6yZKAQ/t6ZEmGlK7c" crossorigin="anonymous">
+
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+<link href="https://massmutual.oktapreview.com/assets/loginpage/css/loginpage-theme.7266b8318cd7a71710311515ab15c462.css" rel="stylesheet" type="text/css"><link href="/api/internal/brand/theme/style-sheet?touch-point=SIGN_IN_PAGE&amp;v=1b81f0613b3d999a14349883b2478b8737a8a8548f60020de8088b6a76c2daf3c99c0953669804d21927b6c1fa7ccdda" rel="stylesheet" type="text/css">
+
+    <script type="text/javascript" nonce="">
+        var okta = {
+            locale: 'en',
+            deployEnv: 'PREVIEW'
+        };
+    </script><script nonce="">window.okta || (window.okta = {}); okta.cdnUrlHostname = ""; okta.cdnPerformCheck = true; okta.cdnPerformCheckHostname = "//op1static.oktacdn.com";</script><script type="text/javascript" nonce="">if (window.module) module = window.module;</script><script src="https://massmutual.oktapreview.com/assets/js/mvc/loginpage/initLoginPage.pack.58de3be0c9b511a0fdfd7ea4f69b56fc.js" crossorigin="anonymous" integrity="sha384-cJ4LGViZBmIttMPH+ao2RyPuN5BztKWYWIa4smbm56r1cUhkU/Dr6vTS3UoPbKTI"></script></head>
+<body class="auth okta-container">
+
+<!--[if gte IE 8]>
+  <![if lte IE 10]>
+
+     <style type="text/css" nonce="IGGMNv1L7NlEVZQ0zvsFSA">
+    .unsupported-browser-banner-wrap {
+      padding: 20px;
+      border: 1px solid #ddd;
+      background-color: #f3fbff;
+    }
+    .unsupported-browser-banner-inner {
+      position: relative;
+      width: 735px;
+      margin: 0 auto;
+      text-align: left;
+    }
+    .unsupported-browser-banner-inner .icon {
+      vertical-align: top;
+      margin-right: 20px;
+      display: inline-block;
+      position: static !important;
+    }
+    .unsupported-browser-banner-inner a {
+      text-decoration: underline;
+    }
+     </style><div class="unsupported-browser-banner-wrap">
+      <div class="unsupported-browser-banner-inner">
+        <span class="icon icon-16 icon-only warning-16-yellow"></span>You are using an unsupported browser. For the best experience, update to <a href="https://support.okta.com/help/s/article/Okta-Browser-and-OS-Support-Policy">a supported browser</a>.</div>
+    </div>
+
+  <![endif]>
+<![endif]-->
+<!--[if IE 8]> <div id="login-bg-image-ie8" class="login-bg-image tb--background bgStyleIE8" data-se="login-bg-image"></div> <![endif]-->
+<!--[if (gt IE 8)|!(IE)]><!--> <div id="login-bg-image" class="login-bg-image tb--background bgStyle" data-se="login-bg-image"></div> <!--<![endif]-->
+
+<!-- hidden form for reposting fromURI for X509 auth -->
+<form action="/login/cert" method="post" id="x509_login" name="x509_login" class="hide">
+    <input type="hidden" id="fromURI" name="fromURI" class="hidden" value="https://massmutual.oktapreview.com/oauth2/v1/authorize?client_id=0oa1wqetrwxkWsbUa0h8&amp;code_challenge=l-kCiwjwIBp4W4jVXvtt322FhDAsOHutT_TT8B-1VIY&amp;code_challenge_method=S256&amp;nonce=t20JyizXtGEvKrl2HgO35lwL6AfUdNyeWuhc0HYG2Nn8Biw2vXB7Zrx7RbyWiqVM&amp;redirect_uri=https%3A%2F%2Fetx-app-workbench-ui-dev.app.dx.nsawsdev.massmutual.com%2Flogin&amp;response_type=code&amp;state=0aQcEEKK1LW5dQ0yxxut8lsuXSnlMMxXwUe7bJzkiBUtR1jQ9A39J0KW0VDXcyVd&amp;scope=openid%20email%20profile">
+</form>
+
+<div class="content">
+  <div class="applogin-banner">
+          <div class="applogin-background"></div>
+          <div class="applogin-container">
+              <h1>
+                  <span class="applogin-app-title">
+                    Connecting to</span>
+                  <div class="applogin-app-logo">
+                      <img src="https://massmutual.oktapreview.com/assets/img/logos/default.6770228fb0dab49a1695ef440a5279bb.png" alt="New Business Workbench 2.0 (federation)" class="logo oidc_client"></div>
+              </h1>
+              <p>Sign in with your account to access New Business Workbench 2.0 (federation)</p>
+              </div>
+      </div>
+  <style type="text/css" nonce="">
+    .noscript-msg {
+        background-color: #fff;
+        border-color: #ddd #ddd #d8d8d8;
+        box-shadow:0 2px 0 rgba(175, 175, 175, 0.12);
+        text-align: center;
+        width: 398px;
+        min-width: 300px;
+        margin: 200px auto;
+        border-radius: 3px;
+        border-width: 1px;
+        border-style: solid;
+    }
+
+    .noscript-content {
+        padding: 42px;
+    }
+
+    .noscript-content h2 {
+        padding-bottom: 20px;
+    }
+
+    .noscript-content h1 {
+        padding-bottom: 25px;
+    }
+
+    .noscript-content a {
+        background: transparent;
+        box-shadow: none;
+        display: table-cell;
+        vertical-align: middle;
+        width: 314px;
+        height: 50px;
+        line-height: 36px;
+        color: #fff;
+        background: linear-gradient(#007dc1, #0073b2), #007dc1;
+        border: 1px solid;
+        border-color: #004b75;
+        border-bottom-color: #00456a;
+        box-shadow: rgba(0, 0, 0, 0.15) 0 1px 0, rgba(255, 255, 255, 0.1) 0 1px 0 0 inset;
+        -webkit-border-radius: 3px;
+        border-radius: 3px;
+    }
+
+    .noscript-content a:hover {
+        background: #007dc1;
+        cursor: hand;
+        text-decoration: none;
+    }
+ </style><noscript>
+    <div id="noscript-msg" class="noscript-msg">
+        <div class="noscript-content">
+            <h2>Javascript is required</h2>
+            <h1>Javascript is disabled on your browser.&nbspPlease enable Javascript and refresh this page.</h1>
+            <a href="." class="tb--button">Refresh</a>
+        </div>
+    </div>
+</noscript>
+<div id="signin-container"><main data-se="auth-container" tabindex="-1" id="okta-sign-in" class="auth-container main-container no-beacon" style=""><div class="okta-sign-in-header auth-header"><h1><img src="https://massmutual.oktapreview.com/fs/bco/1/fs0ahcxwhfhlaFahp0h7" class="auth-org-logo" alt="MassMutual Preview Dev/QA logo logo" aria-label="MassMutual Preview Dev/QA logo logo"></h1><div data-type="beacon-container" class="beacon-container"></div></div><div class="auth-content"><div class="auth-content-inner"><div class="siw-main-view identify primary-auth"><div class="siw-main-header"><div></div></div><div class="siw-main-body"><form method="POST" action="/oauth2/v1/authorize" data-se="o-form" slot="content" id="form20" class="ion-form o-form o-form-edit-mode"><div data-se="o-form-content" class="o-form-content o-form-theme clearfix"><h2 data-se="o-form-head" class="okta-form-title o-form-head">Login</h2><div class="o-form-info-container"></div><div class="o-form-error-container" data-se="o-form-error-container" role="alert"></div><div class="o-form-fieldset-container" data-se="o-form-fieldset-container"><div data-se="o-form-fieldset-identifier" class="o-form-fieldset o-form-label-top"><div data-se="o-form-label" class="okta-form-label o-form-label"><label for="input28">User ID&nbsp;</label></div><div data-se="o-form-input-container" class="o-form-input"><span data-se="o-form-input-identifier" class="o-form-input-name-identifier o-form-control okta-form-input-field input-fix"><input type="text" placeholder="" name="identifier" id="input28" value="ot36701" aria-label="" autocomplete="username"></span></div></div><div data-se="o-form-fieldset-rememberMe" class="o-form-fieldset o-form-label-top"><div data-se="o-form-input-container" class="o-form-input"><span data-se="o-form-input-rememberMe" class="o-form-input-name-rememberMe"><div class="custom-checkbox"><input type="checkbox" name="rememberMe" id="input36"><label for="input36" data-se-for-name="rememberMe">Keep me signed in</label></div></span></div></div></div></div><div class="o-form-button-bar"><input class="button button-primary" type="submit" value="Next" data-type="save"></div></form></div><div class="siw-main-footer"><div class="auth-footer"><a data-se="unlock" href="#" class="link js-unlock">Unlock your account?</a><a data-se="help" href="https://webassets.massmutual.com/okta/loginhelp.html" class="link js-help">Help</a><a data-se="custom" href="https://fieldnet-qa.massmutual.com/fldnet/fnmmfg/login/terms-of-use.html" class="link js-custom">Terms of Use</a><a data-se="custom" href="https://fieldnet-qa.massmutual.com/fldnet/fnmmfg/login/terms-of-use.html" class="link js-custom">Privacy Policy</a></div></div></div></div></div></main></div>
+  
+</div>
+
+<div class="footer">
+  <div class="footer-container clearfix">
+    <p class="copyright">Powered by <a href="https://www.okta.com/?internal_link=wic_login" class="inline-block notranslate">Okta</a></p>
+        <p class="privacy-policy"><a href="/privacy" target="_blank" class="inline-block margin-l-10">Privacy Policy</a></p>
+    </div>
+</div>
+
+<script nonce="" type="text/javascript">function runLoginPage (fn) {var mainScript = document.createElement('script');mainScript.src = 'https://massmutual.oktapreview.com/assets/js/mvc/loginpage/initLoginPage.pack.58de3be0c9b511a0fdfd7ea4f69b56fc.js';mainScript.crossOrigin = 'anonymous';mainScript.integrity = 'sha384-cJ4LGViZBmIttMPH+ao2RyPuN5BztKWYWIa4smbm56r1cUhkU/Dr6vTS3UoPbKTI';document.getElementsByTagName('head')[0].appendChild(mainScript);fn && mainScript.addEventListener('load', function () { setTimeout(fn, 1) });}</script><div id="inactive-tab-main-div" class="hide">
+    <div class="inactive-tab-container">
+    <div class="inactive-tab-header">
+        <img src="https://massmutual.oktapreview.com/fs/bco/1/fs0ahcxwhfhlaFahp0h7" alt="MassMutual Preview Dev/QA" class="report-org-logo"><div class="divider"></div>
+    </div>
+    <div class="inactive-tab-content">
+        <h2 class="inactive-tab-content-title">The page has timed out</h2>
+        <p class="inactive-tab-details">If this page does not reload automatically, please refresh your browser.</p>
+    </div>
+</div>
+</div>
+<script type="text/javascript" nonce="">
+(function(){
+  var baseUrl = 'https\x3A\x2F\x2Fmassmutual.oktapreview.com';
+  var suppliedRedirectUri = '';
+  var repost = false;
+  var stateToken = 'eyJ6aXAiOiJERUYiLCJhbGlhcyI6ImVuY3J5cHRpb25rZXkiLCJ2ZXIiOiIxIiwib2lkIjoiMDBvM3dza216bnVUQTYwemUwaDciLCJlbmMiOiJBMjU2R0NNIiwiYWxnIjoiZGlyIn0..3IdXVNaXYT_9OZpV.EDWp606oLt_bXVhgw\x2DHpT10vINBa\x2DVlqSokMNgemaQfkAiwKpz7pF6QHVvndTzMiMLRoGZYrKkBjymHFc3HwongVCVgOpxJ1JophGoN2xbeEmsj3sEGcTiqKz0VjmFLtnjYB_wqzLEjdLKHCPpucR8b4wvCjEtzxDpNf\x2DE0TQKEAVJ3EVZLEAxExcSSoKRDGKhdIK_YU7EMuSN3bJrxVxMQM123sriJ9IAOhWGJubVcbK4zaPAivZ8GMokQ7aeUiC25ZDdAm3SBaihCHmELkmEqMCdfeX92J7EAQwhaf0Az5sFAsdYTrQ0LK9vpKjc9XZ7sA01DQTQ3R16GjcrfNyOGCLsAKRqbkEIxmXcaSaVS\x2DhuZdk\x2DbN5QEEfvhK7ltTgblKiXwYoCICKgTogT3JPsxXbpFjphRf30A_o4pkkbwZ94OpN5Hvt0lIu1AZ3qnNQyHkV6kN9JleT0NM4D52jat8PVEMpPPCzjvK_qTiqESzrmHi54fMN12hvuwfUnZbZPxyYbQxCNMh36WnTvacpHGoRxdeKmjenQ_5rclbPeXLNAsPm8gEe8ZoAMFaBVBjQCex7J8CM6HVXsGs2wIKwY6f6\x2D_gFt67jL9nYkB4I5eV\x2Dq6sWfJeEu_V0CcIw9Ia7VyMQ7r0zqs88F5qzc3VYrCHji4n5xwTLTf9tAgjzzmy44xRbAeevA3qhkArg1WSooNTHPrxF5370mNJttDOdNVQUY4iE0eMkEVP8_VKzAZPyeE6jUyxagH\x2Dkt1OzIMSbBIgnY0JHg\x2DK9r_VfceDx1N_FqwRAUldQA7L00GfClu2rqwUMPPXfOaPNPzlVo6EvLkOj1g38mNaDf72OrcOWPqRGkmDG6igX\x2Dx1SYRfRNPukbRcucppMPzjtttLMs6QuM12_QrFJ0\x2D3GWkDcg6vUun4cTi0j94cWKcatuwFGCOae0xGOn7iQerW5f8m6xTbtInI1nF3YOsOXW_qH9Ud_HvR6oVk4_p59OSlqenHtPojJpJ7ZGg_MWPTnP2EsGeZ7FvWmI4jVOnT_fdhOmwDqLyc_\x2Dm_fqPhVMznP6sFUVh5tklUWYNeL0MmA4opLPtrhiNcrVLbeeC_iXaIEHyiMyJJQv98hOkVlCRY4GsSM360f6pew61_E81oGMH1ddmLVVofj6NIJHrSsMBwvXBOtj59Ywrkj2h5CM6yWvQBDsJThG7S7lkeWkC3DPNnJ3_NYItCeY70mDfk7jXAKHR3wrf0Vs0sjCTLrXkvdEjTG3v7VnEF0SidlCluWogp_ns2vMkNAJLkIrCpZOI7EDew590c_O9JmnNuh04xzicDZC9pPzxY8BTfAU0pylsu5fLd2B\x2DYqdIFzgEwF7ISqGNVLXHgEQEv9qM0yDYsINQwTBOhzADMM47gChYIqBLnklN\x2DoRfm9IjVup7svGSCyD0QHJEosAjQe49gFkcg\x2DuL03\x2DClyuun7xR4NAQN4WPAf7BtJURvlXMkE9mkPqcWDII9sClLjB2VsmP4AdSmhQy\x2DqPbIkFfLZk98wap6z2qAACOmlXF2\x2D3GET9xZ8pZrkmYj158lVhsPcjNcFtszbOOt6WjtohjmARagRTIk3Zx9EAfJKMegHPTsP8fGsDYNRAonh4Q37xv5uGIajQu7um3uAxQpoKPe1bFwVskogKfE1T3y8lPsRNIR362gtg4G8HN_p\x2DgyU93sOjebMqqZBOpWjNVJmfxy_hlSdOjnPHU0Vw4lAY\x2D4Wwjr9zg2sOD_0GKqAj99PUrurYiKf5JRzgEXa9vmWBRnPyfg2jAARC2WLQAay1DKvrVjRqTlTS6RihJMfU52ihMGpCGvYsM6k\x2DFPaHWgVQ5p3gUcFXkvLWwR5w81VkaGZ6U9HVlntnWClqQ8JeDxQnNKj_7K1etZM5ALLXa6PzGIEm_CGtVFXz7kehisIwCz40k8hB6\x2DrTevBOeOL8VH6qWn2rz0m_ATj3YvnU3GYR\x2DKL3ktKEGUEjETkHM1_Zezvh0FLbU8f5Jx8EcZN4mpWPKR0FN41TAhs\x2D3uSRy7sRH1kgCsiT5rihHoN2AmxgaWCFTY3NjZjCR9enb3lgdV3w0U4dKZfSXYtUumYFEzn9TMciM5HYAOcgVC_sUvwjnEeu9YdZQH95BCw6s7SyC9vSGDPbJUMTjzAscv5CSuKM83LlqqfZi\x2DCWASqgLYSi_NSRJroTlqrjva5B18imjMtsqvSYLSwJuqdTZ8UCXXQiR1pxYWYnJ7ZiEsaLfS4LUR3ng6zZVdB4AlPyTL8\x2Db7q6aPd2R7aH35_WcHtgjYX8jVzwRTR0Yeb1WFVy09Hmk6_xxPa52hOO7juA__Jzz\x2DFDjj39bBIuTPdEepE7amF6s_5rDKnXwopElGYRL0a09qid\x2D_br81CeNzpYzlbYc8qlZsQY6T4jrN9cHCaixQwJYiuedfL_\x2DXBGq\x2DfBaxvZMCCIpqwrSnpurSLtY5CL0GQSn4WDvLyotMWDZ\x2DS0WLQT5fedHHxL4AwlBgzKwO1YyXOFs4Fzz6xdiWWPGwwDrMyeJHjEEmsY9JJODE_Kwzwe1vxvSPjRJZmhMFEV4nGW81cjtWimLuY23gfkhurLzEbDeDXTN9dFYktASoZTc2hn1\x2DmWfIMNU85dq_KKwGPntWYJBEo90vUl3OmOP9tk2CKpZ2ts1Uvxcye692ix1K\x2Dz6PS3\x2DrP_w71K456\x2DyDE5exCpqverWdwBlkwzXSpQQrysZlfsftTqQS8zrPPsfpemKoSgDDAZTDmM1f\x2DDOSxBLcvFSFT1Jv4\x2DoW0bKZTMASsxly9CgD92_UhidaoasTbpvXNHohuQxsW4mlo1\x2Dcjk51\x2D9lF_WhmVCNUDeAc9JoejqKzYChrZtykMZZUPWQBA_Ep3s98QVxl08FvtERcgykCIZWyMS9umID5W7eRUF2eMO1Z\x2DSTF0R81k2zIPDKPQ3CP\x2DHEyJnKXbFeTDQ0\x2DrkD1GglKm60YMFLcIeIS4pbgFH0K75MJN9KwYnr2dkiTzR9b2SxRAwYulmy3wRYiEJc6ExlTzrCoClWsxOkz4awbfQTnAbj\x2DZPR4Tql6Ko_E6vD1OR129eHVSjT6e7_xerpQ281EcAh5gFwFxHBFXU_gScxfhLbaOWMPkM5vxmtVsAWhAt\x2DNDa3aw0CaV8RvyJJzoecie4WfUDFm2C9GtTB8PMTcOAtOIGi0BANkf1NngSyu6N1kvo4\x2DaGDVzOpFKlv0K81UtcQD6v1MHHfhdajBnXW9SrsYOmBBGRYaCAxcwRfVBhqJ1PXznQwLzGjCW\x2DXmbhmmQYslUa103tzujbtQUTQgDz9Sknwqk3WogwQqo32xZpHJwaMD85X4HMB8mT8csUHyRPdrlmIkzV8ItZmpUcwiXarSJuSTCCAzwxA14Kk0UPITSfxjbKIP_xNLIVmpC79DVBpTWuMJsOyhcNAHVfPa_et29q8q0M_G608oL\x2DBWstCRViWTC9Xsbimr\x2D08ut\x2DriubZ_bXRNgVMES8agkN6f0fKqMXt_qUxJo66rK0QpSn7SFO7ixRD\x2D8toMglPEgcZXtrlfDP\x2D7p47vV8VPm1aRDf\x2D72hduilBuZ_iW_2XPOhz1dP_fYFuryE6RJ4XCJry6DPld1Utcp3SRw3s8hmtM73kV3dzzCew5YO00PoSWASOP3JBDdrup8ubKR6YhQvrwIls_wBeqNc8un3eA8_R7epfOhep1tVnePfNOTsOPEeBYpjezPHbrIu8SPHFNab1mrlEg9Cubo\x2DBX1YjTiWy49qd76Qnlgs9PFMyU5be\x2DZ354Gtzo8BKu_wcArkzbYwo05F5mXdbYa5iSf9llk\x2DWvUSXexrrP7Ekc1wM5wvP\x2DSznkE6LrHkDH5tIvwbCN0gYH6POjhPML4fJcGVatz6Zu96bA5uGjMN0PDd0OLczegbylfEPwDRbEMQZABZNKxNYlU3n5YCvu4JdnY0gQR8OWBJYBbGCUeMz6Brvv1wyLOj9PSmBp\x2DL3HmoBH9TMEMD9IK_IEipaPglin4q\x2DI.Htra32kdbz_dXtTZlYCA0g';
+  var fromUri = 'https\x3A\x2F\x2Fmassmutual.oktapreview.com\x2Foauth2\x2Fv1\x2Fauthorize\x3Fclient_id\x3D0oa1wqetrwxkWsbUa0h8\x26code_challenge\x3Dl\x2DkCiwjwIBp4W4jVXvtt322FhDAsOHutT_TT8B\x2D1VIY\x26code_challenge_method\x3DS256\x26nonce\x3Dt20JyizXtGEvKrl2HgO35lwL6AfUdNyeWuhc0HYG2Nn8Biw2vXB7Zrx7RbyWiqVM\x26redirect_uri\x3Dhttps\x253A\x252F\x252Fetx\x2Dapp\x2Dworkbench\x2Dui\x2Ddev.app.dx.nsawsdev.massmutual.com\x252Flogin\x26response_type\x3Dcode\x26state\x3D0aQcEEKK1LW5dQ0yxxut8lsuXSnlMMxXwUe7bJzkiBUtR1jQ9A39J0KW0VDXcyVd\x26scope\x3Dopenid\x2520email\x2520profile';
+  var username = '';
+  var rememberMe = true;
+  var smsRecovery = true;
+  var callRecovery = true;
+  var emailRecovery = true;
+  var usernameLabel = 'User\x20ID';
+  var usernameInlineLabel = '';
+  var passwordLabel = 'Password';
+  var passwordInlineLabel = '';
+  var signinLabel = 'Login';
+  var forgotpasswordLabel = 'Forgot\x20your\x20password\x3F';
+  var unlockaccountLabel = 'Unlock\x20your\x20account\x3F';
+  var helpLabel = 'Help';
+  var orgSupportPhoneNumber = '413\x2D744\x2D4357';
+  var hideSignOutForMFA = false;
+  var hideBackToSignInForReset = false;
+  var footerHelpTitle = 'Need\x20help\x20signing\x20in\x3F';
+  var recoveryFlowPlaceholder = 'Email\x20or\x20Username';
+  var signOutUrl = '';
+  var authScheme = 'OAUTH2';
+  var hasPasswordlessPolicy = 'true';
+  var INVALID_TOKEN_ERROR_CODE = 'errors.E0000011';
+
+  var securityImage = true;
+  
+      securityImage = false;
+  
+    securityImage = false;
+  
+
+
+  var selfServiceUnlock = false;
+  
+    selfServiceUnlock = true;
+  
+
+  var redirectByFormSubmit = false;
+  
+
+  var showPasswordRequirementsAsHtmlList = true;
+
+  var autoPush = false;
+  
+    autoPush = true;
+  
+
+  var accountChooserDiscoveryUrl = 'https://login.okta.com/discovery/iframe.html';
+
+  // In case of custom app login, the uri is already absolute, so we must not attach baseUrl
+  var redirectUri;
+  if (isAbsoluteUri(fromUri)) {
+      redirectUri = fromUri;
+  } else {
+      redirectUri = baseUrl + fromUri;
+  }
+  
+
+  var backToSignInLink = '';
+  
+      backToSignInLink = '';
+  
+
+  var customButtons;
+  var pivProperties = {};
+
+  
+
+  var customLinks = [];
+  
+    customLinks.push({
+      text: 'Terms\x20of\x20Use',
+      href: 'https\x3A\x2F\x2Ffieldnet\x2Dqa.massmutual.com\x2Ffldnet\x2Ffnmmfg\x2Flogin\x2Fterms\x2Dof\x2Duse.html'
+    });
+  
+    customLinks.push({
+      text: 'Privacy\x20Policy',
+      href: 'https\x3A\x2F\x2Ffieldnet\x2Dqa.massmutual.com\x2Ffldnet\x2Ffnmmfg\x2Flogin\x2Fterms\x2Dof\x2Duse.html'
+    });
+  
+  var factorPageCustomLink = {};
+  
+
+  var linkParams;
+  
+
+  var proxyIdxResponse;
+  
+
+  var stateTokenAllFlows;
+  
+    stateTokenAllFlows = true;
+  
+
+  var idpDiscovery;
+  var idpDiscoveryRequestContext;
+  
+
+  var showPasswordToggleOnSignInPage = false;
+  var showIdentifier = false;
+  
+    showPasswordToggleOnSignInPage = true;
+    showIdentifier = true;
+  
+
+  var hasSkipIdpFactorVerificationButton = false;
+  
+
+  var hasOAuth2ConsentFeature = false;
+  var consentFunc;
+  
+    hasOAuth2ConsentFeature = true;
+  
+    consentFunc = {
+      cancel: function() {
+        window.location.href='https://massmutual.oktapreview.com/login/token/redirect?stateToken=eyJ6aXAiOiJERUYiLCJhbGlhcyI6ImVuY3J5cHRpb25rZXkiLCJ2ZXIiOiIxIiwib2lkIjoiMDBvM3dza216bnVUQTYwemUwaDciLCJlbmMiOiJBMjU2R0NNIiwiYWxnIjoiZGlyIn0..3IdXVNaXYT_9OZpV.EDWp606oLt_bXVhgw-HpT10vINBa-VlqSokMNgemaQfkAiwKpz7pF6QHVvndTzMiMLRoGZYrKkBjymHFc3HwongVCVgOpxJ1JophGoN2xbeEmsj3sEGcTiqKz0VjmFLtnjYB_wqzLEjdLKHCPpucR8b4wvCjEtzxDpNf-E0TQKEAVJ3EVZLEAxExcSSoKRDGKhdIK_YU7EMuSN3bJrxVxMQM123sriJ9IAOhWGJubVcbK4zaPAivZ8GMokQ7aeUiC25ZDdAm3SBaihCHmELkmEqMCdfeX92J7EAQwhaf0Az5sFAsdYTrQ0LK9vpKjc9XZ7sA01DQTQ3R16GjcrfNyOGCLsAKRqbkEIxmXcaSaVS-huZdk-bN5QEEfvhK7ltTgblKiXwYoCICKgTogT3JPsxXbpFjphRf30A_o4pkkbwZ94OpN5Hvt0lIu1AZ3qnNQyHkV6kN9JleT0NM4D52jat8PVEMpPPCzjvK_qTiqESzrmHi54fMN12hvuwfUnZbZPxyYbQxCNMh36WnTvacpHGoRxdeKmjenQ_5rclbPeXLNAsPm8gEe8ZoAMFaBVBjQCex7J8CM6HVXsGs2wIKwY6f6-_gFt67jL9nYkB4I5eV-q6sWfJeEu_V0CcIw9Ia7VyMQ7r0zqs88F5qzc3VYrCHji4n5xwTLTf9tAgjzzmy44xRbAeevA3qhkArg1WSooNTHPrxF5370mNJttDOdNVQUY4iE0eMkEVP8_VKzAZPyeE6jUyxagH-kt1OzIMSbBIgnY0JHg-K9r_VfceDx1N_FqwRAUldQA7L00GfClu2rqwUMPPXfOaPNPzlVo6EvLkOj1g38mNaDf72OrcOWPqRGkmDG6igX-x1SYRfRNPukbRcucppMPzjtttLMs6QuM12_QrFJ0-3GWkDcg6vUun4cTi0j94cWKcatuwFGCOae0xGOn7iQerW5f8m6xTbtInI1nF3YOsOXW_qH9Ud_HvR6oVk4_p59OSlqenHtPojJpJ7ZGg_MWPTnP2EsGeZ7FvWmI4jVOnT_fdhOmwDqLyc_-m_fqPhVMznP6sFUVh5tklUWYNeL0MmA4opLPtrhiNcrVLbeeC_iXaIEHyiMyJJQv98hOkVlCRY4GsSM360f6pew61_E81oGMH1ddmLVVofj6NIJHrSsMBwvXBOtj59Ywrkj2h5CM6yWvQBDsJThG7S7lkeWkC3DPNnJ3_NYItCeY70mDfk7jXAKHR3wrf0Vs0sjCTLrXkvdEjTG3v7VnEF0SidlCluWogp_ns2vMkNAJLkIrCpZOI7EDew590c_O9JmnNuh04xzicDZC9pPzxY8BTfAU0pylsu5fLd2B-YqdIFzgEwF7ISqGNVLXHgEQEv9qM0yDYsINQwTBOhzADMM47gChYIqBLnklN-oRfm9IjVup7svGSCyD0QHJEosAjQe49gFkcg-uL03-Clyuun7xR4NAQN4WPAf7BtJURvlXMkE9mkPqcWDII9sClLjB2VsmP4AdSmhQy-qPbIkFfLZk98wap6z2qAACOmlXF2-3GET9xZ8pZrkmYj158lVhsPcjNcFtszbOOt6WjtohjmARagRTIk3Zx9EAfJKMegHPTsP8fGsDYNRAonh4Q37xv5uGIajQu7um3uAxQpoKPe1bFwVskogKfE1T3y8lPsRNIR362gtg4G8HN_p-gyU93sOjebMqqZBOpWjNVJmfxy_hlSdOjnPHU0Vw4lAY-4Wwjr9zg2sOD_0GKqAj99PUrurYiKf5JRzgEXa9vmWBRnPyfg2jAARC2WLQAay1DKvrVjRqTlTS6RihJMfU52ihMGpCGvYsM6k-FPaHWgVQ5p3gUcFXkvLWwR5w81VkaGZ6U9HVlntnWClqQ8JeDxQnNKj_7K1etZM5ALLXa6PzGIEm_CGtVFXz7kehisIwCz40k8hB6-rTevBOeOL8VH6qWn2rz0m_ATj3YvnU3GYR-KL3ktKEGUEjETkHM1_Zezvh0FLbU8f5Jx8EcZN4mpWPKR0FN41TAhs-3uSRy7sRH1kgCsiT5rihHoN2AmxgaWCFTY3NjZjCR9enb3lgdV3w0U4dKZfSXYtUumYFEzn9TMciM5HYAOcgVC_sUvwjnEeu9YdZQH95BCw6s7SyC9vSGDPbJUMTjzAscv5CSuKM83LlqqfZi-CWASqgLYSi_NSRJroTlqrjva5B18imjMtsqvSYLSwJuqdTZ8UCXXQiR1pxYWYnJ7ZiEsaLfS4LUR3ng6zZVdB4AlPyTL8-b7q6aPd2R7aH35_WcHtgjYX8jVzwRTR0Yeb1WFVy09Hmk6_xxPa52hOO7juA__Jzz-FDjj39bBIuTPdEepE7amF6s_5rDKnXwopElGYRL0a09qid-_br81CeNzpYzlbYc8qlZsQY6T4jrN9cHCaixQwJYiuedfL_-XBGq-fBaxvZMCCIpqwrSnpurSLtY5CL0GQSn4WDvLyotMWDZ-S0WLQT5fedHHxL4AwlBgzKwO1YyXOFs4Fzz6xdiWWPGwwDrMyeJHjEEmsY9JJODE_Kwzwe1vxvSPjRJZmhMFEV4nGW81cjtWimLuY23gfkhurLzEbDeDXTN9dFYktASoZTc2hn1-mWfIMNU85dq_KKwGPntWYJBEo90vUl3OmOP9tk2CKpZ2ts1Uvxcye692ix1K-z6PS3-rP_w71K456-yDE5exCpqverWdwBlkwzXSpQQrysZlfsftTqQS8zrPPsfpemKoSgDDAZTDmM1f-DOSxBLcvFSFT1Jv4-oW0bKZTMASsxly9CgD92_UhidaoasTbpvXNHohuQxsW4mlo1-cjk51-9lF_WhmVCNUDeAc9JoejqKzYChrZtykMZZUPWQBA_Ep3s98QVxl08FvtERcgykCIZWyMS9umID5W7eRUF2eMO1Z-STF0R81k2zIPDKPQ3CP-HEyJnKXbFeTDQ0-rkD1GglKm60YMFLcIeIS4pbgFH0K75MJN9KwYnr2dkiTzR9b2SxRAwYulmy3wRYiEJc6ExlTzrCoClWsxOkz4awbfQTnAbj-ZPR4Tql6Ko_E6vD1OR129eHVSjT6e7_xerpQ281EcAh5gFwFxHBFXU_gScxfhLbaOWMPkM5vxmtVsAWhAt-NDa3aw0CaV8RvyJJzoecie4WfUDFm2C9GtTB8PMTcOAtOIGi0BANkf1NngSyu6N1kvo4-aGDVzOpFKlv0K81UtcQD6v1MHHfhdajBnXW9SrsYOmBBGRYaCAxcwRfVBhqJ1PXznQwLzGjCW-XmbhmmQYslUa103tzujbtQUTQgDz9Sknwqk3WogwQqo32xZpHJwaMD85X4HMB8mT8csUHyRPdrlmIkzV8ItZmpUcwiXarSJuSTCCAzwxA14Kk0UPITSfxjbKIP_xNLIVmpC79DVBpTWuMJsOyhcNAHVfPa_et29q8q0M_G608oL-BWstCRViWTC9Xsbimr-08ut-riubZ_bXRNgVMES8agkN6f0fKqMXt_qUxJo66rK0QpSn7SFO7ixRD-8toMglPEgcZXtrlfDP-7p47vV8VPm1aRDf-72hduilBuZ_iW_2XPOhz1dP_fYFuryE6RJ4XCJry6DPld1Utcp3SRw3s8hmtM73kV3dzzCew5YO00PoSWASOP3JBDdrup8ubKR6YhQvrwIls_wBeqNc8un3eA8_R7epfOhep1tVnePfNOTsOPEeBYpjezPHbrIu8SPHFNab1mrlEg9Cubo-BX1YjTiWy49qd76Qnlgs9PFMyU5be-Z354Gtzo8BKu_wcArkzbYwo05F5mXdbYa5iSf9llk-WvUSXexrrP7Ekc1wM5wvP-SznkE6LrHkDH5tIvwbCN0gYH6POjhPML4fJcGVatz6Zu96bA5uGjMN0PDd0OLczegbylfEPwDRbEMQZABZNKxNYlU3n5YCvu4JdnY0gQR8OWBJYBbGCUeMz6Brvv1wyLOj9PSmBp-L3HmoBH9TMEMD9IK_IEipaPglin4q-I.Htra32kdbz_dXtTZlYCA0g'
+      }
+    };
+  
+
+  var hasMfaAttestationFeature = false;
+  
+    hasMfaAttestationFeature = true;
+  
+
+  var rememberMyUsernameOnOIE = false;
+  
+    rememberMyUsernameOnOIE = true;
+  
+
+  var engFastpassMultipleAccounts = true;
+
+  var registration = false;
+  
+
+  var webauthn = true;
+  
+
+    var overrideExistingStateToken = false;
+    
+
+  var isPersonalOktaOrg = false;
+  
+
+  var orgSyncToAccountChooserEnabled = true;
+  
+
+  var showSessionRevocation = false;
+  
+      showSessionRevocation = true;
+  
+
+  var loginPageConfig = {
+    fromUri: fromUri,
+    repost: repost,
+    redirectUri: redirectUri,
+    backToSignInLink: backToSignInLink,
+    isMobileClientLogin: false,
+    isMobileSSO: false,
+    disableiPadCheck: false,
+    enableiPadLoginReload: false,
+    linkParams: linkParams,
+    hasChromeOSFeature: false,
+    showLinkToAppStore: false,
+    accountChooserDiscoveryUrl: accountChooserDiscoveryUrl,
+    mfaAttestation: hasMfaAttestationFeature,
+    isPersonalOktaOrg: isPersonalOktaOrg,
+    enrollingFactor: '',
+    stateTokenExpiresAt: '2024\x2D02\x2D23T08\x3A47\x3A08.000Z',
+    stateTokenRefreshWindowMs: '7140000',
+    orgSyncToAccountChooserEnabled: orgSyncToAccountChooserEnabled,
+    inactiveTab: {
+      enabled: true,
+      elementId: 'inactive-tab-main-div',
+      avoidPageRefresh: true
+    },
+    signIn: {
+      el: '#signin-container',
+      baseUrl: baseUrl,
+      brandName: 'Okta',
+      logo: 'https://massmutual.oktapreview.com/fs/bco/1/fs0ahcxwhfhlaFahp0h7',
+      logoText: 'MassMutual\x20Preview\x20Dev\x2FQA logo',
+      helpSupportNumber: orgSupportPhoneNumber,
+      stateToken: stateToken,
+      username: username,
+      signOutLink: signOutUrl,
+      consent: consentFunc,
+      authScheme: authScheme,
+      relayState: fromUri,
+      proxyIdxResponse: proxyIdxResponse,
+      overrideExistingStateToken: overrideExistingStateToken,
+      interstitialBeforeLoginRedirect: 'DEFAULT',
+      idpDiscovery: {
+        requestContext: idpDiscoveryRequestContext
+      },
+      features: {
+        router: true,
+        securityImage: securityImage,
+        rememberMe: rememberMe,
+        autoPush: autoPush,
+        webauthn: webauthn,
+        smsRecovery: smsRecovery,
+        callRecovery: callRecovery,
+        emailRecovery: emailRecovery,
+        selfServiceUnlock: selfServiceUnlock,
+        multiOptionalFactorEnroll: true,
+        deviceFingerprinting: true,
+        useDeviceFingerprintForSecurityImage: true,
+        trackTypingPattern: false,
+        hideSignOutLinkInMFA: hideSignOutForMFA,
+        hideBackToSignInForReset: hideBackToSignInForReset,
+        rememberMyUsernameOnOIE: rememberMyUsernameOnOIE,
+        engFastpassMultipleAccounts: engFastpassMultipleAccounts,
+        customExpiredPassword: true,
+        idpDiscovery: idpDiscovery,
+        passwordlessAuth: hasPasswordlessPolicy,
+        consent: hasOAuth2ConsentFeature,
+        skipIdpFactorVerificationBtn: hasSkipIdpFactorVerificationButton,
+        showPasswordToggleOnSignInPage: showPasswordToggleOnSignInPage,
+        showIdentifier: showIdentifier,
+        registration: registration,
+        redirectByFormSubmit: redirectByFormSubmit,
+        showPasswordRequirementsAsHtmlList: showPasswordRequirementsAsHtmlList,
+        showSessionRevocation: showSessionRevocation
+      },
+
+      assets: {
+        baseUrl: "https\x3A\x2F\x2Fmassmutual.oktapreview.com\x2Fassets\x2Fjs\x2Fsdk\x2Fokta\x2Dsignin\x2Dwidget\x2F7.15.1"
+      },
+
+      language: okta.locale,
+      i18n: {},
+
+      customButtons: customButtons,
+
+      piv: pivProperties,
+
+      helpLinks: {
+        help: 'https\x3A\x2F\x2Fwebassets.massmutual.com\x2Fokta\x2Floginhelp.html',
+        forgotPassword: '',
+        unlock: '',
+        custom: customLinks,
+        factorPage: factorPageCustomLink
+      },
+
+      cspNonce: window.cspNonce,
+    }
+  };
+  
+
+  loginPageConfig.signIn.i18n[okta.locale] = {
+    
+    'primaryauth.username.placeholder': usernameLabel,
+    'primaryauth.username.tooltip': usernameInlineLabel,
+    'primaryauth.password.placeholder': passwordLabel,
+    'primaryauth.password.tooltip': passwordInlineLabel,
+    'mfa.challenge.password.placeholder': passwordLabel,
+    'primaryauth.title': signinLabel,
+    'forgotpassword': forgotpasswordLabel,
+    'unlockaccount': unlockaccountLabel,
+    'help': helpLabel,
+    'needhelp': footerHelpTitle,
+    'password.forgot.email.or.username.placeholder': recoveryFlowPlaceholder,
+    'password.forgot.email.or.username.tooltip': recoveryFlowPlaceholder,
+    'account.unlock.email.or.username.placeholder': recoveryFlowPlaceholder,
+    'account.unlock.email.or.username.tooltip': recoveryFlowPlaceholder
+  };
+
+    
+            loginPageConfig.signIn.logoText = 'MassMutual\x20Preview\x20Dev\x2FQA logo';
+        
+
+  function isOldWebBrowserControl() {
+    // We no longer support IE7. If we see the MSIE 7.0 browser mode, it's a good signal
+    // that we're in a windows embedded browser.
+    if (navigator.userAgent.indexOf('MSIE 7.0') === -1) {
+      return false;
+    }
+
+    // Because the userAgent is the same across embedded browsers, we use feature
+    // detection to see if we're running on older versions that do not support updating
+    // the documentMode via x-ua-compatible.
+    return document.all && !window.atob;
+  }
+
+  function isAbsoluteUri(uri) {
+    var pat = /^https?:\/\//i;
+    return pat.test(uri);
+  }
+
+  var unsupportedContainer = document.getElementById('okta-sign-in');
+
+  var failIfCookiesDisabled = true;
+  
+
+  // Old versions of WebBrowser Controls (specifically, OneDrive) render in IE7 browser
+  // mode, with no way to override the documentMode. In this case, inform the user they need
+  // to upgrade.
+  if (isOldWebBrowserControl()) {
+    document.getElementById('unsupported-onedrive').removeAttribute('style');
+    unsupportedContainer.removeAttribute('style');
+  }
+  else if (failIfCookiesDisabled && !navigator.cookieEnabled) {
+    document.getElementById('unsupported-cookie').removeAttribute('style');
+    unsupportedContainer.removeAttribute('style');
+  }
+  else {
+    unsupportedContainer.parentNode.removeChild(unsupportedContainer);
+    runLoginPage(function () {
+      var res = OktaLogin.initLoginPage(loginPageConfig);
+      
+    });
+  }
+}());
+</script><script type="text/javascript" nonce="">
+  window.addEventListener('load', function(event) {
+    function applyStyle(id, styleDef) {
+      if (styleDef) {
+        var el = document.getElementById(id);
+        if (!el) {
+          return;
+        }
+        el.classList.add(styleDef);
+      }
+    }
+    applyStyle('login-bg-image', 'bgStyle');
+    applyStyle('login-bg-image-ie8', 'bgStyleIE8');
+  });
+</script>
+
+<iframe id="account-chooser-iframe" data-se="account-chooser" class="hide" src="https://login.okta.com/discovery/iframe.html"></iframe></body></html>

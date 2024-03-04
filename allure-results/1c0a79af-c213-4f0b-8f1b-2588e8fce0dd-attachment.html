@@ -1,0 +1,756 @@
+<html><head>
+        <title>USIG New Business Workbench</title>
+        <meta http-equiv="Pragma" content="no-cache">
+        <meta http-equiv="expires" content="-1">
+        <meta name="keywords" content="">
+        <meta name="description" content="">
+        
+        <link rel="stylesheet" type="text/css" href="/workbench0/css/workbench.css?v=4.11">
+        <iframe src="javascript:void(0)" title="" role="presentation" style="width: 0px; height: 0px; border: 0px; display: none;"></iframe><script type="text/javascript" src="/workbench0/js/jquery.js"></script>
+        <script type="text/javascript" src="/workbench0/js/json2.js"></script>
+
+        <script language="javascript">
+            function viewNotes( policyNumber, ezappSID, insuredName ){
+                document.notesForm.insuredName.value = insuredName;
+        
+        		if( policyNumber == "N/A" ){
+                    document.notesForm.policyNumber.value = "N/A";
+        	    	document.notesForm.ezappSID.value     = ezappSID;
+        		}else{    		
+                    document.notesForm.ezappSID.value      = "N/A";
+                    document.notesForm.policyNumber.value  = policyNumber;
+                }
+        
+                document.notesForm.submit();
+           	}
+        
+        
+            function viewPolicyDocs( policyNumber, adminSystem, insuredName ){
+                document.policyDocsForm.policyNumber.value = policyNumber;      
+                document.policyDocsForm.adminSystem.value  = adminSystem;      
+                document.policyDocsForm.insuredName.value  = insuredName;
+                document.policyDocsForm.submit();
+            }
+        
+        
+            function viewWorkItems( tab, policyNumber, workItemId ){
+                var form = document.createElement("form");
+                form.setAttribute("method", "POST");
+                form.setAttribute("action", "/workbench0/processing.do");
+                
+                var hiddenField1 = document.createElement("input");              
+                hiddenField1.setAttribute("type", "hidden");
+                hiddenField1.setAttribute("name", "tab");
+                hiddenField1.setAttribute("value", tab);
+                form.appendChild(hiddenField1);
+                
+                var hiddenField2 = document.createElement("input");              
+                hiddenField2.setAttribute("type", "hidden");
+                hiddenField2.setAttribute("name", "policyNumber");
+                hiddenField2.setAttribute("value", policyNumber);
+                form.appendChild(hiddenField2);
+                
+                var hiddenField3 = document.createElement("input");              
+                hiddenField3.setAttribute("type", "hidden");
+                hiddenField3.setAttribute("name", "workItemId");
+                hiddenField3.setAttribute("value", workItemId);
+                form.appendChild(hiddenField3);
+
+                document.body.appendChild(form);
+                form.submit();
+            }
+
+
+            function showHide(elementid){
+                if (document.getElementById(elementid).style.display == 'none'){
+                document.getElementById(elementid).style.display = '';
+                document.getElementById('minus').style.display = '';
+                document.getElementById('plus').style.display = 'none';
+                } else {
+                document.getElementById(elementid).style.display = 'none';
+                document.getElementById('plus').style.display = '';
+                document.getElementById('minus').style.display = 'none';
+                }
+            }
+        
+        
+            function applyTextFilter(){
+                document.forms['searchForm'].elements['formName'].value = getFormName();
+            	document.forms['searchForm'].submit();
+            }
+        
+            /* used by waitingredirect.jsp - May be obsolete*/
+            function submitAction()
+            {
+                document.WaitRedirect.submit();
+            }
+        
+        
+            /*Clear Text Filter*/
+            function clearTextFilter(){
+                document.location.href = "clearfilter.do?formName=" + getFormName();
+            }
+            
+            function getFormName(){
+          	    var currentTabID = $(".currentNav").attr('id');
+                if( currentTabID === "presubmitTab" ){
+            	    return "presubmittedForm";
+                }else if( currentTabID === "dashboardTab" ){
+           			return "dashboardForm";
+                }else if( currentTabID === "pendingTab" ){
+           			return "pendingForm";
+                }else if( currentTabID === "issuedTab" ){
+           			return "issuedForm";
+                }else if( currentTabID === "inactiveTab" ){
+           			return "inactiveForm";
+                }else{
+           			return "dashboardForm";
+                }
+            }
+            
+            
+            /*Clear producer filter*/
+            function clearProducerFilter(form){
+                document.location.href = "clearProducerFilter.do";
+            }
+        
+        
+            function rediectEZAppProducer(agentID){
+                var form = document.createElement("form");
+                form.setAttribute("method", "POST");
+                form.setAttribute("action", "/workbench0/EZAppCaseServlet");
+                form.setAttribute("target", "ezapppopup");
+                var hiddenField1 = document.createElement("input");              
+                hiddenField1.setAttribute("type", "hidden");
+                hiddenField1.setAttribute("name", "Action");
+                hiddenField1.setAttribute("value", "create");
+                form.appendChild(hiddenField1);
+                var hiddenField2 = document.createElement("input");              
+                hiddenField2.setAttribute("type", "hidden");
+                hiddenField2.setAttribute("name", "solAgtID");
+                hiddenField2.setAttribute("value", agentID);
+                form.appendChild(hiddenField2);
+                document.body.appendChild(form);
+                form.submit();
+            }
+
+
+            /* This is specifically for Home Office users and gives them the ability to create either an A1000 or A2000 for an agent */
+            function rediectEZAppHO(agentID,target){
+                var form = document.createElement("form");
+                form.setAttribute("method", "POST");
+                form.setAttribute("action", "/workbench0/EZAppCaseServlet");
+                form.setAttribute("target", "ezapppopup");
+                var hiddenField1 = document.createElement("input");              
+                hiddenField1.setAttribute("type", "hidden");
+                hiddenField1.setAttribute("name", "Action");
+                hiddenField1.setAttribute("value", "create");
+                form.appendChild(hiddenField1);
+                var hiddenField2 = document.createElement("input");              
+                hiddenField2.setAttribute("type", "hidden");
+                hiddenField2.setAttribute("name", "solAgtID");
+                hiddenField2.setAttribute("value", agentID);
+                form.appendChild(hiddenField2);
+                var hiddenField3 = document.createElement("input");              
+                hiddenField3.setAttribute("type", "hidden");
+                hiddenField3.setAttribute("name", "createTypeOverride");
+                hiddenField3.setAttribute("value", target);
+                form.appendChild(hiddenField3);
+                document.body.appendChild(form);
+                form.submit();
+            }
+        
+        
+            /*Open an EZ_app*/
+            function rediectRetrieveApp(applicationID){
+                var form = document.createElement("form");
+                form.setAttribute("method", "POST");
+                form.setAttribute("action", "/workbench0/EZAppCaseServlet");
+                form.setAttribute("target", "ezapppopup");
+                var hiddenField1 = document.createElement("input");              
+                hiddenField1.setAttribute("type", "hidden");
+                hiddenField1.setAttribute("name", "Action");
+                hiddenField1.setAttribute("value", "open");
+                form.appendChild(hiddenField1);
+                var hiddenField2 = document.createElement("input");              
+                hiddenField2.setAttribute("type", "hidden");
+                hiddenField2.setAttribute("name", "applicationID");
+                hiddenField2.setAttribute("value", applicationID);
+                form.appendChild(hiddenField2);
+                document.body.appendChild(form);
+                form.submit();
+            }
+        
+        
+            function openTPPCaseSummary(policyNumber,producerID,referrer) {
+                window.open("/workbench0/OpenTPPCaseServlet?policyNumber=" + policyNumber + "&producerID=" + producerID + "&referrer=" + referrer );
+            }
+        
+        
+            function openWorkItem(url){
+            	day = new Date();
+            	id = day.getTime();
+            	document.location.href=url;
+            }
+
+
+            function closeWindow(){
+            window.close();
+            }
+        
+                
+            function show(textboxDiv, changeCriteriaDiv){
+            	document.all[textboxDiv].style.display = '';
+            	document.all[changeCriteriaDiv].style.display = 'none';
+            }
+        
+        
+            function hide(textboxDiv, changeCriteriaDiv){
+                document.all[textboxDiv].style.display = 'none';
+            	document.all[changeCriteriaDiv].style.display = '';
+            }
+        
+        
+            function hideMessage(msgDiv){
+                document.all[msgDiv].style.display = 'none';
+            }
+        </script>
+    
+<script>(window.BOOMR_mq=window.BOOMR_mq||[]).push(["addVar",{"rua.upush":"false","rua.cpush":"false","rua.upre":"false","rua.cpre":"false","rua.uprl":"false","rua.cprl":"false","rua.cprf":"false","rua.trans":"SJ-373927fb-c113-4e7b-92f7-832e3ca5fff9","rua.cook":"true","rua.ims":"false","rua.ufprl":"false","rua.cfprl":"false","rua.isuxp":"false","rua.texp":"norulematch"}]);</script>
+                              <script>!function(a){var e="https://s.go-mpulse.net/boomerang/",t="addEventListener";if("True"=="True")a.BOOMR_config=a.BOOMR_config||{},a.BOOMR_config.PageParams=a.BOOMR_config.PageParams||{},a.BOOMR_config.PageParams.pci=!0,e="https://s2.go-mpulse.net/boomerang/";if(window.BOOMR_API_key="TTG99-RJWQA-A2D9G-JTLC3-NGC4C",function(){function n(e){a.BOOMR_onload=e&&e.timeStamp||(new Date).getTime()}if(!a.BOOMR||!a.BOOMR.version&&!a.BOOMR.snippetExecuted){a.BOOMR=a.BOOMR||{},a.BOOMR.snippetExecuted=!0;var i,_,o,r=document.createElement("iframe");if(a[t])a[t]("load",n,!1);else if(a.attachEvent)a.attachEvent("onload",n);r.src="javascript:void(0)",r.title="",r.role="presentation",(r.frameElement||r).style.cssText="width:0;height:0;border:0;display:none;",o=document.getElementsByTagName("script")[0],o.parentNode.insertBefore(r,o);try{_=r.contentWindow.document}catch(O){i=document.domain,r.src="javascript:var d=document.open();d.domain='"+i+"';void(0);",_=r.contentWindow.document}_.open()._l=function(){var a=this.createElement("script");if(i)this.domain=i;a.id="boomr-if-as",a.src=e+"TTG99-RJWQA-A2D9G-JTLC3-NGC4C",BOOMR_lstart=(new Date).getTime(),this.body.appendChild(a)},_.write("<bo"+'dy onload="document._l();">'),_.close()}}(),"".length>0)if(a&&"performance"in a&&a.performance&&"function"==typeof a.performance.setResourceTimingBufferSize)a.performance.setResourceTimingBufferSize();!function(){if(BOOMR=a.BOOMR||{},BOOMR.plugins=BOOMR.plugins||{},!BOOMR.plugins.AK){var e="false"=="true"?1:0,t="cookiepresent",n="ddhe4wlin3ztqznkp5rq-f-76fbbde05-clientnsv4-s.akamaihd.net",i="false"=="true"?2:1,_={"ak.v":"36","ak.cp":"1411062","ak.ai":parseInt("858533",10),"ak.ol":"0","ak.cr":69,"ak.ipv":4,"ak.proto":"h2","ak.rid":"7dcc6b02","ak.r":40599,"ak.a2":e,"ak.m":"","ak.n":"essl","ak.bpcip":"24.206.78.0","ak.cport":11450,"ak.gh":"104.110.243.52","ak.quicv":"","ak.tlsv":"tls1.3","ak.0rtt":"","ak.csrc":"-","ak.acc":"","ak.t":"1705672547","ak.ak":"hOBiQwZUYzCg5VSAfCLimQ==dyLKIYyKKc8y/2UABZTNsbHaQYZBeU8Y+mKcf3NT/XDqbGwcDAKqRxUUM3aWZV3Jy7dETduVkV9TOc7i8QqMyOW7Cv7uIDW2VqeLfRgNZqqKKS91uHrbwT0HfwGAriL7egHNiwp2yXPbRydCyXon4sgwO1gXywHcprGcUb3NEkVf/zBor3YeJAhXRdNSKjesbUNujxshOYZqJzptoiEHEUE2/Yl+NfWtZITxh7xeaSK36PRzRt4woBz5pJLWbaXQto+aSzHhLc/SCO/JB+yn1YHXsvDe1TiUajGkiFk3AzBwNBPpVy/wwz9lyaGnMzUf+7RRkj30nDKqATuGPbifrhLqlrvkj97PTfyBD6DI8x7vai+HZEoE9A65GoGMiZTZBFFMYA6J74XqDUUOYGbs7MMOachiFE9oCeM2ndnYcvQ=","ak.pv":"20","ak.dpoabenc":"","ak.tf":i};if(""!==t)_["ak.ruds"]=t;var o={i:!1,av:function(e){var t="http.initiator";if(e&&(!e[t]||"spa_hard"===e[t]))_["ak.feo"]=void 0!==a.aFeoApplied?1:0,BOOMR.addVar(_)},rv:function(){var a=["ak.bpcip","ak.cport","ak.cr","ak.csrc","ak.gh","ak.ipv","ak.m","ak.n","ak.ol","ak.proto","ak.quicv","ak.tlsv","ak.0rtt","ak.r","ak.acc","ak.t","ak.tf"];BOOMR.removeVar(a)}};BOOMR.plugins.AK={akVars:_,akDNSPreFetchDomain:n,init:function(){if(!o.i){var a=BOOMR.subscribe;a("before_beacon",o.av,null,null),a("onbeacon",o.rv,null,null),o.i=!0}return this},is_complete:function(){return!0}}}}()}(window);</script></head>
+
+    
+
+    <body>
+        <div id="MainDiv"></div>
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="wbHeader"><!--Order is important here...set the left and right before the center-->
+    <div class="wbHeaderLeft">
+        <div class="wbLogo">
+            <img src="/workbench0/images/logo-massmutual-2017.png" height="31" width="146" alt="MassMutual Logo">
+        </div>
+    </div>
+    <div class="wbHeaderRight">
+        <div class="wbUtilityLinks">
+            <a href="#wbModal_export" name="wbModalButton">Export Data</a>|
+            <a href="#" onclick="window.close()">Close Window</a>|
+            <a href="https://fieldnet.massmutual.com/fldnet/newsales/bizsubmission/life/applying/index.html#Submitting%20Subsequent%20Requirements" target="_blank">Help</a>
+        </div>
+    </div>
+    <div class="wbHeaderCenter">
+        <p class="wbTitle">Insurance New Business Workbench</p>
+    </div>
+</div>
+
+<div class="wbModal_breakingDiv"></div>
+
+<div class="userInfo"><!--Order is important here...set the left and right before the center-->
+    <form action="search.do" method="POST" name="searchForm" onsubmit="applyTextFilter()">
+	<input type="hidden" name="contextPath" value="/workbench0">
+    <input type="hidden" name="tppContextPath" value="http://tpplx3wasproxy-dev.private.massmutual.com/stpnbs/TPPAgentAccessServlet">
+	<input type="hidden" name="loggedInUserID" value="RB24193">
+	<input type="hidden" name="loggedInUserRole" value="producer">
+	<input type="hidden" name="agencyID" value="null">
+	<input type="hidden" name="formName">
+
+    <div class="userInfoLeft">
+        <span class="loggedInUser">New Business For MICHAEL ZAGER (AA123317)</span>
+    </div>
+    <div class="userInfoRight">
+        <!-- Filter -->
+    	<span class="label">Filter Results:</span>
+       	<input name="filterText" value="">
+    	<a href="#" onclick="applyTextFilter()" class="wbModal_button">Apply</a>
+    	<a href="#" onclick="clearTextFilter()" class="wbModal_button">Clear</a>
+    </div>
+    <div class="userInfoCenter">
+    </div>
+</form></div>
+<div class="wbModal_breakingDiv"></div>
+
+<div class="userInfo"><!--Order is important here...set the left and right before the center-->
+    <div class="userInfoLeftFull">
+        <!-- Change Producer -->
+        
+        <a href="#wbModal_changeProducer" name="wbModalButton" class="wbModal_button">Change Producer</a>
+        
+        <!-- Change Agency (Fixed)-->
+        
+
+        <!-- Filter Producer -->
+        
+    </div>
+
+</div>
+<div class="wbModal_breakingDiv"></div>
+
+
+
+<div id="appContainer">
+	<div id="workbenchContent">
+	    <div id="primaryNavTabs">
+        <ul id="primaryNav">
+            <!-- This is the Tab bar -->
+            <!-- Each page will be responsible for adding the active class to the appropriate tab-->
+            <li id="dashboardTab" desc="Workbasket Tab"><a name="wbModalButton" href="#wbModal_loading" onclick="loadTab('/workbench.do', 'Workbasket Tab')" title="View your STP Workbasket">Workbasket</a></li>
+            <li id="presubmitTab" desc="Pre-Submitted Tab"><a name="wbModalButton" id="Pre-Submitted Tab" href="#wbModal_loading" onclick="loadTab('/presubmitted.do', 'Pre-Submitted Tab')" title="View applications you haven't submitted yet">Pre-Submitted</a></li>
+            <li id="pendingTab" desc="Pending Tab" class="currentNav"><a name="wbModalButton" id="Pending Tab" href="#wbModal_loading" onclick="loadTab('/pending.do', 'Pending Tab')" title="View applications pending in the Home Office">Pending </a></li>       
+            <li id="issuedTab" desc="Issued &amp; Reported Tab"><a name="wbModalButton" id="Issued &amp; Reported Tab" href="#wbModal_loading" onclick="loadTab('/issued.do', 'Issued &amp; Reported Tab')" title="View applications ready to be printed and delivered">Issued &amp; Reported </a></li>
+            <li id="inactiveTab" desc="Inactive Tab"><a name="wbModalButton" id="Inactive Tab" href="#wbModal_loading" onclick="loadTab('/inactive.do', 'Inactive Tab')" title="View applications that have been declined">Inactive</a></li> 
+        </ul>
+        </div>
+
+            <!-- This is the EZ-app button section-->
+	    <div id="primaryNavButtons">
+			
+	    		<button class="newAppButton" href="#" onclick="rediectEZAppProducer('AA123317')">Submit New Business</button>
+			
+			
+				<button name="wbModalButton" class="newAppButtonAdmin" href="#wbModal_newEZapp_Admin" onclick="setEZappAdminDefaults('AA123317')"></button>
+			
+			
+				<button name="wbModalButton" class="newAppButtonProfile" href="#wbModal_profile_Admin" onclick="setProfileAdminDefaults('AA123317')"></button>
+			
+    </div>
+	    <div id="primaryNavMiddle">
+	    </div>
+    <div class="wbModal_breakingDiv"></div>
+</div>
+        
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Set the active Tab -->
+<script type="text/javascript" src="/workbench0/js/jquery.js"></script>
+<script>$("#pendingTab").addClass("currentNav");</script>
+
+
+<script language="JavaScript" type="text/javascript">
+function openTppActionPage( policyNumber )
+{
+    document.tppGenericForm.policyNumber.value = policyNumber;
+    document.tppGenericForm.submit();
+}
+
+
+function toggleRequirements( polnum, policyType, companyCode )
+{
+    var title = document.getElementById(polnum + "_REQS_TITLE").innerHTML;
+
+    if( document.getElementById(polnum + "_REQS").style.display=='none' )
+    {
+        document.getElementById(polnum + "_REQS_ICON").src="/workbench0/images/icon-minus-10x10.gif";
+        document.getElementById(polnum + "_REQS").style.display = '';
+        getRequirements(polnum,policyType,companyCode);
+    }
+    else
+    {
+        document.getElementById(polnum + "_REQS_ICON").src="/workbench0/images/icon-plus-10x10.gif";
+        document.getElementById(polnum + "_REQS").style.display = 'none';
+    }
+}
+
+function getRequirements( polnum, policyType, companyCode )
+{
+        var xmlHttpReq = false;
+        // Mozilla/Safari
+        if (window.XMLHttpRequest) {
+            xmlHttpReq = new XMLHttpRequest();
+            if (xmlHttpReq.overrideMimeType) {
+                xmlHttpReq.overrideMimeType('text/xml');
+            }
+        // IE
+        } else if (window.ActiveXObject) { // IE
+            try {
+                xmlHttpReq = new ActiveXObject("Msxml2.XMLHTTP");
+        } catch (e) {
+            try {
+                xmlHttpReq = new ActiveXObject("Microsoft.XMLHTTP");
+            } catch (e) {}
+            }
+        }
+        if (!xmlHttpReq) {
+            alert('ERROR AJAX:( Cannot create an XMLHTTP instance');
+            return false;
+        }
+        xmlHttpReq.open('POST', '/workbench0/RetrieveRequirementsServlet', true);
+        xmlHttpReq.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xmlHttpReq.onreadystatechange = function()
+        {
+            if( policyType === "TERM" ) {
+                displayRequirementsTERM(xmlHttpReq,polnum + "_REQS_DETAILS");
+            } else {
+                displayRequirementsPERM(xmlHttpReq,polnum + "_REQS_DETAILS");
+            }
+        };
+        xmlHttpReq.send("polnum=" + polnum + "&policyType=" + policyType + "&companyCode=" + companyCode);
+        document.getElementById(polnum + "_REQS_DETAILS").innerHTML = "<tr class=workItem><td><img src='/workbench0/images/spacer.gif' width='100px' height='1' />Loading Requirements...</td></tr>";
+    }
+
+
+
+function displayRequirementsTERM(http_request,id_details){
+    if(http_request.readyState == 4){
+        if(http_request.status == 200){
+            var responseString = http_request.responseText;
+            var finalResult = "<td colspan=13><table>";
+
+    	    var fieldRequirementData       = "<tr class=workItem><td><img src='/workbench0/images/spacer.gif' width='100px' height='1' />Field Requirements</td></tr>";
+    	    var additionalDocumentData     = "";
+    	    var homeOfficeRequirementData  = "<tr class=workItem><td><img src='/workbench0/images/spacer.gif' width='100px' height='1' />Home Office Requirements</td></tr>";
+    	    var vendorRequirementData      = "<tr class=workItem><td><img src='/workbench0/images/spacer.gif' width='100px' height='1' />Vendor Requirements</td></tr>";
+    
+    	    var fieldRequirementCount      = 0;
+    	    var fieldRequirementROCount    = 0;
+    	    var additionalDocumentCount    = 0;
+    	    var homeOfficeRequirementCount = 0;
+    	    var vendorRequirementCount     = 0;
+    
+            var arr = JSON.parse(responseString);
+
+            var i;
+            for(i = 0; i < arr.length; i++){
+                if(arr[i].category === "HOME_OFFICE"){
+                    homeOfficeRequirementCount++;
+                    hoverText = "Work Item: " + arr[i].task.replace(/  +/g, ' ') + "\n\nRequirement Additional Details:\n\nWorkitem processing is not available for Home Office or Vendor requirements";
+                    homeOfficeRequirementData = homeOfficeRequirementData +
+            			"<tr class=workItem title=\"" + hoverText + "\"><td><table class=reqrow><tr>" +
+            			"<td width=400><img src='/workbench0/images/spacer.gif' width='110px' height='1' /><img src=/workbench0/images/bg-workItemBullet.gif>&nbsp;&nbsp;"+arr[i].task.replace(/  +/g, ' ')+"</td>"+
+            			"<td width=150>Status: " + arr[i].caseStatus + "</td>" +
+            			"<td width=150>Status Date: " + arr[i].statusDate + "</td>" +
+            			"<td></td></tr></table></td></tr>";
+                }else if(arr[i].category === "VENDOR"){
+                    vendorRequirementCount++;
+                    hoverText = "Work Item: " + arr[i].task.replace(/  +/g, ' ') + "\n\nRequirement Additional Details:\n\nWorkitem processing is not available for Home Office or Vendor requirements";
+                    vendorRequirementData = vendorRequirementData +
+            			"<tr class=workItem title=\"" + hoverText + "\"><td><table class=reqrow><tr>" +
+            			"<td width=400><img src='/workbench0/images/spacer.gif' width='110px' height='1' /><img src=/workbench0/images/bg-workItemBullet.gif>&nbsp;&nbsp;"+arr[i].task.replace(/  +/g, ' ')+"</td>"+
+            			"<td width=150>Status: " + arr[i].caseStatus + "</td>" +
+            			"<td width=150>Status Date: " + arr[i].statusDate + "</td>" +
+            			"<td></td></tr></table></td></tr>";
+                }else if(arr[i].category === "FIELD"){
+                    fieldRequirementCount++;
+                    var url = "viewWorkItems('pending', '" + arr[i].policyNumber + "', '" + arr[i].workItemId + "')";
+                    var hoverText = "Work Item: " + arr[i].task.replace(/  +/g, ' ');
+                    if(arr[i].collectionMethod != "01" || arr[i].collectionMethod != "02"){
+        	    		hoverText = hoverText + "\n\nDocument/Form ID: " + arr[i].formId;
+        	    	}else if(arr[i].collectionMethod != "05"){
+        	    		hoverText = hoverText + "\n\nUW Class / Rating: "         + arr[i].uwClassification;
+        	    		hoverText = hoverText + "\nPermanent Flat Extra Amount: " + arr[i].permFlatExtraAmt;
+        	    		hoverText = hoverText + "\nTemporary Flat Extra Amount: " + arr[i].tempFlatExtraAmt;
+        	    		hoverText = hoverText + "\nTemporary Flat End Date: "     + arr[i].tempFlatEndDate;
+        	    		hoverText = hoverText + "\nFace Amount: "                 + arr[i].faceAmt;
+        	    		hoverText = hoverText + "\nPremium Amount (Annualized): " + arr[i].annualPremiumAmt;
+        	    		hoverText = hoverText + "\nPremium Amount (Modal): "      + arr[i].premiumAmt;
+            		}
+        
+            		// Display any additional details provided
+            		if(arr[i].description != null && !arr[i].description == ""){
+            			hoverText = hoverText + "\n\nRequirement Additional Details: " + arr[i].description;
+            		}
+        
+                    if(arr[i].disableWIProcessing === true){
+                        fieldRequirementROCount++;
+                        fieldRequirementData = fieldRequirementData + "<tr class=\"workItem\" title=\"This workitem is submitted or this case has been withdrawn.\">";
+                        fieldRequirementData = fieldRequirementData + "<td><table class=reqrow><tr class=\"fieldWorkItemDisabled\">";
+        	    	}else{
+                        fieldRequirementData = fieldRequirementData + "<tr class=\"workItem\" onclick=\"" + url + "\" title=\"" + hoverText + "\">";
+                        fieldRequirementData = fieldRequirementData + "<td><table class=reqrow><tr class=\"fieldWorkItemEnabled\">";
+        	    	}
+        
+                    fieldRequirementData = fieldRequirementData +
+            			"<td width=400><img src='/workbench0/images/spacer.gif' width='110px' height='1' /><img src=/workbench0/images/bg-workItemBullet.gif>&nbsp;&nbsp;"+arr[i].task.replace(/  +/g, ' ')+"</td>"+
+            			"<td width=150>Task Date: " + arr[i].taskDate + "</td>" +
+              			"<td width=150>Due Date: " + arr[i].dueDate + "</td>" +
+            			"<td></td></tr></table></td></tr>";
+                }else if( arr[i].category === "ADDITIONALDOCUMENTS" ){
+                    additionalDocumentCount++;
+                    var url = "viewWorkItems('pending', '" + arr[i].policyNumber + "', '" + arr[i].workItemId + "')";
+                    var hoverText = "Additional Documents may be submitted for this policy";
+        
+                    additionalDocumentData = "<tr class=\"workItem\" onclick=\"" + url + "\" title=\"" + hoverText + "\">";
+                    additionalDocumentData = additionalDocumentData + "<td><table class=reqrow><tr class=\"fieldWorkItemEnabled\">";
+                    additionalDocumentData = additionalDocumentData +
+            			"<td width=400><img src='/workbench0/images/spacer.gif' width='110px' height='1' /><img src=/workbench0/images/bg-workItemBullet.gif>&nbsp;&nbsp;Additional Documents</td>"+
+            			"<td width=150></td>" +
+            			"<td width=150></td>" +
+            			"<td></td></tr></table></td></tr>";
+                }
+            }
+
+
+            // Show the Field Requirements Section?
+            if( fieldRequirementCount > 0 || ( additionalDocumentCount > 0 && ( vendorRequirementCount > 0 || homeOfficeRequirementCount > 0 ) ) )
+            {
+                finalResult = finalResult + fieldRequirementData;
+
+                // Show the additional documents link
+                if(fieldRequirementCount == fieldRequirementROCount && additionalDocumentCount > 0)
+                {
+                    finalResult = finalResult + additionalDocumentData;
+                }           
+            }
+
+            // Home Office Requirements - Non-actionable
+            if(homeOfficeRequirementCount > 0){
+                finalResult = finalResult + homeOfficeRequirementData;
+            }
+
+            // Vendor Requirements - Non-actionable
+            if(vendorRequirementCount > 0){
+                finalResult = finalResult + vendorRequirementData;
+            }
+
+            document.getElementById(id_details).innerHTML = finalResult;
+        }else{
+            var data = "<table>"
+                     + "<tr class=workItem>"
+                     +  "<td>&nbsp;</td>"
+                     +  "<td colspan=13><font color=red>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Failed to load requirements.</font></td>"
+                     +  "</tr>"
+                     + "</table>";
+            document.getElementById(id_details).innerHTML = data;
+        }
+    }
+}
+
+
+function displayRequirementsPERM(http_request,id_details){
+    if (http_request.readyState == 4)
+    {
+        if(http_request.status == 200){
+            var responseString = http_request.responseText;
+            var finalResult = "<td colspan=13><table>";
+
+    	    var fieldRequirementData          = "<tr class=workItem><td><img src='/workbench0/images/spacer.gif' width='100px' height='1' />Field Requirements</td></tr>";
+    	    var additionalDocumentData        = "";
+    	    var homeOfficeRequirementData     = "<tr class=workItem><td><img src='/workbench0/images/spacer.gif' width='100px' height='1' />Home Office Requirements</td></tr>";
+    	    var vendorRequirementData         = "<tr class=workItem><td><img src='/workbench0/images/spacer.gif' width='100px' height='1' />Vendor Requirements</td></tr>";
+    	    var uncategorizedData             = "";
+    
+    	    var fieldRequirementCount         = 0;
+    	    var fieldRequirementROCount       = 0;
+            var additionalDocumentCount       = 0;
+    	    var homeOfficeRequirementCount    = 0;
+    	    var vendorRequirementCount        = 0;
+    	    var uncategorizedRequirementCount = 0;
+    
+            var arr = JSON.parse(responseString);
+            for(var i = 0; i < arr.length; i++){
+                var appliesTo = "Primary";
+                if(arr[i].secondaryInsuredIndicator == true){
+                    appliesTo = "Secondary";
+                }
+
+                if(arr[i].category === "HOME_OFFICE"){
+                    homeOfficeRequirementCount++;
+                    hoverText = "Work Item: " + arr[i].task.replace(/  +/g, ' ') + "\n\nRequirement Additional Details:\n\nWorkitem processing is not available for Home Office or Vendor requirements";
+                    homeOfficeRequirementData = homeOfficeRequirementData +
+            			"<tr class=workItem title=\"" + hoverText + "\"><td><table class=reqrow><tr>" +
+            			"<td width=400><img src='/workbench0/images/spacer.gif' width='110px' height='1' /><img src=/workbench0/images/bg-workItemBullet.gif>&nbsp;&nbsp;"+arr[i].task.replace(/  +/g, ' ')+"</td>"+
+            			"<td width=150>Status: " + arr[i].caseStatus + "</td>" +
+            	    	"<td width=150>Ordered Date: " + arr[i].taskDate + "</td>" +
+            			"<td width=150>Applies To: " + appliesTo + "</td>" +
+            	    	"<td width=150></td>" +
+            			"<td></td></tr></table></td></tr>";
+                }else if(arr[i].category === "VENDOR"){
+                    vendorRequirementCount++;
+                    hoverText = "Work Item: " + arr[i].task.replace(/  +/g, ' ') + "\n\nRequirement Additional Details:\n\nWorkitem processing is not available for Home Office or Vendor requirements";
+                    vendorRequirementData = vendorRequirementData +
+            			"<tr class=workItem title=\"" + hoverText + "\"><td><table class=reqrow><tr>" +
+            			"<td width=400><img src='/workbench0/images/spacer.gif' width='110px' height='1' /><img src=/workbench0/images/bg-workItemBullet.gif>&nbsp;&nbsp;"+arr[i].task.replace(/  +/g, ' ')+"</td>"+
+            			"<td width=150>Status: " + arr[i].caseStatus + "</td>" +
+            	    	"<td width=150>Ordered Date: " + arr[i].taskDate + "</td>" +
+            			"<td width=150>Applies To: " + appliesTo + "</td>" +
+            	    	"<td width=150></td>" +
+            			"<td></td></tr></table></td></tr>";
+                }else if(arr[i].category === "FIELD"){
+                    fieldRequirementCount++;
+                    var url = "viewWorkItems('pending', '" + arr[i].policyNumber + "', 'NONE')";
+                    var hoverText = "Work Item: " + arr[i].task.replace(/  +/g, ' ');
+                    if(arr[i].collectionMethod === "02"){
+        	    		hoverText = hoverText + "\n\nDocument/Form ID: " + arr[i].formId;
+            		}
+    
+            		// Display any additional details provided
+            		if(arr[i].description != null && !arr[i].description == ""){
+            			hoverText = hoverText + "\n\nRequirement Additional Details: ";
+            			hoverText = hoverText + arr[i].description;
+            		}
+    
+                    if(arr[i].disableWIProcessing === true){
+                        fieldRequirementROCount++;
+                        fieldRequirementData = fieldRequirementData + "<tr class=\"workItem\" title=\"This workitem is submitted or cannot be processed from the Workbench.\">";
+                        fieldRequirementData = fieldRequirementData + "<td><table class=reqrow><tr class=\"fieldWorkItemDisabled\">";
+        	    	}else{
+                        fieldRequirementData = fieldRequirementData + "<tr class=\"workItem\" onclick=\"" + url + "\" title=\"" + hoverText + "\">";
+                        fieldRequirementData = fieldRequirementData + "<td><table class=reqrow><tr class=\"fieldWorkItemEnabled\">";
+        	    	}
+    
+                    fieldRequirementData = fieldRequirementData +
+            			"<td width=400><img src='/workbench0/images/spacer.gif' width='110px' height='1' /><img src=/workbench0/images/bg-workItemBullet.gif>&nbsp;&nbsp;"+arr[i].task.replace(/  +/g, ' ')+"</td>"+
+            			"<td width=150>Status: " + arr[i].caseStatus + "</td>" +
+            	    	"<td width=150>Ordered Date: " + arr[i].taskDate + "</td>" +
+            			"<td width=150>Applies To: " + appliesTo + "</td>" +
+            	    	"<td width=150></td>" +
+            			"<td></td></tr></table></td></tr>";
+                }else if(arr[i].category === "NA"){
+                    uncategorizedRequirementCount++;
+                    var hoverText = "Work Item: " + arr[i].task.replace(/  +/g, ' ') + "\n\nRequirement Additional Details:\n\nWork item is view only";
+                    uncategorizedData = uncategorizedData +
+            			"<tr class=workItem title=\"" + hoverText + "\"><td><table class=reqrow><tr>" +
+            			"<td width=400><img src='/workbench0/images/spacer.gif' width='110px' height='1' /><img src=/workbench0/images/bg-workItemBullet.gif>&nbsp;&nbsp;"+arr[i].task.replace(/  +/g, ' ')+"</td>"+
+            			"<td width=150>Status: " + arr[i].caseStatus + "</td>" +
+            	    	"<td width=150>Ordered Date: " + arr[i].taskDate + "</td>" +
+            			"<td width=150>Applies To: " + appliesTo + "</td>" +
+            	    	"<td width=150></td>" +
+            			"<td></td></tr></table></td></tr>";
+                }else if(arr[i].category === "ADDITIONALDOCUMENTS"){
+                    additionalDocumentCount++;
+                    var url = "viewWorkItems('pending', '" + arr[i].policyNumber + "', '" + arr[i].workItemId + "')";
+                    var hoverText = "Additional Documents may be submitted for this policy";
+    
+                    additionalDocumentData = "<tr class=\"workItem\" onclick=\"" + url + "\" title=\"" + hoverText + "\">";
+                    additionalDocumentData = additionalDocumentData + "<td><table class=reqrow><tr class=\"fieldWorkItemEnabled\">";
+                    additionalDocumentData = additionalDocumentData +
+            			"<td width=400><img src='/workbench0/images/spacer.gif' width='110px' height='1' /><img src=/workbench0/images/bg-workItemBullet.gif>&nbsp;&nbsp;Additional Documents</td>"+
+            			"<td width=150></td>" +
+            	    	"<td width=150></td>" +
+            	    	"<td width=150></td>" +
+            			"<td width=150></td>" +
+            			"<td></td></tr></table></td></tr>";
+                }
+            }
+
+            // Show the Field Requirements Section?
+            if( fieldRequirementCount > 0 || ( additionalDocumentCount > 0 && ( vendorRequirementCount > 0 || homeOfficeRequirementCount > 0 ) ) )
+            {
+                finalResult = finalResult + fieldRequirementData;
+
+                // Show the additional documents link
+                if(fieldRequirementCount == fieldRequirementROCount && additionalDocumentCount > 0)
+                {
+                    finalResult = finalResult + additionalDocumentData;
+                }           
+            }
+
+            // Home Office Requirements - Non-actionable
+            if(homeOfficeRequirementCount > 0){
+                finalResult = finalResult + homeOfficeRequirementData;
+            }
+
+            // Vendor Requirements - Non-actionable
+            if(vendorRequirementCount > 0){
+                finalResult = finalResult + vendorRequirementData;
+            }
+
+            // Uncategorized Requirements - Non-actionable
+            if(uncategorizedRequirementCount > 0){
+                finalResult = finalResult + uncategorizedData;
+            }
+
+            document.getElementById(id_details).innerHTML = finalResult;
+        }else{
+            var data = "<table>"
+                     + "<tr class=workItem>"
+                     +  "<td>&nbsp;</td>"
+                     +  "<td colspan=13><font color=red>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Failed to load requirements.</font></td>"
+                     +  "</tr>"
+                     + "</table>";
+            document.getElementById(id_details).innerHTML = data;
+        }
+    }
+}
+</script>
+
+
+
+<form name="pendingForm" method="POST" action="/workbench0/pending.html" style="margin:0;padding:0;display:inline;">
+    
+	<div id="appContainer"><br>
+    <div id="workbenchContent" class="clearfix">
+    <div id="pendingApps" class="inbox">
+
+    
+
+    
+    
+    
+
+
+
+    
+            <h2>Pending Cases (8)</h2>
+            <table border="0" cellpadding="0" cellspacing="0">
+                    <tbody><tr>
+                        <th width="60px" onmouseover="this.style.background='#c7e5ff';this.style.cursor='pointer';" onmouseout="this.style.background='#CCC';">
+                            <a href="/workbench0/sort.do?selectedTab=pending&amp;sortColumn=policyNumber&amp;sortOrder=desc&amp;previousSortColumn=statusDate" title="Sort by Policy Number">Policy #
+                            
+                            </a>
+                        </th>
+                        <th width="190px" onmouseover="this.style.background='#c7e5ff';this.style.cursor='pointer';" onmouseout="this.style.background='#CCC';">
+                            <a href="/workbench0/sort.do?selectedTab=pending&amp;sortColumn=insured&amp;sortOrder=desc&amp;previousSortColumn=statusDate" title="Sort by Insured Name">Insured
+                            
+                            </a>
+                        </th>
+                        <th width="80px" onmouseover="this.style.background='#c7e5ff';this.style.cursor='pointer';" onmouseout="this.style.background='#CCC';">
+                            <a href="/workbench0/sort.do?selectedTab=pending&amp;sortColumn=insuredBirthDate&amp;sortOrder=desc&amp;previousSortColumn=statusDate" title="Sort by Insured Birth Date">Birth Date
+                            
+                            </a>
+                        </th>
+                        <th width="60px" onmouseover="this.style.background='#c7e5ff';this.style.cursor='pointer';" onmouseout="this.style.background='#CCC';">
+                            <a href="/workbench0/sort.do?selectedTab=pending&amp;sortColumn=plan&amp;sortOrder=desc&amp;previousSortColumn=statusDate" title="Sort by Plan Type">Plan
+                            
+                            </a>
+                        </th>
+                        <th width="70px" onmouseover="this.style.background='#c7e5ff';this.style.cursor='pointer';" onmouseout="this.style.background='#CCC';">
+                            <a href="/workbench0/sort.do?selectedTab=pending&amp;sortColumn=faceAmt&amp;sortOrder=desc&amp;previousSortColumn=statusDate" title="Sort by Plan Amount">Amount
+                            
+                            </a>
+                        </th>
+                        <th width="80px" onmouseover="this.style.background='#c7e5ff';this.style.cursor='pointer';" onmouseout="this.style.background='#CCC';">
+                            <a href="/workbench0/sort.do?selectedTab=pending&amp;sortColumn=annualPremiumAmt&amp;sortOrder=desc&amp;previousSortColumn=statusDate" title="Sort by Annualized Premium">Premium
+                            
+                            </a>
+                        </th>
+                        <th width="190px" onmouseover="this.style.background='#c7e5ff';this.style.cursor='pointer';" onmouseout="this.style.background='#CCC';">
+                            <a href="/workbench0/sort.do?selectedTab=pending&amp;sortColumn=solicitingProducer&amp;sortOrder=desc&amp;previousSortColumn=statusDate" title="Sort by Soliciting Producer">Soliciting Producer
+                            
+                            </a>
+                        </th>
+                        <th width="90px" onmouseover="this.style.background='#c7e5ff';this.style.cursor='pointer';" onmouseout="this.style.background='#CCC';">
+                            <a href="/workbench0/sort.do?selectedTab=pending&amp;sortColumn=submitted&amp;sortOrder=desc&amp;previousSortColumn=statusDate" title="Sort by Submitted Date">Submitted
+                            
+                            </a>
+                        </th>
+                        <th width="280px" onmouseover="this.style.background='#c7e5ff';this.style.cursor='pointer';" onmouseout="this.style.background='#CCC';">
+                            <a href="/workbench0/sort.do?selectedTab=pending&amp;sortColumn=status&amp;sortOrder=desc&amp;previousSortColumn=statusDate" title="Sort by Case Status">Case Status
+                            
+                            </a>
+                        </th>
+                        <th width="110px" onmouseover="this.style.background='#c7e5ff';this.style.cursor='pointer';" onmouseout="this.style.background='#CCC';" class="last">
+                            <a href="/workbench0/sort.do?selectedTab=pending&amp;sortColumn=statusDate&amp;sortOrder=desc&amp;previousSortColumn=statusDate" title="Sort by Status Date">Status Date
+                            
+                                </a></th></tr></tbody></table></div></div></div></form></div></body></html>

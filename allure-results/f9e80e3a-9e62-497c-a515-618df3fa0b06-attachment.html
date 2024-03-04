@@ -1,0 +1,2731 @@
+<html><head>
+        <title>USIG New Business Workbench</title>
+        <meta http-equiv="Pragma" content="no-cache">
+        <meta http-equiv="expires" content="-1">
+        <meta name="keywords" content="">
+        <meta name="description" content="">
+        
+        <link rel="stylesheet" type="text/css" href="/workbench0/css/workbench.css?v=4.11">
+        <iframe src="javascript:void(0)" title="" role="presentation" style="width: 0px; height: 0px; border: 0px; display: none;"></iframe><script type="text/javascript" src="/workbench0/js/jquery.js"></script>
+        <script type="text/javascript" src="/workbench0/js/json2.js"></script>
+
+        <script language="javascript">
+            function viewNotes( policyNumber, ezappSID, insuredName ){
+                document.notesForm.insuredName.value = insuredName;
+        
+        		if( policyNumber == "N/A" ){
+                    document.notesForm.policyNumber.value = "N/A";
+        	    	document.notesForm.ezappSID.value     = ezappSID;
+        		}else{    		
+                    document.notesForm.ezappSID.value      = "N/A";
+                    document.notesForm.policyNumber.value  = policyNumber;
+                }
+        
+                document.notesForm.submit();
+           	}
+        
+        
+            function viewPolicyDocs( policyNumber, adminSystem, insuredName ){
+                document.policyDocsForm.policyNumber.value = policyNumber;      
+                document.policyDocsForm.adminSystem.value  = adminSystem;      
+                document.policyDocsForm.insuredName.value  = insuredName;
+                document.policyDocsForm.submit();
+            }
+        
+        
+            function viewWorkItems( tab, policyNumber, workItemId ){
+                var form = document.createElement("form");
+                form.setAttribute("method", "POST");
+                form.setAttribute("action", "/workbench0/processing.do");
+                
+                var hiddenField1 = document.createElement("input");              
+                hiddenField1.setAttribute("type", "hidden");
+                hiddenField1.setAttribute("name", "tab");
+                hiddenField1.setAttribute("value", tab);
+                form.appendChild(hiddenField1);
+                
+                var hiddenField2 = document.createElement("input");              
+                hiddenField2.setAttribute("type", "hidden");
+                hiddenField2.setAttribute("name", "policyNumber");
+                hiddenField2.setAttribute("value", policyNumber);
+                form.appendChild(hiddenField2);
+                
+                var hiddenField3 = document.createElement("input");              
+                hiddenField3.setAttribute("type", "hidden");
+                hiddenField3.setAttribute("name", "workItemId");
+                hiddenField3.setAttribute("value", workItemId);
+                form.appendChild(hiddenField3);
+
+                document.body.appendChild(form);
+                form.submit();
+            }
+
+
+            function showHide(elementid){
+                if (document.getElementById(elementid).style.display == 'none'){
+                document.getElementById(elementid).style.display = '';
+                document.getElementById('minus').style.display = '';
+                document.getElementById('plus').style.display = 'none';
+                } else {
+                document.getElementById(elementid).style.display = 'none';
+                document.getElementById('plus').style.display = '';
+                document.getElementById('minus').style.display = 'none';
+                }
+            }
+        
+        
+            function applyTextFilter(){
+                document.forms['searchForm'].elements['formName'].value = getFormName();
+            	document.forms['searchForm'].submit();
+            }
+        
+            /* used by waitingredirect.jsp - May be obsolete*/
+            function submitAction()
+            {
+                document.WaitRedirect.submit();
+            }
+        
+        
+            /*Clear Text Filter*/
+            function clearTextFilter(){
+                document.location.href = "clearfilter.do?formName=" + getFormName();
+            }
+            
+            function getFormName(){
+          	    var currentTabID = $(".currentNav").attr('id');
+                if( currentTabID === "presubmitTab" ){
+            	    return "presubmittedForm";
+                }else if( currentTabID === "dashboardTab" ){
+           			return "dashboardForm";
+                }else if( currentTabID === "pendingTab" ){
+           			return "pendingForm";
+                }else if( currentTabID === "issuedTab" ){
+           			return "issuedForm";
+                }else if( currentTabID === "inactiveTab" ){
+           			return "inactiveForm";
+                }else{
+           			return "dashboardForm";
+                }
+            }
+            
+            
+            /*Clear producer filter*/
+            function clearProducerFilter(form){
+                document.location.href = "clearProducerFilter.do";
+            }
+        
+        
+            function rediectEZAppProducer(agentID){
+                var form = document.createElement("form");
+                form.setAttribute("method", "POST");
+                form.setAttribute("action", "/workbench0/EZAppCaseServlet");
+                form.setAttribute("target", "ezapppopup");
+                var hiddenField1 = document.createElement("input");              
+                hiddenField1.setAttribute("type", "hidden");
+                hiddenField1.setAttribute("name", "Action");
+                hiddenField1.setAttribute("value", "create");
+                form.appendChild(hiddenField1);
+                var hiddenField2 = document.createElement("input");              
+                hiddenField2.setAttribute("type", "hidden");
+                hiddenField2.setAttribute("name", "solAgtID");
+                hiddenField2.setAttribute("value", agentID);
+                form.appendChild(hiddenField2);
+                document.body.appendChild(form);
+                form.submit();
+            }
+
+
+            /* This is specifically for Home Office users and gives them the ability to create either an A1000 or A2000 for an agent */
+            function rediectEZAppHO(agentID,target){
+                var form = document.createElement("form");
+                form.setAttribute("method", "POST");
+                form.setAttribute("action", "/workbench0/EZAppCaseServlet");
+                form.setAttribute("target", "ezapppopup");
+                var hiddenField1 = document.createElement("input");              
+                hiddenField1.setAttribute("type", "hidden");
+                hiddenField1.setAttribute("name", "Action");
+                hiddenField1.setAttribute("value", "create");
+                form.appendChild(hiddenField1);
+                var hiddenField2 = document.createElement("input");              
+                hiddenField2.setAttribute("type", "hidden");
+                hiddenField2.setAttribute("name", "solAgtID");
+                hiddenField2.setAttribute("value", agentID);
+                form.appendChild(hiddenField2);
+                var hiddenField3 = document.createElement("input");              
+                hiddenField3.setAttribute("type", "hidden");
+                hiddenField3.setAttribute("name", "createTypeOverride");
+                hiddenField3.setAttribute("value", target);
+                form.appendChild(hiddenField3);
+                document.body.appendChild(form);
+                form.submit();
+            }
+        
+        
+            /*Open an EZ_app*/
+            function rediectRetrieveApp(applicationID){
+                var form = document.createElement("form");
+                form.setAttribute("method", "POST");
+                form.setAttribute("action", "/workbench0/EZAppCaseServlet");
+                form.setAttribute("target", "ezapppopup");
+                var hiddenField1 = document.createElement("input");              
+                hiddenField1.setAttribute("type", "hidden");
+                hiddenField1.setAttribute("name", "Action");
+                hiddenField1.setAttribute("value", "open");
+                form.appendChild(hiddenField1);
+                var hiddenField2 = document.createElement("input");              
+                hiddenField2.setAttribute("type", "hidden");
+                hiddenField2.setAttribute("name", "applicationID");
+                hiddenField2.setAttribute("value", applicationID);
+                form.appendChild(hiddenField2);
+                document.body.appendChild(form);
+                form.submit();
+            }
+        
+        
+            function openTPPCaseSummary(policyNumber,producerID,referrer) {
+                window.open("/workbench0/OpenTPPCaseServlet?policyNumber=" + policyNumber + "&producerID=" + producerID + "&referrer=" + referrer );
+            }
+        
+        
+            function openWorkItem(url){
+            	day = new Date();
+            	id = day.getTime();
+            	document.location.href=url;
+            }
+
+
+            function closeWindow(){
+            window.close();
+            }
+        
+                
+            function show(textboxDiv, changeCriteriaDiv){
+            	document.all[textboxDiv].style.display = '';
+            	document.all[changeCriteriaDiv].style.display = 'none';
+            }
+        
+        
+            function hide(textboxDiv, changeCriteriaDiv){
+                document.all[textboxDiv].style.display = 'none';
+            	document.all[changeCriteriaDiv].style.display = '';
+            }
+        
+        
+            function hideMessage(msgDiv){
+                document.all[msgDiv].style.display = 'none';
+            }
+        </script>
+    
+<script>(window.BOOMR_mq=window.BOOMR_mq||[]).push(["addVar",{"rua.upush":"false","rua.cpush":"false","rua.upre":"false","rua.cpre":"false","rua.uprl":"false","rua.cprl":"false","rua.cprf":"false","rua.trans":"","rua.cook":"false","rua.ims":"false","rua.ufprl":"false","rua.cfprl":"false","rua.isuxp":"false","rua.texp":"norulematch"}]);</script>
+                              <script>!function(a){var e="https://s.go-mpulse.net/boomerang/",t="addEventListener";if("True"=="True")a.BOOMR_config=a.BOOMR_config||{},a.BOOMR_config.PageParams=a.BOOMR_config.PageParams||{},a.BOOMR_config.PageParams.pci=!0,e="https://s2.go-mpulse.net/boomerang/";if(window.BOOMR_API_key="TTG99-RJWQA-A2D9G-JTLC3-NGC4C",function(){function n(e){a.BOOMR_onload=e&&e.timeStamp||(new Date).getTime()}if(!a.BOOMR||!a.BOOMR.version&&!a.BOOMR.snippetExecuted){a.BOOMR=a.BOOMR||{},a.BOOMR.snippetExecuted=!0;var i,_,o,r=document.createElement("iframe");if(a[t])a[t]("load",n,!1);else if(a.attachEvent)a.attachEvent("onload",n);r.src="javascript:void(0)",r.title="",r.role="presentation",(r.frameElement||r).style.cssText="width:0;height:0;border:0;display:none;",o=document.getElementsByTagName("script")[0],o.parentNode.insertBefore(r,o);try{_=r.contentWindow.document}catch(O){i=document.domain,r.src="javascript:var d=document.open();d.domain='"+i+"';void(0);",_=r.contentWindow.document}_.open()._l=function(){var a=this.createElement("script");if(i)this.domain=i;a.id="boomr-if-as",a.src=e+"TTG99-RJWQA-A2D9G-JTLC3-NGC4C",BOOMR_lstart=(new Date).getTime(),this.body.appendChild(a)},_.write("<bo"+'dy onload="document._l();">'),_.close()}}(),"".length>0)if(a&&"performance"in a&&a.performance&&"function"==typeof a.performance.setResourceTimingBufferSize)a.performance.setResourceTimingBufferSize();!function(){if(BOOMR=a.BOOMR||{},BOOMR.plugins=BOOMR.plugins||{},!BOOMR.plugins.AK){var e=""=="true"?1:0,t="",n="ddhe4wixfqfdqznpnakq-f-e99b6ba81-clientnsv4-s.akamaihd.net",i="false"=="true"?2:1,_={"ak.v":"36","ak.cp":"1411062","ak.ai":parseInt("858533",10),"ak.ol":"0","ak.cr":246,"ak.ipv":4,"ak.proto":"h2","ak.rid":"1f9634c7","ak.r":38160,"ak.a2":e,"ak.m":"","ak.n":"essl","ak.bpcip":"24.206.78.0","ak.cport":6908,"ak.gh":"23.44.10.52","ak.quicv":"","ak.tlsv":"tls1.3","ak.0rtt":"","ak.csrc":"-","ak.acc":"","ak.t":"1705994261","ak.ak":"hOBiQwZUYzCg5VSAfCLimQ==d26EplSfwg0TD8Vs6L4Yj1U5hZptBfzE4w1rFNIuzs18oXLcNjAWrz54rUuPfibFenzGzQn92T62fvBHLKLBgYBe4iWrPNa+i3bweJgAqO7MzQeofQCLZfurn63hK7Uxvo/f5IPrBam2jB+PtWveosXc+38zAv7XZuzypjNWPmJuWCdPaAGKOqaKnMagQy+9aDKXW/NHkMIzikB0IwZ8FLNlKN3NhnD4rgvpMBf69Nst9brpx7JlbmFKDkvCDf87TGKcJLHwaYEc9Irt7HQHXHcBRAcuSQIAV/EG4/Fkx9SZ21sjSJTehquDc2uSiWrbiCvM9RRp82pE9c6gD3kalGGVCCmamdDrGFv+1CcZIkzt3AYvana3lOjxGRCHf+RxpfozNJc4OdyD4U1hLah9eV4+wD8PKp+GUwcC7iCPlu4=","ak.pv":"20","ak.dpoabenc":"","ak.tf":i};if(""!==t)_["ak.ruds"]=t;var o={i:!1,av:function(e){var t="http.initiator";if(e&&(!e[t]||"spa_hard"===e[t]))_["ak.feo"]=void 0!==a.aFeoApplied?1:0,BOOMR.addVar(_)},rv:function(){var a=["ak.bpcip","ak.cport","ak.cr","ak.csrc","ak.gh","ak.ipv","ak.m","ak.n","ak.ol","ak.proto","ak.quicv","ak.tlsv","ak.0rtt","ak.r","ak.acc","ak.t","ak.tf"];BOOMR.removeVar(a)}};BOOMR.plugins.AK={akVars:_,akDNSPreFetchDomain:n,init:function(){if(!o.i){var a=BOOMR.subscribe;a("before_beacon",o.av,null,null),a("onbeacon",o.rv,null,null),o.i=!0}return this},is_complete:function(){return!0}}}}()}(window);</script></head>
+
+    
+
+    <body>
+        <div id="MainDiv"></div>
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="wbHeader"><!--Order is important here...set the left and right before the center-->
+    <div class="wbHeaderLeft">
+        <div class="wbLogo">
+            <img src="/workbench0/images/logo-massmutual-2017.png" height="31" width="146" alt="MassMutual Logo">
+        </div>
+    </div>
+    <div class="wbHeaderRight">
+        <div class="wbUtilityLinks">
+            <a href="#wbModal_export" name="wbModalButton">Export Data</a>|
+            <a href="#" onclick="window.close()">Close Window</a>|
+            <a href="https://fieldnet.massmutual.com/fldnet/newsales/bizsubmission/life/applying/index.html#Submitting%20Subsequent%20Requirements" target="_blank">Help</a>
+        </div>
+    </div>
+    <div class="wbHeaderCenter">
+        <p class="wbTitle">Insurance New Business Workbench</p>
+    </div>
+</div>
+
+<div class="wbModal_breakingDiv"></div>
+
+<div class="userInfo"><!--Order is important here...set the left and right before the center-->
+    <form action="search.do" method="POST" name="searchForm" onsubmit="applyTextFilter()">
+	<input type="hidden" name="contextPath" value="/workbench0">
+    <input type="hidden" name="tppContextPath" value="http://tpplx3wasproxy-dev.private.massmutual.com/stpnbs/TPPAgentAccessServlet">
+	<input type="hidden" name="loggedInUserID" value="RB24193">
+	<input type="hidden" name="loggedInUserRole" value="producer">
+	<input type="hidden" name="agencyID" value="null">
+	<input type="hidden" name="formName">
+
+    <div class="userInfoLeft">
+        <span class="loggedInUser">New Business For MICHAEL ZAGER (AA123317)</span>
+    </div>
+    <div class="userInfoRight">
+        <!-- Filter -->
+    	<span class="label">Filter Results:</span>
+       	<input name="filterText" value="">
+    	<a href="#" onclick="applyTextFilter()" class="wbModal_button">Apply</a>
+    	<a href="#" onclick="clearTextFilter()" class="wbModal_button">Clear</a>
+    </div>
+    <div class="userInfoCenter">
+    </div>
+</form></div>
+<div class="wbModal_breakingDiv"></div>
+
+<div class="userInfo"><!--Order is important here...set the left and right before the center-->
+    <div class="userInfoLeftFull">
+        <!-- Change Producer -->
+        
+        <a href="#wbModal_changeProducer" name="wbModalButton" class="wbModal_button">Change Producer</a>
+        
+        <!-- Change Agency (Fixed)-->
+        
+
+        <!-- Filter Producer -->
+        
+    </div>
+
+</div>
+<div class="wbModal_breakingDiv"></div>
+
+
+
+<div id="appContainer">
+	<div id="workbenchContent">
+	    <div id="primaryNavTabs">
+        <ul id="primaryNav">
+            <!-- This is the Tab bar -->
+            <!-- Each page will be responsible for adding the active class to the appropriate tab-->
+            <li id="dashboardTab" desc="Workbasket Tab"><a name="wbModalButton" href="#wbModal_loading" onclick="loadTab('/workbench.do', 'Workbasket Tab')" title="View your STP Workbasket">Workbasket</a></li>
+            <li id="presubmitTab" desc="Pre-Submitted Tab"><a name="wbModalButton" id="Pre-Submitted Tab" href="#wbModal_loading" onclick="loadTab('/presubmitted.do', 'Pre-Submitted Tab')" title="View applications you haven't submitted yet">Pre-Submitted</a></li>
+            <li id="pendingTab" desc="Pending Tab" class="currentNav"><a name="wbModalButton" id="Pending Tab" href="#wbModal_loading" onclick="loadTab('/pending.do', 'Pending Tab')" title="View applications pending in the Home Office">Pending </a></li>       
+            <li id="issuedTab" desc="Issued &amp; Reported Tab"><a name="wbModalButton" id="Issued &amp; Reported Tab" href="#wbModal_loading" onclick="loadTab('/issued.do', 'Issued &amp; Reported Tab')" title="View applications ready to be printed and delivered">Issued &amp; Reported </a></li>
+            <li id="inactiveTab" desc="Inactive Tab"><a name="wbModalButton" id="Inactive Tab" href="#wbModal_loading" onclick="loadTab('/inactive.do', 'Inactive Tab')" title="View applications that have been declined">Inactive</a></li> 
+        </ul>
+        </div>
+
+            <!-- This is the EZ-app button section-->
+	    <div id="primaryNavButtons">
+			
+	    		<button class="newAppButton" href="#" onclick="rediectEZAppProducer('AA123317')">Submit New Business</button>
+			
+			
+				<button name="wbModalButton" class="newAppButtonAdmin" href="#wbModal_newEZapp_Admin" onclick="setEZappAdminDefaults('AA123317')"></button>
+			
+			
+				<button name="wbModalButton" class="newAppButtonProfile" href="#wbModal_profile_Admin" onclick="setProfileAdminDefaults('AA123317')"></button>
+			
+    </div>
+	    <div id="primaryNavMiddle">
+	    </div>
+    <div class="wbModal_breakingDiv"></div>
+</div>
+        
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Set the active Tab -->
+<script type="text/javascript" src="/workbench0/js/jquery.js"></script>
+<script>$("#pendingTab").addClass("currentNav");</script>
+
+
+<script language="JavaScript" type="text/javascript">
+function openTppActionPage( policyNumber )
+{
+    document.tppGenericForm.policyNumber.value = policyNumber;
+    document.tppGenericForm.submit();
+}
+
+
+function toggleRequirements( polnum, policyType, companyCode )
+{
+    var title = document.getElementById(polnum + "_REQS_TITLE").innerHTML;
+
+    if( document.getElementById(polnum + "_REQS").style.display=='none' )
+    {
+        document.getElementById(polnum + "_REQS_ICON").src="/workbench0/images/icon-minus-10x10.gif";
+        document.getElementById(polnum + "_REQS").style.display = '';
+        getRequirements(polnum,policyType,companyCode);
+    }
+    else
+    {
+        document.getElementById(polnum + "_REQS_ICON").src="/workbench0/images/icon-plus-10x10.gif";
+        document.getElementById(polnum + "_REQS").style.display = 'none';
+    }
+}
+
+function getRequirements( polnum, policyType, companyCode )
+{
+        var xmlHttpReq = false;
+        // Mozilla/Safari
+        if (window.XMLHttpRequest) {
+            xmlHttpReq = new XMLHttpRequest();
+            if (xmlHttpReq.overrideMimeType) {
+                xmlHttpReq.overrideMimeType('text/xml');
+            }
+        // IE
+        } else if (window.ActiveXObject) { // IE
+            try {
+                xmlHttpReq = new ActiveXObject("Msxml2.XMLHTTP");
+        } catch (e) {
+            try {
+                xmlHttpReq = new ActiveXObject("Microsoft.XMLHTTP");
+            } catch (e) {}
+            }
+        }
+        if (!xmlHttpReq) {
+            alert('ERROR AJAX:( Cannot create an XMLHTTP instance');
+            return false;
+        }
+        xmlHttpReq.open('POST', '/workbench0/RetrieveRequirementsServlet', true);
+        xmlHttpReq.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xmlHttpReq.onreadystatechange = function()
+        {
+            if( policyType === "TERM" ) {
+                displayRequirementsTERM(xmlHttpReq,polnum + "_REQS_DETAILS");
+            } else {
+                displayRequirementsPERM(xmlHttpReq,polnum + "_REQS_DETAILS");
+            }
+        };
+        xmlHttpReq.send("polnum=" + polnum + "&policyType=" + policyType + "&companyCode=" + companyCode);
+        document.getElementById(polnum + "_REQS_DETAILS").innerHTML = "<tr class=workItem><td><img src='/workbench0/images/spacer.gif' width='100px' height='1' />Loading Requirements...</td></tr>";
+    }
+
+
+
+function displayRequirementsTERM(http_request,id_details){
+    if(http_request.readyState == 4){
+        if(http_request.status == 200){
+            var responseString = http_request.responseText;
+            var finalResult = "<td colspan=13><table>";
+
+    	    var fieldRequirementData       = "<tr class=workItem><td><img src='/workbench0/images/spacer.gif' width='100px' height='1' />Field Requirements</td></tr>";
+    	    var additionalDocumentData     = "";
+    	    var homeOfficeRequirementData  = "<tr class=workItem><td><img src='/workbench0/images/spacer.gif' width='100px' height='1' />Home Office Requirements</td></tr>";
+    	    var vendorRequirementData      = "<tr class=workItem><td><img src='/workbench0/images/spacer.gif' width='100px' height='1' />Vendor Requirements</td></tr>";
+    
+    	    var fieldRequirementCount      = 0;
+    	    var fieldRequirementROCount    = 0;
+    	    var additionalDocumentCount    = 0;
+    	    var homeOfficeRequirementCount = 0;
+    	    var vendorRequirementCount     = 0;
+    
+            var arr = JSON.parse(responseString);
+
+            var i;
+            for(i = 0; i < arr.length; i++){
+                if(arr[i].category === "HOME_OFFICE"){
+                    homeOfficeRequirementCount++;
+                    hoverText = "Work Item: " + arr[i].task.replace(/  +/g, ' ') + "\n\nRequirement Additional Details:\n\nWorkitem processing is not available for Home Office or Vendor requirements";
+                    homeOfficeRequirementData = homeOfficeRequirementData +
+            			"<tr class=workItem title=\"" + hoverText + "\"><td><table class=reqrow><tr>" +
+            			"<td width=400><img src='/workbench0/images/spacer.gif' width='110px' height='1' /><img src=/workbench0/images/bg-workItemBullet.gif>&nbsp;&nbsp;"+arr[i].task.replace(/  +/g, ' ')+"</td>"+
+            			"<td width=150>Status: " + arr[i].caseStatus + "</td>" +
+            			"<td width=150>Status Date: " + arr[i].statusDate + "</td>" +
+            			"<td></td></tr></table></td></tr>";
+                }else if(arr[i].category === "VENDOR"){
+                    vendorRequirementCount++;
+                    hoverText = "Work Item: " + arr[i].task.replace(/  +/g, ' ') + "\n\nRequirement Additional Details:\n\nWorkitem processing is not available for Home Office or Vendor requirements";
+                    vendorRequirementData = vendorRequirementData +
+            			"<tr class=workItem title=\"" + hoverText + "\"><td><table class=reqrow><tr>" +
+            			"<td width=400><img src='/workbench0/images/spacer.gif' width='110px' height='1' /><img src=/workbench0/images/bg-workItemBullet.gif>&nbsp;&nbsp;"+arr[i].task.replace(/  +/g, ' ')+"</td>"+
+            			"<td width=150>Status: " + arr[i].caseStatus + "</td>" +
+            			"<td width=150>Status Date: " + arr[i].statusDate + "</td>" +
+            			"<td></td></tr></table></td></tr>";
+                }else if(arr[i].category === "FIELD"){
+                    fieldRequirementCount++;
+                    var url = "viewWorkItems('pending', '" + arr[i].policyNumber + "', '" + arr[i].workItemId + "')";
+                    var hoverText = "Work Item: " + arr[i].task.replace(/  +/g, ' ');
+                    if(arr[i].collectionMethod != "01" || arr[i].collectionMethod != "02"){
+        	    		hoverText = hoverText + "\n\nDocument/Form ID: " + arr[i].formId;
+        	    	}else if(arr[i].collectionMethod != "05"){
+        	    		hoverText = hoverText + "\n\nUW Class / Rating: "         + arr[i].uwClassification;
+        	    		hoverText = hoverText + "\nPermanent Flat Extra Amount: " + arr[i].permFlatExtraAmt;
+        	    		hoverText = hoverText + "\nTemporary Flat Extra Amount: " + arr[i].tempFlatExtraAmt;
+        	    		hoverText = hoverText + "\nTemporary Flat End Date: "     + arr[i].tempFlatEndDate;
+        	    		hoverText = hoverText + "\nFace Amount: "                 + arr[i].faceAmt;
+        	    		hoverText = hoverText + "\nPremium Amount (Annualized): " + arr[i].annualPremiumAmt;
+        	    		hoverText = hoverText + "\nPremium Amount (Modal): "      + arr[i].premiumAmt;
+            		}
+        
+            		// Display any additional details provided
+            		if(arr[i].description != null && !arr[i].description == ""){
+            			hoverText = hoverText + "\n\nRequirement Additional Details: " + arr[i].description;
+            		}
+        
+                    if(arr[i].disableWIProcessing === true){
+                        fieldRequirementROCount++;
+                        fieldRequirementData = fieldRequirementData + "<tr class=\"workItem\" title=\"This workitem is submitted or this case has been withdrawn.\">";
+                        fieldRequirementData = fieldRequirementData + "<td><table class=reqrow><tr class=\"fieldWorkItemDisabled\">";
+        	    	}else{
+                        fieldRequirementData = fieldRequirementData + "<tr class=\"workItem\" onclick=\"" + url + "\" title=\"" + hoverText + "\">";
+                        fieldRequirementData = fieldRequirementData + "<td><table class=reqrow><tr class=\"fieldWorkItemEnabled\">";
+        	    	}
+        
+                    fieldRequirementData = fieldRequirementData +
+            			"<td width=400><img src='/workbench0/images/spacer.gif' width='110px' height='1' /><img src=/workbench0/images/bg-workItemBullet.gif>&nbsp;&nbsp;"+arr[i].task.replace(/  +/g, ' ')+"</td>"+
+            			"<td width=150>Task Date: " + arr[i].taskDate + "</td>" +
+              			"<td width=150>Due Date: " + arr[i].dueDate + "</td>" +
+            			"<td></td></tr></table></td></tr>";
+                }else if( arr[i].category === "ADDITIONALDOCUMENTS" ){
+                    additionalDocumentCount++;
+                    var url = "viewWorkItems('pending', '" + arr[i].policyNumber + "', '" + arr[i].workItemId + "')";
+                    var hoverText = "Additional Documents may be submitted for this policy";
+        
+                    additionalDocumentData = "<tr class=\"workItem\" onclick=\"" + url + "\" title=\"" + hoverText + "\">";
+                    additionalDocumentData = additionalDocumentData + "<td><table class=reqrow><tr class=\"fieldWorkItemEnabled\">";
+                    additionalDocumentData = additionalDocumentData +
+            			"<td width=400><img src='/workbench0/images/spacer.gif' width='110px' height='1' /><img src=/workbench0/images/bg-workItemBullet.gif>&nbsp;&nbsp;Additional Documents</td>"+
+            			"<td width=150></td>" +
+            			"<td width=150></td>" +
+            			"<td></td></tr></table></td></tr>";
+                }
+            }
+
+
+            // Show the Field Requirements Section?
+            if( fieldRequirementCount > 0 || ( additionalDocumentCount > 0 && ( vendorRequirementCount > 0 || homeOfficeRequirementCount > 0 ) ) )
+            {
+                finalResult = finalResult + fieldRequirementData;
+
+                // Show the additional documents link
+                if(fieldRequirementCount == fieldRequirementROCount && additionalDocumentCount > 0)
+                {
+                    finalResult = finalResult + additionalDocumentData;
+                }           
+            }
+
+            // Home Office Requirements - Non-actionable
+            if(homeOfficeRequirementCount > 0){
+                finalResult = finalResult + homeOfficeRequirementData;
+            }
+
+            // Vendor Requirements - Non-actionable
+            if(vendorRequirementCount > 0){
+                finalResult = finalResult + vendorRequirementData;
+            }
+
+            document.getElementById(id_details).innerHTML = finalResult;
+        }else{
+            var data = "<table>"
+                     + "<tr class=workItem>"
+                     +  "<td>&nbsp;</td>"
+                     +  "<td colspan=13><font color=red>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Failed to load requirements.</font></td>"
+                     +  "</tr>"
+                     + "</table>";
+            document.getElementById(id_details).innerHTML = data;
+        }
+    }
+}
+
+
+function displayRequirementsPERM(http_request,id_details){
+    if (http_request.readyState == 4)
+    {
+        if(http_request.status == 200){
+            var responseString = http_request.responseText;
+            var finalResult = "<td colspan=13><table>";
+
+    	    var fieldRequirementData          = "<tr class=workItem><td><img src='/workbench0/images/spacer.gif' width='100px' height='1' />Field Requirements</td></tr>";
+    	    var additionalDocumentData        = "";
+    	    var homeOfficeRequirementData     = "<tr class=workItem><td><img src='/workbench0/images/spacer.gif' width='100px' height='1' />Home Office Requirements</td></tr>";
+    	    var vendorRequirementData         = "<tr class=workItem><td><img src='/workbench0/images/spacer.gif' width='100px' height='1' />Vendor Requirements</td></tr>";
+    	    var uncategorizedData             = "";
+    
+    	    var fieldRequirementCount         = 0;
+    	    var fieldRequirementROCount       = 0;
+            var additionalDocumentCount       = 0;
+    	    var homeOfficeRequirementCount    = 0;
+    	    var vendorRequirementCount        = 0;
+    	    var uncategorizedRequirementCount = 0;
+    
+            var arr = JSON.parse(responseString);
+            for(var i = 0; i < arr.length; i++){
+                var appliesTo = "Primary";
+                if(arr[i].secondaryInsuredIndicator == true){
+                    appliesTo = "Secondary";
+                }
+
+                if(arr[i].category === "HOME_OFFICE"){
+                    homeOfficeRequirementCount++;
+                    hoverText = "Work Item: " + arr[i].task.replace(/  +/g, ' ') + "\n\nRequirement Additional Details:\n\nWorkitem processing is not available for Home Office or Vendor requirements";
+                    homeOfficeRequirementData = homeOfficeRequirementData +
+            			"<tr class=workItem title=\"" + hoverText + "\"><td><table class=reqrow><tr>" +
+            			"<td width=400><img src='/workbench0/images/spacer.gif' width='110px' height='1' /><img src=/workbench0/images/bg-workItemBullet.gif>&nbsp;&nbsp;"+arr[i].task.replace(/  +/g, ' ')+"</td>"+
+            			"<td width=150>Status: " + arr[i].caseStatus + "</td>" +
+            	    	"<td width=150>Ordered Date: " + arr[i].taskDate + "</td>" +
+            			"<td width=150>Applies To: " + appliesTo + "</td>" +
+            	    	"<td width=150></td>" +
+            			"<td></td></tr></table></td></tr>";
+                }else if(arr[i].category === "VENDOR"){
+                    vendorRequirementCount++;
+                    hoverText = "Work Item: " + arr[i].task.replace(/  +/g, ' ') + "\n\nRequirement Additional Details:\n\nWorkitem processing is not available for Home Office or Vendor requirements";
+                    vendorRequirementData = vendorRequirementData +
+            			"<tr class=workItem title=\"" + hoverText + "\"><td><table class=reqrow><tr>" +
+            			"<td width=400><img src='/workbench0/images/spacer.gif' width='110px' height='1' /><img src=/workbench0/images/bg-workItemBullet.gif>&nbsp;&nbsp;"+arr[i].task.replace(/  +/g, ' ')+"</td>"+
+            			"<td width=150>Status: " + arr[i].caseStatus + "</td>" +
+            	    	"<td width=150>Ordered Date: " + arr[i].taskDate + "</td>" +
+            			"<td width=150>Applies To: " + appliesTo + "</td>" +
+            	    	"<td width=150></td>" +
+            			"<td></td></tr></table></td></tr>";
+                }else if(arr[i].category === "FIELD"){
+                    fieldRequirementCount++;
+                    var url = "viewWorkItems('pending', '" + arr[i].policyNumber + "', 'NONE')";
+                    var hoverText = "Work Item: " + arr[i].task.replace(/  +/g, ' ');
+                    if(arr[i].collectionMethod === "02"){
+        	    		hoverText = hoverText + "\n\nDocument/Form ID: " + arr[i].formId;
+            		}
+    
+            		// Display any additional details provided
+            		if(arr[i].description != null && !arr[i].description == ""){
+            			hoverText = hoverText + "\n\nRequirement Additional Details: ";
+            			hoverText = hoverText + arr[i].description;
+            		}
+    
+                    if(arr[i].disableWIProcessing === true){
+                        fieldRequirementROCount++;
+                        fieldRequirementData = fieldRequirementData + "<tr class=\"workItem\" title=\"This workitem is submitted or cannot be processed from the Workbench.\">";
+                        fieldRequirementData = fieldRequirementData + "<td><table class=reqrow><tr class=\"fieldWorkItemDisabled\">";
+        	    	}else{
+                        fieldRequirementData = fieldRequirementData + "<tr class=\"workItem\" onclick=\"" + url + "\" title=\"" + hoverText + "\">";
+                        fieldRequirementData = fieldRequirementData + "<td><table class=reqrow><tr class=\"fieldWorkItemEnabled\">";
+        	    	}
+    
+                    fieldRequirementData = fieldRequirementData +
+            			"<td width=400><img src='/workbench0/images/spacer.gif' width='110px' height='1' /><img src=/workbench0/images/bg-workItemBullet.gif>&nbsp;&nbsp;"+arr[i].task.replace(/  +/g, ' ')+"</td>"+
+            			"<td width=150>Status: " + arr[i].caseStatus + "</td>" +
+            	    	"<td width=150>Ordered Date: " + arr[i].taskDate + "</td>" +
+            			"<td width=150>Applies To: " + appliesTo + "</td>" +
+            	    	"<td width=150></td>" +
+            			"<td></td></tr></table></td></tr>";
+                }else if(arr[i].category === "NA"){
+                    uncategorizedRequirementCount++;
+                    var hoverText = "Work Item: " + arr[i].task.replace(/  +/g, ' ') + "\n\nRequirement Additional Details:\n\nWork item is view only";
+                    uncategorizedData = uncategorizedData +
+            			"<tr class=workItem title=\"" + hoverText + "\"><td><table class=reqrow><tr>" +
+            			"<td width=400><img src='/workbench0/images/spacer.gif' width='110px' height='1' /><img src=/workbench0/images/bg-workItemBullet.gif>&nbsp;&nbsp;"+arr[i].task.replace(/  +/g, ' ')+"</td>"+
+            			"<td width=150>Status: " + arr[i].caseStatus + "</td>" +
+            	    	"<td width=150>Ordered Date: " + arr[i].taskDate + "</td>" +
+            			"<td width=150>Applies To: " + appliesTo + "</td>" +
+            	    	"<td width=150></td>" +
+            			"<td></td></tr></table></td></tr>";
+                }else if(arr[i].category === "ADDITIONALDOCUMENTS"){
+                    additionalDocumentCount++;
+                    var url = "viewWorkItems('pending', '" + arr[i].policyNumber + "', '" + arr[i].workItemId + "')";
+                    var hoverText = "Additional Documents may be submitted for this policy";
+    
+                    additionalDocumentData = "<tr class=\"workItem\" onclick=\"" + url + "\" title=\"" + hoverText + "\">";
+                    additionalDocumentData = additionalDocumentData + "<td><table class=reqrow><tr class=\"fieldWorkItemEnabled\">";
+                    additionalDocumentData = additionalDocumentData +
+            			"<td width=400><img src='/workbench0/images/spacer.gif' width='110px' height='1' /><img src=/workbench0/images/bg-workItemBullet.gif>&nbsp;&nbsp;Additional Documents</td>"+
+            			"<td width=150></td>" +
+            	    	"<td width=150></td>" +
+            	    	"<td width=150></td>" +
+            			"<td width=150></td>" +
+            			"<td></td></tr></table></td></tr>";
+                }
+            }
+
+            // Show the Field Requirements Section?
+            if( fieldRequirementCount > 0 || ( additionalDocumentCount > 0 && ( vendorRequirementCount > 0 || homeOfficeRequirementCount > 0 ) ) )
+            {
+                finalResult = finalResult + fieldRequirementData;
+
+                // Show the additional documents link
+                if(fieldRequirementCount == fieldRequirementROCount && additionalDocumentCount > 0)
+                {
+                    finalResult = finalResult + additionalDocumentData;
+                }           
+            }
+
+            // Home Office Requirements - Non-actionable
+            if(homeOfficeRequirementCount > 0){
+                finalResult = finalResult + homeOfficeRequirementData;
+            }
+
+            // Vendor Requirements - Non-actionable
+            if(vendorRequirementCount > 0){
+                finalResult = finalResult + vendorRequirementData;
+            }
+
+            // Uncategorized Requirements - Non-actionable
+            if(uncategorizedRequirementCount > 0){
+                finalResult = finalResult + uncategorizedData;
+            }
+
+            document.getElementById(id_details).innerHTML = finalResult;
+        }else{
+            var data = "<table>"
+                     + "<tr class=workItem>"
+                     +  "<td>&nbsp;</td>"
+                     +  "<td colspan=13><font color=red>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Failed to load requirements.</font></td>"
+                     +  "</tr>"
+                     + "</table>";
+            document.getElementById(id_details).innerHTML = data;
+        }
+    }
+}
+</script>
+
+
+
+<form name="pendingForm" method="POST" action="/workbench0/pending.html" style="margin:0;padding:0;display:inline;">
+    
+	<div id="appContainer"><br>
+    <div id="workbenchContent" class="clearfix">
+    <div id="pendingApps" class="inbox">
+
+    
+
+    
+    
+    
+
+
+
+    
+            <h2>Pending Cases (16)</h2>
+            <table border="0" cellpadding="0" cellspacing="0">
+                    <tbody><tr>
+                        <th width="60px" onmouseover="this.style.background='#c7e5ff';this.style.cursor='pointer';" onmouseout="this.style.background='#CCC';">
+                            <a href="/workbench0/sort.do?selectedTab=pending&amp;sortColumn=policyNumber&amp;sortOrder=desc&amp;previousSortColumn=statusDate" title="Sort by Policy Number">Policy #
+                            
+                            </a>
+                        </th>
+                        <th width="190px" onmouseover="this.style.background='#c7e5ff';this.style.cursor='pointer';" onmouseout="this.style.background='#CCC';">
+                            <a href="/workbench0/sort.do?selectedTab=pending&amp;sortColumn=insured&amp;sortOrder=desc&amp;previousSortColumn=statusDate" title="Sort by Insured Name">Insured
+                            
+                            </a>
+                        </th>
+                        <th width="80px" onmouseover="this.style.background='#c7e5ff';this.style.cursor='pointer';" onmouseout="this.style.background='#CCC';">
+                            <a href="/workbench0/sort.do?selectedTab=pending&amp;sortColumn=insuredBirthDate&amp;sortOrder=desc&amp;previousSortColumn=statusDate" title="Sort by Insured Birth Date">Birth Date
+                            
+                            </a>
+                        </th>
+                        <th width="60px" onmouseover="this.style.background='#c7e5ff';this.style.cursor='pointer';" onmouseout="this.style.background='#CCC';">
+                            <a href="/workbench0/sort.do?selectedTab=pending&amp;sortColumn=plan&amp;sortOrder=desc&amp;previousSortColumn=statusDate" title="Sort by Plan Type">Plan
+                            
+                            </a>
+                        </th>
+                        <th width="70px" onmouseover="this.style.background='#c7e5ff';this.style.cursor='pointer';" onmouseout="this.style.background='#CCC';">
+                            <a href="/workbench0/sort.do?selectedTab=pending&amp;sortColumn=faceAmt&amp;sortOrder=desc&amp;previousSortColumn=statusDate" title="Sort by Plan Amount">Amount
+                            
+                            </a>
+                        </th>
+                        <th width="80px" onmouseover="this.style.background='#c7e5ff';this.style.cursor='pointer';" onmouseout="this.style.background='#CCC';">
+                            <a href="/workbench0/sort.do?selectedTab=pending&amp;sortColumn=annualPremiumAmt&amp;sortOrder=desc&amp;previousSortColumn=statusDate" title="Sort by Annualized Premium">Premium
+                            
+                            </a>
+                        </th>
+                        <th width="190px" onmouseover="this.style.background='#c7e5ff';this.style.cursor='pointer';" onmouseout="this.style.background='#CCC';">
+                            <a href="/workbench0/sort.do?selectedTab=pending&amp;sortColumn=solicitingProducer&amp;sortOrder=desc&amp;previousSortColumn=statusDate" title="Sort by Soliciting Producer">Soliciting Producer
+                            
+                            </a>
+                        </th>
+                        <th width="90px" onmouseover="this.style.background='#c7e5ff';this.style.cursor='pointer';" onmouseout="this.style.background='#CCC';">
+                            <a href="/workbench0/sort.do?selectedTab=pending&amp;sortColumn=submitted&amp;sortOrder=desc&amp;previousSortColumn=statusDate" title="Sort by Submitted Date">Submitted
+                            
+                            </a>
+                        </th>
+                        <th width="280px" onmouseover="this.style.background='#c7e5ff';this.style.cursor='pointer';" onmouseout="this.style.background='#CCC';">
+                            <a href="/workbench0/sort.do?selectedTab=pending&amp;sortColumn=status&amp;sortOrder=desc&amp;previousSortColumn=statusDate" title="Sort by Case Status">Case Status
+                            
+                            </a>
+                        </th>
+                        <th width="110px" onmouseover="this.style.background='#c7e5ff';this.style.cursor='pointer';" onmouseout="this.style.background='#CCC';" class="last">
+                            <a href="/workbench0/sort.do?selectedTab=pending&amp;sortColumn=statusDate&amp;sortOrder=desc&amp;previousSortColumn=statusDate" title="Sort by Status Date">Status Date
+                            
+                                <img src="/workbench0/images/bg_sortAsc.gif" border="0">
+                            
+                            </a>
+                        </th>
+                    </tr>
+
+
+                    
+                    
+
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+
+                    
+
+
+<!-- TPP Data Start -->
+                        <tr class="oddfirst">
+                                    <td onclick="javascript:openTPPCaseSummary('50280522','123317','pending')">
+                                        <a name="50280522"></a>50280522
+                                    </td>
+                                    <td onclick="javascript:openTPPCaseSummary('50280522','123317','pending')">
+                                        BUCHANAN, CHARLES
+                                    </td>
+                                    <td onclick="javascript:openTPPCaseSummary('50280522','123317','pending')">
+                                        10/10/1981&nbsp;
+                                    </td>
+                                    <td onclick="javascript:openTPPCaseSummary('50280522','123317','pending')">
+                                        VT20
+                                    </td>
+                                    <td onclick="javascript:openTPPCaseSummary('50280522','123317','pending')">
+                                        4,000,000&nbsp;
+                                    </td>
+                                    <td onclick="javascript:openTPPCaseSummary('50280522','123317','pending')">
+                                        3,225.92&nbsp;
+                                    </td>
+                                    <td><a href="#wbModal_producerAccess" name="wbModalButton" onclick="$(&quot;#wbModal_producerAccess #wbModal_producerAccessBody&quot;).load(&quot;/workbench0/jsp/modals/wbModalsProducerCaseAccess.jsp?&quot; + &quot;policyNumber=50280522&amp;producerId=123317&amp;producerName=ZAGER%2C+MICHAEL&quot;);">
+                                        <u><i>ZAGER, MICHAEL</i></u></a>
+                                    </td>
+                                    <td onclick="javascript:openTPPCaseSummary('50280522','123317','pending')">
+                                        11/14/2023
+                                    </td>
+                                    <td onclick="javascript:openTPPCaseSummary('50280522','123317','pending')">
+                                        Pending Requirements
+                                    </td>
+                                    <td onclick="javascript:openTPPCaseSummary('50280522','123317','pending')">
+                                        01/03/2024
+                                    </td>
+                                </tr>
+<!-- Second Data Row -->
+                                <tr class="odd">
+                                    <td colspan="2">&nbsp;</td> <!-- Skip policy number and insured name columns -->
+                                    <td colspan="6">
+                                        <table>
+                                            <tbody><tr><td width="50%">Account Manager: Andrea Elfman</td>
+                                                <td width="50%">Underwriter: Gina Plouffe</td>
+                                            </tr>
+                                        </tbody></table>
+                                    </td>
+                                    <td colspan="2">
+                                        <table>
+                                            <tbody><tr><td width="200px"></td>
+                                                
+                                                <td width="50px" disabled=""><a href="#" title="Withdraw not available">Withdraw</a></td>
+                                                
+                                                
+
+                                                
+                                                
+                                                <td><img title="Case is not split" src="/workbench0/images/icon-splitAgreement_disabled.gif" border="0" height="15px" width="15px"></td>
+                                                
+
+                                                
+                                                
+                                                <td width="15px"><img title="Case was not prepaid" src="/workbench0/images/icon-prepaid_disabled.gif" border="0" height="15px" width="15px"></td>
+                                                
+
+                                                
+                                                
+                                                <td><img title="Case was not eSigned" src="/workbench0/images/eSign_disabled.gif" border="0" height="15px" width="15px"></td>
+                                                
+
+                                                
+                                                
+                                                <td><a href="#" onclick="viewNotes('50280522', 'N/A', 'BUCHANAN, CHARLES')"><img title="Case does not have notes. Click to add notes." src="/workbench0/images/icon-note-grey-15x15.gif" border="0" height="15px" width="15px"></a></td>
+                                                
+
+                                                <td><a href="#50280522" onclick="viewPolicyDocs('50280522', 'VNTG1', 'BUCHANAN, CHARLES')"><img title="View policy documents for this case" src="/workbench0/images/icon-docs-grey-15x15.gif" border="0" height="15px" width="15px"></a></td>
+                                            </tr>
+                                        </tbody></table>
+                                    </td>
+                                </tr>
+<!-- TPP Data End -->
+
+
+
+<!-- Requirements Start-->
+
+                                <tr class="odd" title="Expand to see open requirements for this case">
+                                        <td>&nbsp;</td>
+                                        <td id="50280522_REQS_TITLE" colspan="13" onclick="toggleRequirements('50280522','TERM','TERM_DATA' )"><img src="/workbench0/images/spacer.gif" width="10px" height="10px"><img id="50280522_REQS_ICON" src="/workbench0/images/icon-plus-10x10.gif" alt=""><i>&nbsp;&nbsp;Requirements (Y)</i></td>
+                                </tr>
+
+                                <tr class="odd" id="50280522_REQS" style="display:none;">
+                                                    <td colspan="14" id="50280522_REQS_DETAILS">
+                                                </td></tr>
+<!-- Requirements End -->
+                    
+
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+
+                    
+
+
+<!-- TPP Data Start -->
+                        <tr class="evenfirst">
+                                    <td onclick="javascript:openTPPCaseSummary('50280517','123317','pending')">
+                                        <a name="50280517"></a>50280517
+                                    </td>
+                                    <td onclick="javascript:openTPPCaseSummary('50280517','123317','pending')">
+                                        Ran, Relat
+                                    </td>
+                                    <td onclick="javascript:openTPPCaseSummary('50280517','123317','pending')">
+                                        05/30/1987&nbsp;
+                                    </td>
+                                    <td onclick="javascript:openTPPCaseSummary('50280517','123317','pending')">
+                                        VT10
+                                    </td>
+                                    <td onclick="javascript:openTPPCaseSummary('50280517','123317','pending')">
+                                        1,000,000&nbsp;
+                                    </td>
+                                    <td onclick="javascript:openTPPCaseSummary('50280517','123317','pending')">
+                                        740.44&nbsp;
+                                    </td>
+                                    <td><a href="#wbModal_producerAccess" name="wbModalButton" onclick="$(&quot;#wbModal_producerAccess #wbModal_producerAccessBody&quot;).load(&quot;/workbench0/jsp/modals/wbModalsProducerCaseAccess.jsp?&quot; + &quot;policyNumber=50280517&amp;producerId=123317&amp;producerName=ZAGER%2C+MICHAEL&quot;);">
+                                        <u><i>ZAGER, MICHAEL</i></u></a>
+                                    </td>
+                                    <td onclick="javascript:openTPPCaseSummary('50280517','123317','pending')">
+                                        10/27/2023
+                                    </td>
+                                    <td onclick="javascript:openTPPCaseSummary('50280517','123317','pending')">
+                                        Approved Pending Issue Requirements
+                                    </td>
+                                    <td onclick="javascript:openTPPCaseSummary('50280517','123317','pending')">
+                                        11/13/2023
+                                    </td>
+                                </tr>
+<!-- Second Data Row -->
+                                <tr class="even">
+                                    <td colspan="2">&nbsp;</td> <!-- Skip policy number and insured name columns -->
+                                    <td colspan="6">
+                                        <table>
+                                            <tbody><tr><td width="50%">Account Manager: Andrea Elfman</td>
+                                                <td width="50%">Underwriter: Gina Plouffe</td>
+                                            </tr>
+                                        </tbody></table>
+                                    </td>
+                                    <td colspan="2">
+                                        <table>
+                                            <tbody><tr><td width="200px"></td>
+                                                
+                                                
+                                                <td width="50px" class="rowLink"><a title="Withdraw case" href="#" onclick="javascript:openTppActionPage('50280517')">Withdraw</a></td>
+                                                
+                                                
+
+                                                
+                                                
+                                                <td><img title="Case is not split" src="/workbench0/images/icon-splitAgreement_disabled.gif" border="0" height="15px" width="15px"></td>
+                                                
+
+                                                
+                                                
+                                                <td width="15px"><img title="Case was not prepaid" src="/workbench0/images/icon-prepaid_disabled.gif" border="0" height="15px" width="15px"></td>
+                                                
+
+                                                
+                                                
+                                                <td><img title="Case was not eSigned" src="/workbench0/images/eSign_disabled.gif" border="0" height="15px" width="15px"></td>
+                                                
+
+                                                
+                                                
+                                                <td><a href="#" onclick="viewNotes('50280517', 'N/A', 'Ran, Relat')"><img title="Case does not have notes. Click to add notes." src="/workbench0/images/icon-note-grey-15x15.gif" border="0" height="15px" width="15px"></a></td>
+                                                
+
+                                                <td><a href="#50280517" onclick="viewPolicyDocs('50280517', 'VNTG1', 'Ran, Relat')"><img title="View policy documents for this case" src="/workbench0/images/icon-docs-grey-15x15.gif" border="0" height="15px" width="15px"></a></td>
+                                            </tr>
+                                        </tbody></table>
+                                    </td>
+                                </tr>
+<!-- TPP Data End -->
+
+
+
+<!-- Requirements Start-->
+
+                                <tr class="even" title="Expand to see open requirements for this case">
+                                        <td>&nbsp;</td>
+                                        <td id="50280517_REQS_TITLE" colspan="13" onclick="toggleRequirements('50280517','TERM','TERM_DATA' )"><img src="/workbench0/images/spacer.gif" width="10px" height="10px"><img id="50280517_REQS_ICON" src="/workbench0/images/icon-plus-10x10.gif" alt=""><i>&nbsp;&nbsp;Requirements (Y)</i></td>
+                                </tr>
+
+                                <tr class="even" id="50280517_REQS" style="display:none;">
+                                                    <td colspan="14" id="50280517_REQS_DETAILS">
+                                                </td></tr>
+<!-- Requirements End -->
+                    
+
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+
+                    
+
+
+<!-- TPP Data Start -->
+                        <tr class="oddfirst">
+                                    <td onclick="javascript:openTPPCaseSummary('23838184','123317','pending')">
+                                        <a name="23838184"></a>23838184
+                                    </td>
+                                    <td onclick="javascript:openTPPCaseSummary('23838184','123317','pending')">
+                                        Jonny, padman
+                                    </td>
+                                    <td onclick="javascript:openTPPCaseSummary('23838184','123317','pending')">
+                                        10/10/1985&nbsp;
+                                    </td>
+                                    <td onclick="javascript:openTPPCaseSummary('23838184','123317','pending')">
+                                        VT20
+                                    </td>
+                                    <td onclick="javascript:openTPPCaseSummary('23838184','123317','pending')">
+                                        100,000&nbsp;
+                                    </td>
+                                    <td onclick="javascript:openTPPCaseSummary('23838184','123317','pending')">
+                                        143.96&nbsp;
+                                    </td>
+                                    <td><a href="#wbModal_producerAccess" name="wbModalButton" onclick="$(&quot;#wbModal_producerAccess #wbModal_producerAccessBody&quot;).load(&quot;/workbench0/jsp/modals/wbModalsProducerCaseAccess.jsp?&quot; + &quot;policyNumber=23838184&amp;producerId=123317&amp;producerName=ZAGER%2C+MICHAEL&quot;);">
+                                        <u><i>ZAGER, MICHAEL</i></u></a>
+                                    </td>
+                                    <td onclick="javascript:openTPPCaseSummary('23838184','123317','pending')">
+                                        10/06/2023
+                                    </td>
+                                    <td onclick="javascript:openTPPCaseSummary('23838184','123317','pending')">
+                                        Pending Requirements
+                                    </td>
+                                    <td onclick="javascript:openTPPCaseSummary('23838184','123317','pending')">
+                                        10/06/2023
+                                    </td>
+                                </tr>
+<!-- Second Data Row -->
+                                <tr class="odd">
+                                    <td colspan="2">&nbsp;</td> <!-- Skip policy number and insured name columns -->
+                                    <td colspan="6">
+                                        <table>
+                                            <tbody><tr><td width="50%">Account Manager: CAB CM</td>
+                                                <td width="50%">Underwriter: </td>
+                                            </tr>
+                                        </tbody></table>
+                                    </td>
+                                    <td colspan="2">
+                                        <table>
+                                            <tbody><tr><td width="200px"></td>
+                                                
+                                                
+                                                <td width="50px" class="rowLink"><a title="Withdraw case" href="#" onclick="javascript:openTppActionPage('23838184')">Withdraw</a></td>
+                                                
+                                                
+
+                                                
+                                                
+                                                <td><img title="Case is not split" src="/workbench0/images/icon-splitAgreement_disabled.gif" border="0" height="15px" width="15px"></td>
+                                                
+
+                                                
+                                                
+                                                <td width="15px"><img title="Case was not prepaid" src="/workbench0/images/icon-prepaid_disabled.gif" border="0" height="15px" width="15px"></td>
+                                                
+
+                                                
+                                                
+                                                <td><img title="Case was not eSigned" src="/workbench0/images/eSign_disabled.gif" border="0" height="15px" width="15px"></td>
+                                                
+
+                                                
+                                                
+                                                <td><a href="#" onclick="viewNotes('23838184', 'N/A', 'Jonny, padman')"><img title="Case does not have notes. Click to add notes." src="/workbench0/images/icon-note-grey-15x15.gif" border="0" height="15px" width="15px"></a></td>
+                                                
+
+                                                <td><a href="#23838184" onclick="viewPolicyDocs('23838184', 'VNTG1', 'Jonny, padman')"><img title="View policy documents for this case" src="/workbench0/images/icon-docs-grey-15x15.gif" border="0" height="15px" width="15px"></a></td>
+                                            </tr>
+                                        </tbody></table>
+                                    </td>
+                                </tr>
+<!-- TPP Data End -->
+
+
+
+<!-- Requirements Start-->
+
+                                <tr class="odd" title="Expand to see open requirements for this case">
+                                        <td>&nbsp;</td>
+                                        <td id="23838184_REQS_TITLE" colspan="13" onclick="toggleRequirements('23838184','TERM','TERM_DATA' )"><img src="/workbench0/images/spacer.gif" width="10px" height="10px"><img id="23838184_REQS_ICON" src="/workbench0/images/icon-plus-10x10.gif" alt=""><i>&nbsp;&nbsp;Requirements (Y)</i></td>
+                                </tr>
+
+                                <tr class="odd" id="23838184_REQS" style="display:none;">
+                                                    <td colspan="14" id="23838184_REQS_DETAILS">
+                                                </td></tr>
+<!-- Requirements End -->
+                    
+
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+
+                    
+
+
+<!-- TPP Data Start -->
+                        <tr class="evenfirst">
+                                    <td onclick="javascript:openTPPCaseSummary('50280498','123317','pending')">
+                                        <a name="50280498"></a>50280498
+                                    </td>
+                                    <td onclick="javascript:openTPPCaseSummary('50280498','123317','pending')">
+                                        steve, Testpad
+                                    </td>
+                                    <td onclick="javascript:openTPPCaseSummary('50280498','123317','pending')">
+                                        10/10/1980&nbsp;
+                                    </td>
+                                    <td onclick="javascript:openTPPCaseSummary('50280498','123317','pending')">
+                                        VT20
+                                    </td>
+                                    <td onclick="javascript:openTPPCaseSummary('50280498','123317','pending')">
+                                        100,000&nbsp;
+                                    </td>
+                                    <td onclick="javascript:openTPPCaseSummary('50280498','123317','pending')">
+                                        204.04&nbsp;
+                                    </td>
+                                    <td><a href="#wbModal_producerAccess" name="wbModalButton" onclick="$(&quot;#wbModal_producerAccess #wbModal_producerAccessBody&quot;).load(&quot;/workbench0/jsp/modals/wbModalsProducerCaseAccess.jsp?&quot; + &quot;policyNumber=50280498&amp;producerId=123317&amp;producerName=ZAGER%2C+MICHAEL&quot;);">
+                                        <u><i>ZAGER, MICHAEL</i></u></a>
+                                    </td>
+                                    <td onclick="javascript:openTPPCaseSummary('50280498','123317','pending')">
+                                        10/06/2023
+                                    </td>
+                                    <td onclick="javascript:openTPPCaseSummary('50280498','123317','pending')">
+                                        Pending Requirements
+                                    </td>
+                                    <td onclick="javascript:openTPPCaseSummary('50280498','123317','pending')">
+                                        10/06/2023
+                                    </td>
+                                </tr>
+<!-- Second Data Row -->
+                                <tr class="even">
+                                    <td colspan="2">&nbsp;</td> <!-- Skip policy number and insured name columns -->
+                                    <td colspan="6">
+                                        <table>
+                                            <tbody><tr><td width="50%">Account Manager: </td>
+                                                <td width="50%">Underwriter: Gina Plouffe</td>
+                                            </tr>
+                                        </tbody></table>
+                                    </td>
+                                    <td colspan="2">
+                                        <table>
+                                            <tbody><tr><td width="200px"></td>
+                                                
+                                                
+                                                <td width="50px" class="rowLink"><a title="Withdraw case" href="#" onclick="javascript:openTppActionPage('50280498')">Withdraw</a></td>
+                                                
+                                                
+
+                                                
+                                                
+                                                <td><img title="Case is not split" src="/workbench0/images/icon-splitAgreement_disabled.gif" border="0" height="15px" width="15px"></td>
+                                                
+
+                                                
+                                                
+                                                <td width="15px"><img title="Case was not prepaid" src="/workbench0/images/icon-prepaid_disabled.gif" border="0" height="15px" width="15px"></td>
+                                                
+
+                                                
+                                                
+                                                <td><img title="Case was not eSigned" src="/workbench0/images/eSign_disabled.gif" border="0" height="15px" width="15px"></td>
+                                                
+
+                                                
+                                                
+                                                <td><a href="#" onclick="viewNotes('50280498', 'N/A', 'steve, Testpad')"><img title="Case does not have notes. Click to add notes." src="/workbench0/images/icon-note-grey-15x15.gif" border="0" height="15px" width="15px"></a></td>
+                                                
+
+                                                <td><a href="#50280498" onclick="viewPolicyDocs('50280498', 'VNTG1', 'steve, Testpad')"><img title="View policy documents for this case" src="/workbench0/images/icon-docs-grey-15x15.gif" border="0" height="15px" width="15px"></a></td>
+                                            </tr>
+                                        </tbody></table>
+                                    </td>
+                                </tr>
+<!-- TPP Data End -->
+
+
+
+<!-- Requirements Start-->
+
+                                <tr class="even" title="Expand to see open requirements for this case">
+                                        <td>&nbsp;</td>
+                                        <td id="50280498_REQS_TITLE" colspan="13" onclick="toggleRequirements('50280498','TERM','TERM_DATA' )"><img src="/workbench0/images/spacer.gif" width="10px" height="10px"><img id="50280498_REQS_ICON" src="/workbench0/images/icon-plus-10x10.gif" alt=""><i>&nbsp;&nbsp;Requirements (Y)</i></td>
+                                </tr>
+
+                                <tr class="even" id="50280498_REQS" style="display:none;">
+                                                    <td colspan="14" id="50280498_REQS_DETAILS">
+                                                </td></tr>
+<!-- Requirements End -->
+                    
+
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+
+                    
+
+
+<!-- TPP Data Start -->
+                        <tr class="oddfirst">
+                                    <td onclick="javascript:openTPPCaseSummary('50280496','123317','pending')">
+                                        <a name="50280496"></a>50280496
+                                    </td>
+                                    <td onclick="javascript:openTPPCaseSummary('50280496','123317','pending')">
+                                        Ran, Relat
+                                    </td>
+                                    <td onclick="javascript:openTPPCaseSummary('50280496','123317','pending')">
+                                        05/30/1987&nbsp;
+                                    </td>
+                                    <td onclick="javascript:openTPPCaseSummary('50280496','123317','pending')">
+                                        VT10
+                                    </td>
+                                    <td onclick="javascript:openTPPCaseSummary('50280496','123317','pending')">
+                                        100,000&nbsp;
+                                    </td>
+                                    <td onclick="javascript:openTPPCaseSummary('50280496','123317','pending')">
+                                        114.96&nbsp;
+                                    </td>
+                                    <td><a href="#wbModal_producerAccess" name="wbModalButton" onclick="$(&quot;#wbModal_producerAccess #wbModal_producerAccessBody&quot;).load(&quot;/workbench0/jsp/modals/wbModalsProducerCaseAccess.jsp?&quot; + &quot;policyNumber=50280496&amp;producerId=123317&amp;producerName=ZAGER%2C+MICHAEL&quot;);">
+                                        <u><i>ZAGER, MICHAEL</i></u></a>
+                                    </td>
+                                    <td onclick="javascript:openTPPCaseSummary('50280496','123317','pending')">
+                                        10/05/2023
+                                    </td>
+                                    <td onclick="javascript:openTPPCaseSummary('50280496','123317','pending')">
+                                        Pending Requirements
+                                    </td>
+                                    <td onclick="javascript:openTPPCaseSummary('50280496','123317','pending')">
+                                        10/05/2023
+                                    </td>
+                                </tr>
+<!-- Second Data Row -->
+                                <tr class="odd">
+                                    <td colspan="2">&nbsp;</td> <!-- Skip policy number and insured name columns -->
+                                    <td colspan="6">
+                                        <table>
+                                            <tbody><tr><td width="50%">Account Manager: Shawana Bowens</td>
+                                                <td width="50%">Underwriter: Society 1851 UW</td>
+                                            </tr>
+                                        </tbody></table>
+                                    </td>
+                                    <td colspan="2">
+                                        <table>
+                                            <tbody><tr><td width="200px"></td>
+                                                
+                                                
+                                                <td width="50px" class="rowLink"><a title="Withdraw case" href="#" onclick="javascript:openTppActionPage('50280496')">Withdraw</a></td>
+                                                
+                                                
+
+                                                
+                                                
+                                                <td><img title="Case is not split" src="/workbench0/images/icon-splitAgreement_disabled.gif" border="0" height="15px" width="15px"></td>
+                                                
+
+                                                
+                                                
+                                                <td width="15px"><img title="Case was not prepaid" src="/workbench0/images/icon-prepaid_disabled.gif" border="0" height="15px" width="15px"></td>
+                                                
+
+                                                
+                                                
+                                                <td><img title="Case was not eSigned" src="/workbench0/images/eSign_disabled.gif" border="0" height="15px" width="15px"></td>
+                                                
+
+                                                
+                                                
+                                                <td><a href="#" onclick="viewNotes('50280496', 'N/A', 'Ran, Relat')"><img title="Case does not have notes. Click to add notes." src="/workbench0/images/icon-note-grey-15x15.gif" border="0" height="15px" width="15px"></a></td>
+                                                
+
+                                                <td><a href="#50280496" onclick="viewPolicyDocs('50280496', 'VNTG1', 'Ran, Relat')"><img title="View policy documents for this case" src="/workbench0/images/icon-docs-grey-15x15.gif" border="0" height="15px" width="15px"></a></td>
+                                            </tr>
+                                        </tbody></table>
+                                    </td>
+                                </tr>
+<!-- TPP Data End -->
+
+
+
+<!-- Requirements Start-->
+
+                                <tr class="odd" title="Expand to see open requirements for this case">
+                                        <td>&nbsp;</td>
+                                        <td id="50280496_REQS_TITLE" colspan="13" onclick="toggleRequirements('50280496','TERM','TERM_DATA' )"><img src="/workbench0/images/spacer.gif" width="10px" height="10px"><img id="50280496_REQS_ICON" src="/workbench0/images/icon-plus-10x10.gif" alt=""><i>&nbsp;&nbsp;Requirements (Y)</i></td>
+                                </tr>
+
+                                <tr class="odd" id="50280496_REQS" style="display:none;">
+                                                    <td colspan="14" id="50280496_REQS_DETAILS">
+                                                </td></tr>
+<!-- Requirements End -->
+                    
+
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+
+                    
+
+
+<!-- TPP Data Start -->
+                        <tr class="evenfirst">
+                                    <td onclick="javascript:openTPPCaseSummary('50280495','123317','pending')">
+                                        <a name="50280495"></a>50280495
+                                    </td>
+                                    <td onclick="javascript:openTPPCaseSummary('50280495','123317','pending')">
+                                        Jonny, padman
+                                    </td>
+                                    <td onclick="javascript:openTPPCaseSummary('50280495','123317','pending')">
+                                        10/10/1985&nbsp;
+                                    </td>
+                                    <td onclick="javascript:openTPPCaseSummary('50280495','123317','pending')">
+                                        VT20
+                                    </td>
+                                    <td onclick="javascript:openTPPCaseSummary('50280495','123317','pending')">
+                                        100,000&nbsp;
+                                    </td>
+                                    <td onclick="javascript:openTPPCaseSummary('50280495','123317','pending')">
+                                        143.96&nbsp;
+                                    </td>
+                                    <td><a href="#wbModal_producerAccess" name="wbModalButton" onclick="$(&quot;#wbModal_producerAccess #wbModal_producerAccessBody&quot;).load(&quot;/workbench0/jsp/modals/wbModalsProducerCaseAccess.jsp?&quot; + &quot;policyNumber=50280495&amp;producerId=123317&amp;producerName=ZAGER%2C+MICHAEL&quot;);">
+                                        <u><i>ZAGER, MICHAEL</i></u></a>
+                                    </td>
+                                    <td onclick="javascript:openTPPCaseSummary('50280495','123317','pending')">
+                                        10/05/2023
+                                    </td>
+                                    <td onclick="javascript:openTPPCaseSummary('50280495','123317','pending')">
+                                        Pending Requirements
+                                    </td>
+                                    <td onclick="javascript:openTPPCaseSummary('50280495','123317','pending')">
+                                        10/05/2023
+                                    </td>
+                                </tr>
+<!-- Second Data Row -->
+                                <tr class="even">
+                                    <td colspan="2">&nbsp;</td> <!-- Skip policy number and insured name columns -->
+                                    <td colspan="6">
+                                        <table>
+                                            <tbody><tr><td width="50%">Account Manager: CAB CM</td>
+                                                <td width="50%">Underwriter: Society 1851 UW</td>
+                                            </tr>
+                                        </tbody></table>
+                                    </td>
+                                    <td colspan="2">
+                                        <table>
+                                            <tbody><tr><td width="200px"></td>
+                                                
+                                                
+                                                <td width="50px" class="rowLink"><a title="Withdraw case" href="#" onclick="javascript:openTppActionPage('50280495')">Withdraw</a></td>
+                                                
+                                                
+
+                                                
+                                                
+                                                <td><img title="Case is not split" src="/workbench0/images/icon-splitAgreement_disabled.gif" border="0" height="15px" width="15px"></td>
+                                                
+
+                                                
+                                                
+                                                <td width="15px"><img title="Case was not prepaid" src="/workbench0/images/icon-prepaid_disabled.gif" border="0" height="15px" width="15px"></td>
+                                                
+
+                                                
+                                                
+                                                <td><img title="Case was not eSigned" src="/workbench0/images/eSign_disabled.gif" border="0" height="15px" width="15px"></td>
+                                                
+
+                                                
+                                                
+                                                <td><a href="#" onclick="viewNotes('50280495', 'N/A', 'Jonny, padman')"><img title="Case does not have notes. Click to add notes." src="/workbench0/images/icon-note-grey-15x15.gif" border="0" height="15px" width="15px"></a></td>
+                                                
+
+                                                <td><a href="#50280495" onclick="viewPolicyDocs('50280495', 'VNTG1', 'Jonny, padman')"><img title="View policy documents for this case" src="/workbench0/images/icon-docs-grey-15x15.gif" border="0" height="15px" width="15px"></a></td>
+                                            </tr>
+                                        </tbody></table>
+                                    </td>
+                                </tr>
+<!-- TPP Data End -->
+
+
+
+<!-- Requirements Start-->
+
+                                <tr class="even" title="Expand to see open requirements for this case">
+                                        <td>&nbsp;</td>
+                                        <td id="50280495_REQS_TITLE" colspan="13" onclick="toggleRequirements('50280495','TERM','TERM_DATA' )"><img src="/workbench0/images/spacer.gif" width="10px" height="10px"><img id="50280495_REQS_ICON" src="/workbench0/images/icon-plus-10x10.gif" alt=""><i>&nbsp;&nbsp;Requirements (Y)</i></td>
+                                </tr>
+
+                                <tr class="even" id="50280495_REQS" style="display:none;">
+                                                    <td colspan="14" id="50280495_REQS_DETAILS">
+                                                </td></tr>
+<!-- Requirements End -->
+                    
+
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+
+                    
+
+
+<!-- TPP Data Start -->
+                        <tr class="oddfirst">
+                                    <td onclick="javascript:openTPPCaseSummary('50280494','123317','pending')">
+                                        <a name="50280494"></a>50280494
+                                    </td>
+                                    <td onclick="javascript:openTPPCaseSummary('50280494','123317','pending')">
+                                        smith, padman
+                                    </td>
+                                    <td onclick="javascript:openTPPCaseSummary('50280494','123317','pending')">
+                                        10/10/1980&nbsp;
+                                    </td>
+                                    <td onclick="javascript:openTPPCaseSummary('50280494','123317','pending')">
+                                        VT20
+                                    </td>
+                                    <td onclick="javascript:openTPPCaseSummary('50280494','123317','pending')">
+                                        100,000&nbsp;
+                                    </td>
+                                    <td onclick="javascript:openTPPCaseSummary('50280494','123317','pending')">
+                                        170.92&nbsp;
+                                    </td>
+                                    <td><a href="#wbModal_producerAccess" name="wbModalButton" onclick="$(&quot;#wbModal_producerAccess #wbModal_producerAccessBody&quot;).load(&quot;/workbench0/jsp/modals/wbModalsProducerCaseAccess.jsp?&quot; + &quot;policyNumber=50280494&amp;producerId=123317&amp;producerName=ZAGER%2C+MICHAEL&quot;);">
+                                        <u><i>ZAGER, MICHAEL</i></u></a>
+                                    </td>
+                                    <td onclick="javascript:openTPPCaseSummary('50280494','123317','pending')">
+                                        10/05/2023
+                                    </td>
+                                    <td onclick="javascript:openTPPCaseSummary('50280494','123317','pending')">
+                                        Pending Requirements
+                                    </td>
+                                    <td onclick="javascript:openTPPCaseSummary('50280494','123317','pending')">
+                                        10/05/2023
+                                    </td>
+                                </tr>
+<!-- Second Data Row -->
+                                <tr class="odd">
+                                    <td colspan="2">&nbsp;</td> <!-- Skip policy number and insured name columns -->
+                                    <td colspan="6">
+                                        <table>
+                                            <tbody><tr><td width="50%">Account Manager: CAB CM</td>
+                                                <td width="50%">Underwriter: Society 1851 UW</td>
+                                            </tr>
+                                        </tbody></table>
+                                    </td>
+                                    <td colspan="2">
+                                        <table>
+                                            <tbody><tr><td width="200px"></td>
+                                                
+                                                
+                                                <td width="50px" class="rowLink"><a title="Withdraw case" href="#" onclick="javascript:openTppActionPage('50280494')">Withdraw</a></td>
+                                                
+                                                
+
+                                                
+                                                
+                                                <td><img title="Case is not split" src="/workbench0/images/icon-splitAgreement_disabled.gif" border="0" height="15px" width="15px"></td>
+                                                
+
+                                                
+                                                
+                                                <td width="15px"><img title="Case was not prepaid" src="/workbench0/images/icon-prepaid_disabled.gif" border="0" height="15px" width="15px"></td>
+                                                
+
+                                                
+                                                
+                                                <td><img title="Case was not eSigned" src="/workbench0/images/eSign_disabled.gif" border="0" height="15px" width="15px"></td>
+                                                
+
+                                                
+                                                
+                                                <td><a href="#" onclick="viewNotes('50280494', 'N/A', 'smith, padman')"><img title="Case does not have notes. Click to add notes." src="/workbench0/images/icon-note-grey-15x15.gif" border="0" height="15px" width="15px"></a></td>
+                                                
+
+                                                <td><a href="#50280494" onclick="viewPolicyDocs('50280494', 'VNTG1', 'smith, padman')"><img title="View policy documents for this case" src="/workbench0/images/icon-docs-grey-15x15.gif" border="0" height="15px" width="15px"></a></td>
+                                            </tr>
+                                        </tbody></table>
+                                    </td>
+                                </tr>
+<!-- TPP Data End -->
+
+
+
+<!-- Requirements Start-->
+
+                                <tr class="odd" title="Expand to see open requirements for this case">
+                                        <td>&nbsp;</td>
+                                        <td id="50280494_REQS_TITLE" colspan="13" onclick="toggleRequirements('50280494','TERM','TERM_DATA' )"><img src="/workbench0/images/spacer.gif" width="10px" height="10px"><img id="50280494_REQS_ICON" src="/workbench0/images/icon-plus-10x10.gif" alt=""><i>&nbsp;&nbsp;Requirements (Y)</i></td>
+                                </tr>
+
+                                <tr class="odd" id="50280494_REQS" style="display:none;">
+                                                    <td colspan="14" id="50280494_REQS_DETAILS">
+                                                </td></tr>
+<!-- Requirements End -->
+                    
+
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+
+                    
+
+
+<!-- TPP Data Start -->
+                        <tr class="evenfirst">
+                                    <td onclick="javascript:openTPPCaseSummary('50280330','123317','pending')">
+                                        <a name="50280330"></a>50280330
+                                    </td>
+                                    <td onclick="javascript:openTPPCaseSummary('50280330','123317','pending')">
+                                        annualone, ruleona
+                                    </td>
+                                    <td onclick="javascript:openTPPCaseSummary('50280330','123317','pending')">
+                                        05/30/1990&nbsp;
+                                    </td>
+                                    <td onclick="javascript:openTPPCaseSummary('50280330','123317','pending')">
+                                        VT10
+                                    </td>
+                                    <td onclick="javascript:openTPPCaseSummary('50280330','123317','pending')">
+                                        951,999&nbsp;
+                                    </td>
+                                    <td onclick="javascript:openTPPCaseSummary('50280330','123317','pending')">
+                                        334.00&nbsp;
+                                    </td>
+                                    <td><a href="#wbModal_producerAccess" name="wbModalButton" onclick="$(&quot;#wbModal_producerAccess #wbModal_producerAccessBody&quot;).load(&quot;/workbench0/jsp/modals/wbModalsProducerCaseAccess.jsp?&quot; + &quot;policyNumber=50280330&amp;producerId=123317&amp;producerName=ZAGER%2C+MICHAEL&quot;);">
+                                        <u><i>ZAGER, MICHAEL</i></u></a>
+                                    </td>
+                                    <td onclick="javascript:openTPPCaseSummary('50280330','123317','pending')">
+                                        07/27/2023
+                                    </td>
+                                    <td onclick="javascript:openTPPCaseSummary('50280330','123317','pending')">
+                                        Pending Requirements
+                                    </td>
+                                    <td onclick="javascript:openTPPCaseSummary('50280330','123317','pending')">
+                                        07/27/2023
+                                    </td>
+                                </tr>
+<!-- Second Data Row -->
+                                <tr class="even">
+                                    <td colspan="2">&nbsp;</td> <!-- Skip policy number and insured name columns -->
+                                    <td colspan="6">
+                                        <table>
+                                            <tbody><tr><td width="50%">Account Manager: </td>
+                                                <td width="50%">Underwriter: Society 1851 UW</td>
+                                            </tr>
+                                        </tbody></table>
+                                    </td>
+                                    <td colspan="2">
+                                        <table>
+                                            <tbody><tr><td width="200px"></td>
+                                                
+                                                
+                                                <td width="50px" class="rowLink"><a title="Withdraw case" href="#" onclick="javascript:openTppActionPage('50280330')">Withdraw</a></td>
+                                                
+                                                
+
+                                                
+                                                
+                                                <td><img title="Case is not split" src="/workbench0/images/icon-splitAgreement_disabled.gif" border="0" height="15px" width="15px"></td>
+                                                
+
+                                                
+                                                
+                                                <td width="15px"><img title="Case was not prepaid" src="/workbench0/images/icon-prepaid_disabled.gif" border="0" height="15px" width="15px"></td>
+                                                
+
+                                                
+                                                
+                                                <td><img title="Case was not eSigned" src="/workbench0/images/eSign_disabled.gif" border="0" height="15px" width="15px"></td>
+                                                
+
+                                                
+                                                
+                                                <td><a href="#" onclick="viewNotes('50280330', 'N/A', 'annualone, ruleona')"><img title="Case does not have notes. Click to add notes." src="/workbench0/images/icon-note-grey-15x15.gif" border="0" height="15px" width="15px"></a></td>
+                                                
+
+                                                <td><a href="#50280330" onclick="viewPolicyDocs('50280330', 'VNTG1', 'annualone, ruleona')"><img title="View policy documents for this case" src="/workbench0/images/icon-docs-grey-15x15.gif" border="0" height="15px" width="15px"></a></td>
+                                            </tr>
+                                        </tbody></table>
+                                    </td>
+                                </tr>
+<!-- TPP Data End -->
+
+
+
+<!-- Requirements Start-->
+
+                                <tr class="even" title="Expand to see open requirements for this case">
+                                        <td>&nbsp;</td>
+                                        <td id="50280330_REQS_TITLE" colspan="13" onclick="toggleRequirements('50280330','TERM','TERM_DATA' )"><img src="/workbench0/images/spacer.gif" width="10px" height="10px"><img id="50280330_REQS_ICON" src="/workbench0/images/icon-plus-10x10.gif" alt=""><i>&nbsp;&nbsp;Requirements (Y)</i></td>
+                                </tr>
+
+                                <tr class="even" id="50280330_REQS" style="display:none;">
+                                                    <td colspan="14" id="50280330_REQS_DETAILS">
+                                                </td></tr>
+<!-- Requirements End -->
+                    
+
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+
+                    
+
+
+<!-- APB Data Start -->
+                        <tr class="oddfirst">
+                                    <td><a name="32764508"></a>32764508</td>
+                                    <td>CHERNOFF, IRA J</td>
+                                    <td>&nbsp;</td>
+                                    <td>SWLV2</td>
+                                    <td>5,000,000&nbsp;</td>
+                                    <td>187,346.00&nbsp;</td>
+                                    <td><i></i>&nbsp;</td>
+                                    <td>06/29/2023</td>
+                                    <td>Approved</td>
+                                    <td>07/24/2023</td>
+                                </tr>
+<!-- Second Data Row -->
+                                <tr class="odd">
+                                    <td colspan="2">&nbsp;</td> <!-- Skip policy number and insured name columns -->
+                                    <td colspan="6">
+                                        <table>
+                                            <tbody><tr><td width="50%">Account Manager: </td>
+                                                <td width="50%">Underwriter: </td>
+                                            </tr>
+                                        </tbody></table>
+                                    </td>
+                                    <td colspan="2" align="right">
+                                        <table>
+                                            <tbody><tr><td width="200px"></td>
+                                                <td width="50px" disabled=""><a href="#" title="Withdraw is not available for this product type"><font color="#BEBEBE">Withdraw</font></a></td>
+
+                                                <td><img title="Split indicator is not available for this product type" src="/workbench0/images/icon-splitAgreement_disabled.gif" border="0" height="15px" width="15px"></td>
+
+
+                                                
+                                                
+                                                <td><img title="Case was not prepaid" src="/workbench0/images/icon-prepaid_disabled.gif" border="0" height="15px" width="15px"></td>
+                                                
+
+
+                                                
+                                                
+                                                <td><img title="Case was not eSigned" src="/workbench0/images/eSign_disabled.gif" border="0" height="15px" width="15px"></td>
+                                                
+
+                                                <td><img title="Notes are not available for this product type" src="/workbench0/images/icon-note_disabled.gif" border="0" height="15px" width="15px"></td>
+
+                                                <td><a href="#32764508" onclick="viewPolicyDocs('32764508', 'VNTG1', 'CHERNOFF, IRA J')"><img title="View policy documents for this case" src="/workbench0/images/icon-docs-grey-15x15.gif" border="0" height="15px" width="15px"></a></td>
+                                            </tr>
+                                        </tbody></table>
+                                    </td>
+                                </tr>
+<!-- APB Data End -->
+
+
+
+<!-- Requirements Start-->
+
+                                <tr class="odd" title="Expand to see open requirements for this case">
+                                        <td>&nbsp;</td>
+                                        <td id="32764508_REQS_TITLE" colspan="13" onclick="toggleRequirements('32764508','PERM','PERM_DATA' )"><img src="/workbench0/images/spacer.gif" width="10px" height="10px"><img id="32764508_REQS_ICON" src="/workbench0/images/icon-plus-10x10.gif" alt=""><i>&nbsp;&nbsp;Requirements (Y)</i></td>
+                                </tr>
+
+                                <tr class="odd" id="32764508_REQS" style="display:none;">
+                                                    <td colspan="14" id="32764508_REQS_DETAILS">
+                                                </td></tr>
+<!-- Requirements End -->
+                    
+
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+
+                    
+
+
+<!-- APB Data Start -->
+                        <tr class="evenfirst">
+                                    <td><a name="32767724"></a>32767724</td>
+                                    <td>LANDAU, TODD</td>
+                                    <td>&nbsp;</td>
+                                    <td>WLV2</td>
+                                    <td>5,000,000&nbsp;</td>
+                                    <td>127,450.00&nbsp;</td>
+                                    <td><i></i>&nbsp;</td>
+                                    <td>07/21/2023</td>
+                                    <td>Pending</td>
+                                    <td>07/21/2023</td>
+                                </tr>
+<!-- Second Data Row -->
+                                <tr class="even">
+                                    <td colspan="2">&nbsp;</td> <!-- Skip policy number and insured name columns -->
+                                    <td colspan="6">
+                                        <table>
+                                            <tbody><tr><td width="50%">Account Manager: </td>
+                                                <td width="50%">Underwriter: </td>
+                                            </tr>
+                                        </tbody></table>
+                                    </td>
+                                    <td colspan="2" align="right">
+                                        <table>
+                                            <tbody><tr><td width="200px"></td>
+                                                <td width="50px" disabled=""><a href="#" title="Withdraw is not available for this product type"><font color="#BEBEBE">Withdraw</font></a></td>
+
+                                                <td><img title="Split indicator is not available for this product type" src="/workbench0/images/icon-splitAgreement_disabled.gif" border="0" height="15px" width="15px"></td>
+
+
+                                                
+                                                
+                                                <td><img title="Case was not prepaid" src="/workbench0/images/icon-prepaid_disabled.gif" border="0" height="15px" width="15px"></td>
+                                                
+
+
+                                                
+                                                
+                                                <td><img title="Case was not eSigned" src="/workbench0/images/eSign_disabled.gif" border="0" height="15px" width="15px"></td>
+                                                
+
+                                                <td><img title="Notes are not available for this product type" src="/workbench0/images/icon-note_disabled.gif" border="0" height="15px" width="15px"></td>
+
+                                                <td><a href="#32767724" onclick="viewPolicyDocs('32767724', 'VNTG1', 'LANDAU, TODD')"><img title="View policy documents for this case" src="/workbench0/images/icon-docs-grey-15x15.gif" border="0" height="15px" width="15px"></a></td>
+                                            </tr>
+                                        </tbody></table>
+                                    </td>
+                                </tr>
+<!-- APB Data End -->
+
+
+
+<!-- Requirements Start-->
+
+                                <tr class="even" title="Expand to see open requirements for this case">
+                                        <td>&nbsp;</td>
+                                        <td id="32767724_REQS_TITLE" colspan="13" onclick="toggleRequirements('32767724','PERM','PERM_DATA' )"><img src="/workbench0/images/spacer.gif" width="10px" height="10px"><img id="32767724_REQS_ICON" src="/workbench0/images/icon-plus-10x10.gif" alt=""><i>&nbsp;&nbsp;Requirements (Y)</i></td>
+                                </tr>
+
+                                <tr class="even" id="32767724_REQS" style="display:none;">
+                                                    <td colspan="14" id="32767724_REQS_DETAILS">
+                                                </td></tr>
+<!-- Requirements End -->
+                    
+
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+
+                    
+
+
+<!-- APB Data Start -->
+                        <tr class="oddfirst">
+                                    <td><a name="32767730"></a>32767730</td>
+                                    <td>FREEDLAND, MICHAEL</td>
+                                    <td>&nbsp;</td>
+                                    <td>SWLV2</td>
+                                    <td>10,000,000&nbsp;</td>
+                                    <td>167,350.00&nbsp;</td>
+                                    <td><i></i>&nbsp;</td>
+                                    <td>07/20/2023</td>
+                                    <td>Pending</td>
+                                    <td>07/20/2023</td>
+                                </tr>
+<!-- Second Data Row -->
+                                <tr class="odd">
+                                    <td colspan="2">&nbsp;</td> <!-- Skip policy number and insured name columns -->
+                                    <td colspan="6">
+                                        <table>
+                                            <tbody><tr><td width="50%">Account Manager: </td>
+                                                <td width="50%">Underwriter: </td>
+                                            </tr>
+                                        </tbody></table>
+                                    </td>
+                                    <td colspan="2" align="right">
+                                        <table>
+                                            <tbody><tr><td width="200px"></td>
+                                                <td width="50px" disabled=""><a href="#" title="Withdraw is not available for this product type"><font color="#BEBEBE">Withdraw</font></a></td>
+
+                                                <td><img title="Split indicator is not available for this product type" src="/workbench0/images/icon-splitAgreement_disabled.gif" border="0" height="15px" width="15px"></td>
+
+
+                                                
+                                                
+                                                <td><img title="Case was not prepaid" src="/workbench0/images/icon-prepaid_disabled.gif" border="0" height="15px" width="15px"></td>
+                                                
+
+
+                                                
+                                                
+                                                <td><img title="Case was not eSigned" src="/workbench0/images/eSign_disabled.gif" border="0" height="15px" width="15px"></td>
+                                                
+
+                                                <td><img title="Notes are not available for this product type" src="/workbench0/images/icon-note_disabled.gif" border="0" height="15px" width="15px"></td>
+
+                                                <td><a href="#32767730" onclick="viewPolicyDocs('32767730', 'VNTG1', 'FREEDLAND, MICHAEL')"><img title="View policy documents for this case" src="/workbench0/images/icon-docs-grey-15x15.gif" border="0" height="15px" width="15px"></a></td>
+                                            </tr>
+                                        </tbody></table>
+                                    </td>
+                                </tr>
+<!-- APB Data End -->
+
+
+
+<!-- Requirements Start-->
+
+                                <tr class="odd" title="Expand to see open requirements for this case">
+                                        <td>&nbsp;</td>
+                                        <td id="32767730_REQS_TITLE" colspan="13" onclick="toggleRequirements('32767730','PERM','PERM_DATA' )"><img src="/workbench0/images/spacer.gif" width="10px" height="10px"><img id="32767730_REQS_ICON" src="/workbench0/images/icon-plus-10x10.gif" alt=""><i>&nbsp;&nbsp;Requirements (Y)</i></td>
+                                </tr>
+
+                                <tr class="odd" id="32767730_REQS" style="display:none;">
+                                                    <td colspan="14" id="32767730_REQS_DETAILS">
+                                                </td></tr>
+<!-- Requirements End -->
+                    
+
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+
+                    
+
+
+<!-- APB Data Start -->
+                        <tr class="evenfirst">
+                                    <td><a name="32764833"></a>32764833</td>
+                                    <td>SCAVO, ANTHONY</td>
+                                    <td>&nbsp;</td>
+                                    <td>WLV2</td>
+                                    <td>2,000,000&nbsp;</td>
+                                    <td>44,570.00&nbsp;</td>
+                                    <td><i></i>&nbsp;</td>
+                                    <td>06/28/2023</td>
+                                    <td>Pending</td>
+                                    <td>06/28/2023</td>
+                                </tr>
+<!-- Second Data Row -->
+                                <tr class="even">
+                                    <td colspan="2">&nbsp;</td> <!-- Skip policy number and insured name columns -->
+                                    <td colspan="6">
+                                        <table>
+                                            <tbody><tr><td width="50%">Account Manager: </td>
+                                                <td width="50%">Underwriter: </td>
+                                            </tr>
+                                        </tbody></table>
+                                    </td>
+                                    <td colspan="2" align="right">
+                                        <table>
+                                            <tbody><tr><td width="200px"></td>
+                                                <td width="50px" disabled=""><a href="#" title="Withdraw is not available for this product type"><font color="#BEBEBE">Withdraw</font></a></td>
+
+                                                <td><img title="Split indicator is not available for this product type" src="/workbench0/images/icon-splitAgreement_disabled.gif" border="0" height="15px" width="15px"></td>
+
+
+                                                
+                                                
+                                                <td><img title="Case was not prepaid" src="/workbench0/images/icon-prepaid_disabled.gif" border="0" height="15px" width="15px"></td>
+                                                
+
+
+                                                
+                                                
+                                                <td><img title="Case was not eSigned" src="/workbench0/images/eSign_disabled.gif" border="0" height="15px" width="15px"></td>
+                                                
+
+                                                <td><img title="Notes are not available for this product type" src="/workbench0/images/icon-note_disabled.gif" border="0" height="15px" width="15px"></td>
+
+                                                <td><a href="#32764833" onclick="viewPolicyDocs('32764833', 'VNTG1', 'SCAVO, ANTHONY')"><img title="View policy documents for this case" src="/workbench0/images/icon-docs-grey-15x15.gif" border="0" height="15px" width="15px"></a></td>
+                                            </tr>
+                                        </tbody></table>
+                                    </td>
+                                </tr>
+<!-- APB Data End -->
+
+
+
+<!-- Requirements Start-->
+
+                                <tr class="even" title="Expand to see open requirements for this case">
+                                        <td>&nbsp;</td>
+                                        <td id="32764833_REQS_TITLE" colspan="13" onclick="toggleRequirements('32764833','PERM','PERM_DATA' )"><img src="/workbench0/images/spacer.gif" width="10px" height="10px"><img id="32764833_REQS_ICON" src="/workbench0/images/icon-plus-10x10.gif" alt=""><i>&nbsp;&nbsp;Requirements (Y)</i></td>
+                                </tr>
+
+                                <tr class="even" id="32764833_REQS" style="display:none;">
+                                                    <td colspan="14" id="32764833_REQS_DETAILS">
+                                                </td></tr>
+<!-- Requirements End -->
+                    
+
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+
+                    
+
+
+<!-- APB Data Start -->
+                        <tr class="oddfirst">
+                                    <td><a name="22868397"></a>22868397</td>
+                                    <td>COHEN, JEFFREY</td>
+                                    <td>&nbsp;</td>
+                                    <td>CC1V2</td>
+                                    <td>245,559&nbsp;</td>
+                                    <td>290,000.00&nbsp;</td>
+                                    <td><i></i>&nbsp;</td>
+                                    <td>06/04/2023</td>
+                                    <td>Pending</td>
+                                    <td>06/04/2023</td>
+                                </tr>
+<!-- Second Data Row -->
+                                <tr class="odd">
+                                    <td colspan="2">&nbsp;</td> <!-- Skip policy number and insured name columns -->
+                                    <td colspan="6">
+                                        <table>
+                                            <tbody><tr><td width="50%">Account Manager: </td>
+                                                <td width="50%">Underwriter: </td>
+                                            </tr>
+                                        </tbody></table>
+                                    </td>
+                                    <td colspan="2" align="right">
+                                        <table>
+                                            <tbody><tr><td width="200px"></td>
+                                                <td width="50px" disabled=""><a href="#" title="Withdraw is not available for this product type"><font color="#BEBEBE">Withdraw</font></a></td>
+
+                                                <td><img title="Split indicator is not available for this product type" src="/workbench0/images/icon-splitAgreement_disabled.gif" border="0" height="15px" width="15px"></td>
+
+
+                                                
+                                                
+                                                <td><img title="Case was not prepaid" src="/workbench0/images/icon-prepaid_disabled.gif" border="0" height="15px" width="15px"></td>
+                                                
+
+
+                                                
+                                                
+                                                <td><img title="Case was not eSigned" src="/workbench0/images/eSign_disabled.gif" border="0" height="15px" width="15px"></td>
+                                                
+
+                                                <td><img title="Notes are not available for this product type" src="/workbench0/images/icon-note_disabled.gif" border="0" height="15px" width="15px"></td>
+
+                                                <td><a href="#22868397" onclick="viewPolicyDocs('22868397', 'VNTG1', 'COHEN, JEFFREY')"><img title="View policy documents for this case" src="/workbench0/images/icon-docs-grey-15x15.gif" border="0" height="15px" width="15px"></a></td>
+                                            </tr>
+                                        </tbody></table>
+                                    </td>
+                                </tr>
+<!-- APB Data End -->
+
+
+
+<!-- Requirements Start-->
+
+                                <tr class="odd" title="Expand to see open requirements for this case">
+                                        <td>&nbsp;</td>
+                                        <td id="22868397_REQS_TITLE" colspan="13" onclick="toggleRequirements('22868397','PERM','PERM_DATA' )"><img src="/workbench0/images/spacer.gif" width="10px" height="10px"><img id="22868397_REQS_ICON" src="/workbench0/images/icon-plus-10x10.gif" alt=""><i>&nbsp;&nbsp;Requirements (Y)</i></td>
+                                </tr>
+
+                                <tr class="odd" id="22868397_REQS" style="display:none;">
+                                                    <td colspan="14" id="22868397_REQS_DETAILS">
+                                                </td></tr>
+<!-- Requirements End -->
+                    
+
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+
+                    
+
+
+<!-- APB Data Start -->
+                        <tr class="evenfirst">
+                                    <td><a name="32752783"></a>32752783</td>
+                                    <td>CURTIS, OLIVER B</td>
+                                    <td>&nbsp;</td>
+                                    <td>WLV2</td>
+                                    <td>1,000,000&nbsp;</td>
+                                    <td>23,230.00&nbsp;</td>
+                                    <td><i></i>&nbsp;</td>
+                                    <td>04/19/2023</td>
+                                    <td>Approved</td>
+                                    <td>05/16/2023</td>
+                                </tr>
+<!-- Second Data Row -->
+                                <tr class="even">
+                                    <td colspan="2">&nbsp;</td> <!-- Skip policy number and insured name columns -->
+                                    <td colspan="6">
+                                        <table>
+                                            <tbody><tr><td width="50%">Account Manager: </td>
+                                                <td width="50%">Underwriter: </td>
+                                            </tr>
+                                        </tbody></table>
+                                    </td>
+                                    <td colspan="2" align="right">
+                                        <table>
+                                            <tbody><tr><td width="200px"></td>
+                                                <td width="50px" disabled=""><a href="#" title="Withdraw is not available for this product type"><font color="#BEBEBE">Withdraw</font></a></td>
+
+                                                <td><img title="Split indicator is not available for this product type" src="/workbench0/images/icon-splitAgreement_disabled.gif" border="0" height="15px" width="15px"></td>
+
+
+                                                
+                                                
+                                                <td><img title="Case was not prepaid" src="/workbench0/images/icon-prepaid_disabled.gif" border="0" height="15px" width="15px"></td>
+                                                
+
+
+                                                
+                                                
+                                                <td><img title="Case was not eSigned" src="/workbench0/images/eSign_disabled.gif" border="0" height="15px" width="15px"></td>
+                                                
+
+                                                <td><img title="Notes are not available for this product type" src="/workbench0/images/icon-note_disabled.gif" border="0" height="15px" width="15px"></td>
+
+                                                <td><a href="#32752783" onclick="viewPolicyDocs('32752783', 'VNTG1', 'CURTIS, OLIVER B')"><img title="View policy documents for this case" src="/workbench0/images/icon-docs-grey-15x15.gif" border="0" height="15px" width="15px"></a></td>
+                                            </tr>
+                                        </tbody></table>
+                                    </td>
+                                </tr>
+<!-- APB Data End -->
+
+
+
+<!-- Requirements Start-->
+
+                                <tr class="even" title="Expand to see open requirements for this case">
+                                        <td>&nbsp;</td>
+                                        <td id="32752783_REQS_TITLE" colspan="13" onclick="toggleRequirements('32752783','PERM','PERM_DATA' )"><img src="/workbench0/images/spacer.gif" width="10px" height="10px"><img id="32752783_REQS_ICON" src="/workbench0/images/icon-plus-10x10.gif" alt=""><i>&nbsp;&nbsp;Requirements (Y)</i></td>
+                                </tr>
+
+                                <tr class="even" id="32752783_REQS" style="display:none;">
+                                                    <td colspan="14" id="32752783_REQS_DETAILS">
+                                                </td></tr>
+<!-- Requirements End -->
+                    
+
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+
+                    
+
+
+<!-- APB Data Start -->
+                        <tr class="oddfirst">
+                                    <td><a name="32740960"></a>32740960</td>
+                                    <td>WEISS, COLTON</td>
+                                    <td>&nbsp;</td>
+                                    <td>WLV2</td>
+                                    <td>2,000,000&nbsp;</td>
+                                    <td>22,830.00&nbsp;</td>
+                                    <td><i></i>&nbsp;</td>
+                                    <td>02/21/2023</td>
+                                    <td>Pending</td>
+                                    <td>04/06/2023</td>
+                                </tr>
+<!-- Second Data Row -->
+                                <tr class="odd">
+                                    <td colspan="2">&nbsp;</td> <!-- Skip policy number and insured name columns -->
+                                    <td colspan="6">
+                                        <table>
+                                            <tbody><tr><td width="50%">Account Manager: </td>
+                                                <td width="50%">Underwriter: </td>
+                                            </tr>
+                                        </tbody></table>
+                                    </td>
+                                    <td colspan="2" align="right">
+                                        <table>
+                                            <tbody><tr><td width="200px"></td>
+                                                <td width="50px" disabled=""><a href="#" title="Withdraw is not available for this product type"><font color="#BEBEBE">Withdraw</font></a></td>
+
+                                                <td><img title="Split indicator is not available for this product type" src="/workbench0/images/icon-splitAgreement_disabled.gif" border="0" height="15px" width="15px"></td>
+
+
+                                                
+                                                
+                                                <td><img title="Case was not prepaid" src="/workbench0/images/icon-prepaid_disabled.gif" border="0" height="15px" width="15px"></td>
+                                                
+
+
+                                                
+                                                
+                                                <td><img title="Case was not eSigned" src="/workbench0/images/eSign_disabled.gif" border="0" height="15px" width="15px"></td>
+                                                
+
+                                                <td><img title="Notes are not available for this product type" src="/workbench0/images/icon-note_disabled.gif" border="0" height="15px" width="15px"></td>
+
+                                                <td><a href="#32740960" onclick="viewPolicyDocs('32740960', 'VNTG1', 'WEISS, COLTON')"><img title="View policy documents for this case" src="/workbench0/images/icon-docs-grey-15x15.gif" border="0" height="15px" width="15px"></a></td>
+                                            </tr>
+                                        </tbody></table>
+                                    </td>
+                                </tr>
+<!-- APB Data End -->
+
+
+
+<!-- Requirements Start-->
+
+                                <tr class="odd" title="Expand to see open requirements for this case">
+                                        <td>&nbsp;</td>
+                                        <td id="32740960_REQS_TITLE" colspan="13" onclick="toggleRequirements('32740960','PERM','PERM_DATA' )"><img src="/workbench0/images/spacer.gif" width="10px" height="10px"><img id="32740960_REQS_ICON" src="/workbench0/images/icon-plus-10x10.gif" alt=""><i>&nbsp;&nbsp;Requirements (Y)</i></td>
+                                </tr>
+
+                                <tr class="odd" id="32740960_REQS" style="display:none;">
+                                                    <td colspan="14" id="32740960_REQS_DETAILS">
+                                                </td></tr>
+<!-- Requirements End -->
+                    
+
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+
+                    
+
+
+<!-- APB Data Start -->
+                        <tr class="evenfirst">
+                                    <td><a name="22839939"></a>22839939</td>
+                                    <td>MILCIUNAS, JOHN P</td>
+                                    <td>&nbsp;</td>
+                                    <td>WLV2</td>
+                                    <td>5,000,000&nbsp;</td>
+                                    <td>115,950.00&nbsp;</td>
+                                    <td><i></i>&nbsp;</td>
+                                    <td>03/09/2022</td>
+                                    <td>Pending</td>
+                                    <td>08/25/2022</td>
+                                </tr>
+<!-- Second Data Row -->
+                                <tr class="even">
+                                    <td colspan="2">&nbsp;</td> <!-- Skip policy number and insured name columns -->
+                                    <td colspan="6">
+                                        <table>
+                                            <tbody><tr><td width="50%">Account Manager: </td>
+                                                <td width="50%">Underwriter: </td>
+                                            </tr>
+                                        </tbody></table>
+                                    </td>
+                                    <td colspan="2" align="right">
+                                        <table>
+                                            <tbody><tr><td width="200px"></td>
+                                                <td width="50px" disabled=""><a href="#" title="Withdraw is not available for this product type"><font color="#BEBEBE">Withdraw</font></a></td>
+
+                                                <td><img title="Split indicator is not available for this product type" src="/workbench0/images/icon-splitAgreement_disabled.gif" border="0" height="15px" width="15px"></td>
+
+
+                                                
+                                                
+                                                <td><img title="Case was not prepaid" src="/workbench0/images/icon-prepaid_disabled.gif" border="0" height="15px" width="15px"></td>
+                                                
+
+
+                                                
+                                                
+                                                <td><img title="Case was not eSigned" src="/workbench0/images/eSign_disabled.gif" border="0" height="15px" width="15px"></td>
+                                                
+
+                                                <td><img title="Notes are not available for this product type" src="/workbench0/images/icon-note_disabled.gif" border="0" height="15px" width="15px"></td>
+
+                                                <td><a href="#22839939" onclick="viewPolicyDocs('22839939', 'VNTG1', 'MILCIUNAS, JOHN P')"><img title="View policy documents for this case" src="/workbench0/images/icon-docs-grey-15x15.gif" border="0" height="15px" width="15px"></a></td>
+                                            </tr>
+                                        </tbody></table>
+                                    </td>
+                                </tr>
+<!-- APB Data End -->
+
+
+
+<!-- Requirements Start-->
+
+                                <tr class="even" title="There are no open requirements for this case">
+                                        <td>&nbsp;</td>
+                                        <td id="22839939_REQS_TITLE" colspan="13"><img src="/workbench0/images/spacer.gif" width="20px" height="10px"><i>&nbsp;&nbsp;Requirements (N)</i></td>
+                                                </tr>
+
+                                <tr class="even" id="22839939_REQS" style="display:none;">
+                                                    <td colspan="14" id="22839939_REQS_DETAILS">
+                                                </td></tr>
+<!-- Requirements End -->
+                    
+            </tbody></table>
+            
+            
+            
+</div>
+</div>
+</div>
+
+<input type="hidden" name="hiddenProducerID" value="123317">
+
+</form>
+
+<form name="notesForm" method="POST" action="/workbench0/viewNotes.html">
+<input type="hidden" name="insuredName" value="">
+<input type="hidden" name="ezappSID" value="">
+<input type="hidden" name="policyNumber" value="">
+<input type="hidden" name="formName" value="pending">
+</form>
+
+<form name="policyDocsForm" method="POST" action="/workbench0/viewPolicyDocs.html" target="WBPolicyDocsList">
+<input type="hidden" name="policyNumber" value="">
+<input type="hidden" name="adminSystem" value="">
+<input type="hidden" name="insuredName" value="">
+</form>
+
+<form name="tppGenericForm" method="POST" action="/workbench0/tppGenericRequest.html">
+<input type="hidden" name="policyNumber" value="">
+<input type="hidden" name="action" value="load">
+<input type="hidden" name="actionSource" value="pending.do">
+<input type="hidden" name="actionType" value="withdraw">
+</form>
+        
+
+ 
+<div id="wbFooter">
+    <div id="wbFooterLeft"></div>
+    <div id="wbFooterRight">GH5.5.1AM</div>
+    <div id="wbFooterMiddle">Copyright © 2024 Massachusetts Mutual Life Insurance Company. All rights reserved.</div>
+</div>
+
+        
+
+
+
+
+
+
+    
+        <script type="text/javascript" src="/workbench0/js/jquery.js"></script>
+        <script type="text/javascript" src="/workbench0/js/wbModals.js?v=4.11"></script>
+        <script type="text/javascript" src="/workbench0/js/wbModalsHelper.js?v=4.11"></script>
+        <script>
+            var currentContextPath = "/workbench0";
+            var environmentSelectionDropDownOptions = "<option value='6207.uat1'>UAT1 (AWS) - A2000</option><option value='6207.uat2'>UAT2 (AWS) - A2000</option><option value='6207.uat3'>UAT3 (AWS) - A2000</option><option value='7082.uat1'>UAT1 (AWS) - Mosaic 7082</option><option value='7714.uat1'>UAT1 (AWS) - SDP 7714</option>";
+        </script>
+    
+<script>(window.BOOMR_mq=window.BOOMR_mq||[]).push(["addVar",{"rua.upush":"false","rua.cpush":"false","rua.upre":"false","rua.cpre":"false","rua.uprl":"false","rua.cprl":"false","rua.cprf":"false","rua.trans":"","rua.cook":"false","rua.ims":"false","rua.ufprl":"false","rua.cfprl":"false","rua.isuxp":"false","rua.texp":"norulematch"}]);</script>
+                              <script>!function(a){var e="https://s.go-mpulse.net/boomerang/",t="addEventListener";if("True"=="True")a.BOOMR_config=a.BOOMR_config||{},a.BOOMR_config.PageParams=a.BOOMR_config.PageParams||{},a.BOOMR_config.PageParams.pci=!0,e="https://s2.go-mpulse.net/boomerang/";if(window.BOOMR_API_key="TTG99-RJWQA-A2D9G-JTLC3-NGC4C",function(){function n(e){a.BOOMR_onload=e&&e.timeStamp||(new Date).getTime()}if(!a.BOOMR||!a.BOOMR.version&&!a.BOOMR.snippetExecuted){a.BOOMR=a.BOOMR||{},a.BOOMR.snippetExecuted=!0;var i,_,o,r=document.createElement("iframe");if(a[t])a[t]("load",n,!1);else if(a.attachEvent)a.attachEvent("onload",n);r.src="javascript:void(0)",r.title="",r.role="presentation",(r.frameElement||r).style.cssText="width:0;height:0;border:0;display:none;",o=document.getElementsByTagName("script")[0],o.parentNode.insertBefore(r,o);try{_=r.contentWindow.document}catch(O){i=document.domain,r.src="javascript:var d=document.open();d.domain='"+i+"';void(0);",_=r.contentWindow.document}_.open()._l=function(){var a=this.createElement("script");if(i)this.domain=i;a.id="boomr-if-as",a.src=e+"TTG99-RJWQA-A2D9G-JTLC3-NGC4C",BOOMR_lstart=(new Date).getTime(),this.body.appendChild(a)},_.write("<bo"+'dy onload="document._l();">'),_.close()}}(),"".length>0)if(a&&"performance"in a&&a.performance&&"function"==typeof a.performance.setResourceTimingBufferSize)a.performance.setResourceTimingBufferSize();!function(){if(BOOMR=a.BOOMR||{},BOOMR.plugins=BOOMR.plugins||{},!BOOMR.plugins.AK){var e=""=="true"?1:0,t="",n="ddhe4wixfqfdqznpnakq-f-e99b6ba81-clientnsv4-s.akamaihd.net",i="false"=="true"?2:1,_={"ak.v":"36","ak.cp":"1411062","ak.ai":parseInt("858533",10),"ak.ol":"0","ak.cr":246,"ak.ipv":4,"ak.proto":"h2","ak.rid":"1f9634c7","ak.r":38160,"ak.a2":e,"ak.m":"","ak.n":"essl","ak.bpcip":"24.206.78.0","ak.cport":6908,"ak.gh":"23.44.10.52","ak.quicv":"","ak.tlsv":"tls1.3","ak.0rtt":"","ak.csrc":"-","ak.acc":"","ak.t":"1705994261","ak.ak":"hOBiQwZUYzCg5VSAfCLimQ==d26EplSfwg0TD8Vs6L4Yj1U5hZptBfzE4w1rFNIuzs18oXLcNjAWrz54rUuPfibFenzGzQn92T62fvBHLKLBgYBe4iWrPNa+i3bweJgAqO7MzQeofQCLZfurn63hK7Uxvo/f5IPrBam2jB+PtWveosXc+38zAv7XZuzypjNWPmJuWCdPaAGKOqaKnMagQy+9aDKXW/NHkMIzikB0IwZ8FLNlKN3NhnD4rgvpMBf69Nst9brpx7JlbmFKDkvCDf87TGKcJLHwaYEc9Irt7HQHXHcBRAcuSQIAV/EG4/Fkx9SZ21sjSJTehquDc2uSiWrbiCvM9RRp82pE9c6gD3kalGGVCCmamdDrGFv+1CcZIkzt3AYvana3lOjxGRCHf+RxpfozNJc4OdyD4U1hLah9eV4+wD8PKp+GUwcC7iCPlu4=","ak.pv":"20","ak.dpoabenc":"","ak.tf":i};if(""!==t)_["ak.ruds"]=t;var o={i:!1,av:function(e){var t="http.initiator";if(e&&(!e[t]||"spa_hard"===e[t]))_["ak.feo"]=void 0!==a.aFeoApplied?1:0,BOOMR.addVar(_)},rv:function(){var a=["ak.bpcip","ak.cport","ak.cr","ak.csrc","ak.gh","ak.ipv","ak.m","ak.n","ak.ol","ak.proto","ak.quicv","ak.tlsv","ak.0rtt","ak.r","ak.acc","ak.t","ak.tf"];BOOMR.removeVar(a)}};BOOMR.plugins.AK={akVars:_,akDNSPreFetchDomain:n,init:function(){if(!o.i){var a=BOOMR.subscribe;a("before_beacon",o.av,null,null),a("onbeacon",o.rv,null,null),o.i=!0}return this},is_complete:function(){return!0}}}}()}(window);</script>
+        <div class="wbModal_breakingDiv"></div>
+        <div id="wbModals">
+<!-- Screen Mask -->
+            <div id="wbModal_mask"></div>
+
+
+<!-- Loading -->
+            <div id="wbModal_loading" class="window">
+                <div class="wbModal_header">
+                    <div class="wbModalTitle">Workbench</div>
+                </div>
+                <div class="wbModal_body wbModalCentered">
+                    <img id="wbModalLoadingImg" src="/workbench0/images/wbModalsProgressBar.gif">
+                    <p id="wbModalLoadingMsg1" class="WbModalMessage wbModalLoadingText"></p>
+                    <p id="wbModalLoadingMsg2" class="WbModalMessage wbModalLoadingText"></p>
+                </div>
+            </div>
+
+
+<!-- Reopen disclaimer -->
+            <div id="wbModal_reopenDisclaimer" class="window">
+                <div class="wbModal_header">
+                    <div class="wbModalTitle">Workbench</div>
+                </div>
+                <div class="wbModal_body wbModalCentered">
+                    <p class="wbModalSubTitle">This request to re-open a closed case may require the fulfillment of New Business and Underwriting requirements including, but not limited to, those that had been previously provided.</p>
+                    <form class="wbModalForm" method="get" action="">
+                        <input type="hidden" id="wbModal_reopenPolicyNumber" value="">
+                        <input type="button" name="Cancel" value="Cancel" class="close">
+                        <input type="button" name="Continue" value="Continue" onclick="continueToReopen();">
+                    </form>
+                </div>
+            </div>
+            
+            
+<!-- Delete EZ-app confirmation -->
+            <div id="wbModal_deleteEZapp" class="window">
+                <div class="wbModal_header">
+                    <div class="wbModalTitle">Workbench</div>
+                </div>
+                <div class="wbModal_body wbModalCentered">
+                    <p class="wbModalSubTitle">Are you sure you want to delete this <i>EZ</i>-app?</p>
+                    <p id="wbModal_deleteEZappDetails" class="WbModalMessage WbModalMessageFail"></p>
+                    <form class="wbModalForm" method="get" action="">
+                        <input type="hidden" id="wbModal_deleteEZappSID" value="">
+                        <input type="hidden" id="wbModal_deleteEZappInsuredName" value="">
+                        <input type="button" name="Cancel" id="deleteCancel" value="Cancel" class="close">
+                        <input type="button" name="Delete" id="deleteContinue" value="Delete" onclick="deleteEZApp();">
+                    </form>
+                </div>
+            </div>
+            
+<!-- Delete EZ-app Result -->
+            <div id="wbModal_deleteEZappResult" class="window">
+                <div class="wbModal_header">
+                    <div class="wbModalTitle">Workbench</div>
+                </div>
+                <div class="wbModal_body wbModalCentered">
+                    <p id="wbModal_deleteEZappzResultDetailsPass" class="WbModalMessage WbModalMessageSuccess"></p>
+                    <p id="wbModal_deleteEZappzResultDetailsFail" class="WbModalMessage WbModalMessageFail"></p>
+                    <form class="wbModalForm" method="get" action="">
+                        <input type="button" value="OK" onclick="deleteEZAppResultClose();">
+                    </form>
+                </div>
+            </div>            
+
+
+<!-- Change Producer -->
+            <div id="wbModal_changeProducer" class="window">
+                <div class="wbModal_header">
+                    <div class="wbModalTitle">Change Producer</div>
+                    <!--<div class="wbModalClose"><a class="close" href="#"><img src="/workbench0/images/wbModalsCloseIcon.png"/></a></div>-->
+                </div>
+                <div class="wbModal_body wbModalCentered wbModalPaddedDiv">
+                    <p class="wbModalSubTitle">Enter ID of producer</p>
+                        <div class="inputField">
+                            <span class="wbModalFieldLabel">AA</span>
+                            <input name="changeProducerID" id="changeProducerID" class="forceNumeric wbModalFirstField" onkeydown="if (event.keyCode == 13) { changeProducer(); return false; }">
+                        </div>
+                        <br>
+                        <br>
+                        <input type="button" name="Cancel" value="Cancel" class="wbModal_button close">
+                        <input type="button" name="Continue" value="Continue" class="wbModal_button" onclick="changeProducer();">
+                        <p id="wbModal_changeProducer_msg" class="WbModalMessage WbModalMessageFail"></p>
+                </div>
+            </div>
+
+
+<!-- Change Agency -->
+            <div id="wbModal_changeAgency" class="window">
+                <div class="wbModal_header">
+                    <div class="wbModalTitle">Change Agency</div>
+                    <!--<div class="wbModalClose"><a class="close" href="#"><img src="/workbench0/images/wbModalsCloseIcon.png"/></a></div>-->
+                </div>
+                <div class="wbModal_body wbModalCentered wbModalPaddedDiv">
+                    <p class="wbModalSubTitle">Enter Agency Number</p>
+                        <div class="inputField">
+                            <span class="wbModalFieldLabel">Agency</span>
+                            <input name="changeAgencyCode" id="changeAgencyCode" class="forceNumeric wbModalFirstField" onkeydown="if (event.keyCode == 13) { changeAgency(); return false; }">
+                        </div>
+                        <br>
+                        <br>
+                        <input type="button" name="Cancel" value="Cancel" class="wbModal_button close">
+                        <input type="button" name="Continue" value="Continue" class="wbModal_button" onclick="changeAgency();">
+                        <p id="wbModal_changeAgency_msg" class="wbModalMessage WbModalMessageFail"></p>
+                </div>
+            </div>
+
+
+<!-- Export Request -->
+            <div id="wbModal_export" class="window">
+                <div class="wbModal_header">
+                    <div class="wbModalTitle">Workbench Export</div>
+                    <!--<div class="wbModalClose"><a class="close" href="#"><img src="/workbench0/images/wbModalsCloseIcon.png"/></a></div>-->
+                </div>
+                <div class="wbModal_body">
+                    <p class="wbModalSubTitle">Select tabs to include in report</p>
+                    <form class="wbModalForm" method="get" action="">
+                        <input type="checkbox" name="exportData" id="exportData_Check_Pending" value="pending" class="wbModalFirstField" onchange="exportSelectionChanged()"><span class="wbModalCheckLabel">Pending</span>
+                        <br>
+                        <input type="checkbox" name="exportData" id="exportData_Check_Issued" value="issued" size="40px" onchange="exportSelectionChanged()"><span class="wbModalCheckLabel">Issued &amp; Reported</span>
+                        <br>
+                        <br>
+                        <input type="button" name="Cancel" value="Cancel" class="close">
+                        <input type="button" name="Export Data" id="exportSubmitButton" value="Generate Report" onclick="exportValidateAndSubmit();" disabled="">
+                        <p id="wbModal_export_msg" class="wbModalMessage WbModalMessageFail"></p>
+                    </form>
+                </div>
+            </div>
+
+
+<!-- Export Confirmation-->
+            <div id="wbModal_export_acknowledge" class="window">
+                <div class="wbModal_header">
+                    <div class="wbModalTitle">Workbench Export</div>
+                    <!--<div class="wbModalClose"><a class="close" href="#"><img src="/workbench0/images/wbModalsCloseIcon.png"/></a></div>-->
+                </div>
+                <div class="wbModal_body">
+                    <p class="wbModalSubTitle">Request Received</p>
+                    <p>Your Workbench report will be emailed to you in a few minutes</p>
+                    <div class="wbModalCentered">
+                        <form class="wbModalForm" method="get" action="">
+                            <input type="button" name="OK" value="OK" class="close">
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+
+<!-- TPP Producer Access Selection -->
+            <div id="wbModal_producerAccess" class="window">
+                <div class="wbModal_header">
+                    <div class="wbModalTitle">Producer Access</div>
+                    <!--<div class="wbModalClose"><a class="close" href="#"><img src="/workbench0/images/wbModalsCloseIcon.png"/></a></div>-->
+                </div>
+                <div id="wbModal_producerAccessBody" class="wbModal_body"></div>
+            </div>
+
+
+<!-- WorkItem Response Collection Method 3 - Text Response -->
+            <div id="wbModal_wiTextResponse03" class="window">
+                <div class="wbModal_header">
+                    <div class="wbModalTitle">Work Item Processing</div>
+                    <!--<div class="wbModalClose"><a class="close" href="#"><img src="/workbench0/images/wbModalsCloseIcon.png"/></a></div>-->
+                </div>
+                <div id="wbModal_wiTextResponseBody03" class="wbModal_body"></div>
+            </div>
+
+
+<!-- WorkItem Response Collection Method 5 - Text Response Producer Offer -->
+            <div id="wbModal_wiTextResponse05" class="window">
+                <div class="wbModal_header">
+                    <div class="wbModalTitle">Work Item Processing</div>
+                    <!--<div class="wbModalClose"><a class="close" href="#"><img src="/workbench0/images/wbModalsCloseIcon.png"/></a></div>-->
+                </div>
+                <div id="wbModal_wiTextResponseBody05" class="wbModal_body"></div>
+            </div>
+
+
+<!-- WorkItem AdditionalDocsSelection -->
+            <div id="wbModal_wiAdditionalDocs" class="window">
+                <div class="wbModal_header">
+                    <div class="wbModalTitle">Additional Documents</div>
+                    <!--<div class="wbModalClose"><a class="close" href="#"><img src="/workbench0/images/wbModalsCloseIcon.png"/></a></div>-->
+                </div>
+                <div class="wbModal_body">
+                    <p class="wbModalSubTitle">Select Additional Document</p>
+                    <form class="wbModalForm" id="selectAdditionalDocument" method="get" action="">
+                        <input type="hidden" id="wiAdditionalDocsHiddenFieldPolNum">
+                        <div class="wbModalCentered">
+                            <div class="inputField">
+                                <select id="AdditionalDocumentChoice" name="AdditionalDocumentChoice">
+                                    <option value=""> - Select Additional Document - </option>
+                                </select>
+                            </div>
+                            <br>
+                            <br>
+                            <input type="button" name="Cancel" value="Cancel" class="close">
+                            <input type="button" id="selectAdditionalDocumentButton" name="ContinueAdditionalDocument" value="Continue" onclick="adddAdditionalDocumentSelection();">
+                            <p id="wbModal_AdditionalDocument_msg1" class="wbModalMessage WbModalMessageFail"></p>
+                            <p id="wbModal_AdditionalDocument_msg2" class="wbModalMessage WbModalMessageSuccess"></p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+
+<!-- New EZ-app Producer Selection -->
+            <div id="wbModal_newEZapp" class="window">
+                <div class="wbModal_header">
+                    <div class="wbModalTitle">Submit New Business</div>
+                    <!--<div class="wbModalClose"><a class="close" href="#"><img src="/workbench0/images/wbModalsCloseIcon.png"/></a></div>-->
+                </div>
+                <div class="wbModal_body">
+                    <p class="wbModalSubTitle">Enter the ID of the Soliciting Producer</p>
+                    <form class="wbModalForm" id="selectProducer" method="get" action="">
+                        <div class="inputField">
+                            <span class="wbModalFieldLabel">AA</span>
+                            <input name="newEZappProducerID" id="newEZappProducerID" class="forceNumeric wbModalFirstField" onkeydown="if (event.keyCode == 13) { lookupEZappProducer(); return false; }">
+                        </div>
+                        <br>
+                        <br>
+                        <input type="button" name="Cancel" value="Cancel" class="close">
+                        <input type="button" id="lookupEZappProducerButton" name="Lookup" value="Lookup" onclick="lookupEZappProducer();">
+                        <input type="button" id="selectEZappProducerButton" name="Continue" value="Continue" onclick="selectEZappProducer();" disabled="">
+                        <p id="wbModal_newEZapp_msg1" class="wbModalMessage WbModalMessageFail"></p>
+                        <p id="wbModal_newEZapp_msg2" class="wbModalMessage WbModalMessageSuccess"></p>
+                </form></div>
+                    
+            </div>
+
+
+<!-- New EZ-app (Admin Mode) -->
+            <div id="wbModal_newEZapp_Admin" class="window">
+                <div class="wbModal_header">
+                    <div class="wbModalTitle">Submit New Business (Admin Mode)</div>
+                    <!--<div class="wbModalClose"><a class="close" href="#"><img src="/workbench0/images/wbModalsCloseIcon.png"/></a></div>-->
+                </div>
+                <div class="wbModal_body">
+                    <p class="wbModalSubTitle">Enter the information for this new business</p>
+                    <form class="wbModalForm" id="selectProducerAdmin" method="get" action="">
+                        <div class="wbModalCentered">
+                            <div class="inputField">
+                                <span class="wbModalFieldLabel">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AA</span>
+                                <input name="newEZappProducerIDAdmin" id="newEZappProducerIDAdmin" class="forceNumeric wbModalFirstField" onchange="softValidateNewEZAppAdmin();" onkeyup="softValidateNewEZAppAdmin();">
+                            </div>
+                            <div class="inputField" id="wbModal_newEZappChoice">
+                                <span class="wbModalFieldLabel">Environment</span>
+                                <select name="newEZappChoice" onchange="softValidateNewEZAppAdmin()">
+                                    <option value=""> - Select Environment - </option>
+                                    <option value="6207.uat1">UAT1 (AWS) - A2000</option><option value="6207.uat2">UAT2 (AWS) - A2000</option><option value="6207.uat3">UAT3 (AWS) - A2000</option><option value="7082.uat1">UAT1 (AWS) - Mosaic 7082</option><option value="7714.uat1">UAT1 (AWS) - SDP 7714</option>
+                                </select>
+                            </div>
+                            <div class="inputField" id="wbModal_unrestricted">
+                                <span class="wbModalFieldLabel">Unrestricted EZ-app Access</span>
+                                <input type="checkbox" name="Unrestricted" id="Unrestricted">
+                            </div>
+                            <div class="inputField" id="wbModal_useRouter">
+                                <span class="wbModalFieldLabel">Force CoverPath Router</span>
+                                <input type="checkbox" name="useRouter" id="useRouter">
+                            </div>
+                            <div class="inputField" id="wbModal_routerOverrideLoggedInUserId">
+                                <span class="wbModalFieldLabel">Logged In User ID (optional)</span>
+                                <input name="routerOverrideLoggedInUserId" id="routerOverrideLoggedInUserId">
+                            </div>
+                            <div class="inputField" id="wbModal_routerOverrideSolAgtID">
+                                <span class="wbModalFieldLabel">Agent ID (optional)</span>
+                                <input name="routerOverrideSolAgtID" id="routerOverrideSolAgtID">
+                            </div>
+                        </div>
+                        <br>
+                        <div class="wbModalCentered">
+                            <input type="button" name="Cancel" value="Cancel" class="close">
+                            <input type="button" id="selectEZappProducerButtonAdmin" name="ContinueAdmin" value="Continue" onclick="selectEZappProducerAdmin();" disabled="">
+                        </div>
+                        <br>
+                        <p id="wbModal_newEZappAdmin_msg1" class="wbModalMessage WbModalMessageFail"></p>
+                        <p id="wbModal_newEZappAdmin_msg2" class="wbModalMessage WbModalMessageSuccess"></p>
+                    </form>
+                </div>
+            </div>
+
+
+<!-- Profile -->
+            <div id="wbModal_profile_Admin" class="window">
+                <div class="wbModal_header">
+                    <div class="wbModalTitle">Add/Update EZ-app Profile</div>
+                    <!--<div class="wbModalClose"><a class="close" href="#"><img src="/workbench0/images/wbModalsCloseIcon.png"/></a></div>-->
+                </div>
+                <div class="wbModal_body">
+                    <p class="wbModalSubTitle">Enter the information for this agent</p>
+                    <form class="wbModalForm" id="profileAdmin" method="get" action="">
+                        <div class="wbModalCentered">
+                            <div class="inputField">
+                                <span class="wbModalFieldLabel">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AA</span>
+                                <input name="profileIDAdmin" id="profileIDAdmin" class="forceNumeric wbModalFirstField" onchange="softValidateProfileAdmin();" onkeyup="softValidateProfileAdmin();">
+                            </div>
+                            <div class="inputField" id="wbModal_profileGAID">
+                                <span class="wbModalFieldLabel">GAID</span>
+                                <select name="profileGAID" onchange="softValidateProfileAdmin()">
+                                    <option value=""> - Select GAID - </option>
+                                    <option value="6207">6207 (Default)</option>
+                                    <option value="7082">7082 (Mosaic)</option>
+                                    <option value="7714">7714 (SDP)</option>
+                                </select>
+                            </div>
+                            <div class="inputField" id="wbModal_profileEnv">
+                                <span class="wbModalFieldLabel">Environment</span>
+                                <select name="profileEnv" onchange="softValidateProfileAdmin()">
+                                    <option value=""> - Select Environment - </option>
+                                    <option value="td1">TD1</option>
+                                    <option value="td2">TD2</option>
+                                    <option value="td3">TD3</option>
+                                    <option value="uat">UAT</option>
+                                    <option value="test">TEST</option>
+                                    <option value="prod">PRODUCTION</option>
+                                </select>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="wbModalCentered">
+                            <input type="button" name="Cancel" value="Cancel" class="close">
+                            <input type="button" id="continueProfileAdminButton" name="ContinueProfileAdmin" value="Continue" onclick="continueProfileAdmin();" disabled="">
+                        </div>
+                        <br>
+                        <p id="wbModal_profile_msg1" class="wbModalMessage WbModalMessageFail"></p>
+                        <p id="wbModal_profile_msg2" class="wbModalMessage WbModalMessageSuccess"></p>
+                    </form>
+                </div>
+            </div>
+
+
+<!-- Producer Filter -->
+            <div id="wbModal_producerFilter" class="window">
+                <div class="wbModal_header">
+                    <div class="wbModalTitle">Producer Filter</div>
+                    <!--<div class="wbModalClose"><a class="close" href="#"><img src="/workbench0/images/wbModalsCloseIcon.png"/></a></div>-->
+                </div>
+                <div id="wbModal_producerFilterBody" class="wbModal_body"></div>
+                <div id="wbModal_producerFilterFooter" class="wbModal_button_footer">
+                    <form class="wbModalForm" id="producerFilterButtons" method="get" action="">
+                    <div class="wbModalFloatLeft">
+                        <input type="button" id="SelectAll" name="SelectAll" value="Select All" onclick="filterSelectAllProducers()">
+                        <input type="button" id="Clear" name="Clear" value="Clear" onclick="filterClearAllProducers()">
+                    </div>
+                    <div class="wbModalFloatRight">
+                        <input type="button" name="Cancel" value="Cancel" class="close">
+                        <input type="button" id="Filter" name="Filter" value="Apply &amp; Save" onclick="applyProducerFilter()">
+                    </div>
+                </form>
+                </div>
+            </div>            
+
+
+<!-- Producer Filter Loading-->
+            <div id="wbModal_producerFilterLoading" class="window">
+                <div class="wbModal_header">
+                    <div class="wbModalTitle">Producer Filter</div>
+                </div>
+                <div class="wbModal_body wbModalCentered">
+                    <img id="wbModalLoadingImg" src="/workbench0/images/wbModalsProgressBar.gif">
+                    <p class="wbModalLoadingText">Loading Producer List...</p>
+                </div>
+            </div>
+
+
+<!-- Advanced Sort-->
+            <div id="wbModal_advancedSort" class="window">
+                <div class="wbModal_header">
+                    <div class="wbModalTitle">Advanced Sort</div>
+                    <!--<div class="wbModalClose"><a class="close" href="#"><img src="/workbench0/images/wbModalsCloseIcon.png"/></a></div>-->
+                </div>
+                <div class="wbModal_body">
+                    <form class="wbModalForm" method="get" action="">
+                    <p class="wbModalSubTitle">Primary Sort Options</p>
+                    <span class="wbModalFormAdjust">
+                        <select name="primarySort">
+                            <option value=""> - Select First Column - </option>
+     					    <option value="Policy Number">Policy Number</option>
+     					    <option value="Insured">Insured</option>
+     					    <option value="Plan">Plan</option>
+     					    <option value="Issued">Issued</option>
+     					    <option value="Delivery Due">Delivery Due</option>
+     					    <option value="Soliciting Producer">Soliciting Producer</option>
+     					    <option value="Last Downloaded">Last Downloaded</option>
+     					    <option value="Downloaded By">Downloaded By</option>
+                        </select><br>
+                        <input type="radio" name="advancedSort_Order_1" value="asc"><span class="wbModalCheckLabel">Ascending</span><br>
+                        <input type="radio" name="advancedSort_Order_1" value="desc" checked=""><span class="wbModalCheckLabel">Descending</span>
+                    </span>
+                    <br>
+                    <br>
+                    <p class="wbModalSubTitle">Secondary Sort Options</p>
+                    <span class="wbModalFormAdjust">
+                        <select name="secndSort">
+                            <option value=""> - Select Second Column - </option>
+     					    <option value="Policy Number">Policy Number</option>
+     					    <option value="Insured">Insured</option>
+     					    <option value="Plan">Plan</option>
+     					    <option value="Issued">Issued</option>
+     					    <option value="Delivery Due">Delivery Due</option>
+     					    <option value="Soliciting Producer">Soliciting Producer</option>
+     					    <option value="Last Downloaded">Last Downloaded</option>
+     					    <option value="Downloaded By">Downloaded By</option>
+                        </select><br>
+                        <input type="radio" name="advancedSort_Order_2" value="asc"><span class="wbModalCheckLabel">Ascending</span><br>
+                        <input type="radio" name="advancedSort_Order_2" value="desc" checked=""><span class="wbModalCheckLabel">Descending</span>
+                    </span>
+                    <br>
+                    <br>
+                    <div class="wbModalCentered">
+                        <input type="button" class="close" href="#" value="Cancel">
+                        <input type="button" id="Sort" name="Sort" value="Apply" onclick="applyAdvancedSort()">
+                    </div>
+                    </form>
+
+                    <p id="wbModal_advancedSort_msg" class="wbModalMessage WbModalMessageFail"></p>
+                </div>
+            </div>
+        </div>    
+    
+</div></body></html>

@@ -1,0 +1,43 @@
+---
+# MassMutual Repo attributes file, must be at repo root, named .mm-attributes 
+version: v1.0.0
+#
+# application and team attributes
+application-attributes:
+  escalation-email: "nannamtvs41@massmutual.com"
+  app-group: "india-gcc-qa"
+  # app technology - java, ruby, python, vbscript
+  app: "java"
+  # app component - automation, Smarttest, POWR, DataCompy, UFT
+  component: "Smarttest"
+  # app type - web, standalone
+  type: "standalone"
+  sdlc-phase: "active"
+  user-base: "internal"
+  notes: "automation written in java selenide for NBS project"
+devops-attributes:
+  # app environment - aws, on-prem
+  host-environment: "on-prem"
+  # jira-bucket - you Jira project name abbriviation
+  jira-bucket: ""   
+  ci-tooling: ""
+  cd-tooling: ""
+  # dev-branch - put the branch name different then main or master(live empty quotes if you have only one branch)
+  dev-branch: ""
+  includes-iac: ""
+  iac-tooling: ""
+#
+# attributes used during reporting
+organization-attributes: 
+  division: "IAGC"
+  department: "QM"
+  sub-department: "India-GCC"
+  team: "india-gcc-qa"
+#
+# tags required for all cloud resources
+cloud-tags:
+  appid: ""
+  app: ""
+  tcode: ""
+  support-owner: ""
+  security_classification: ""
