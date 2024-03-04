@@ -56,6 +56,8 @@ Feature: UI Validation for workbench
     And verify table columns and rows for <menuitem>
     And verify filter icon for all columns
     Then validate pagination and complete ui validation
+    
+    
 
     Examples: 
       | menuitem  |
