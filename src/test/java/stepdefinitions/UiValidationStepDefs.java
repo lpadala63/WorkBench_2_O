@@ -6,10 +6,12 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import pageclass.UiValidationObjects;
+import pageclass.searchOperationObjects;
 
 public class UiValidationStepDefs {
 
 	UiValidationObjects uiElements = new UiValidationObjects();
+	searchOperationObjects searchOperation = new searchOperationObjects();
 
 	@Then("^validate workbench launch$")
 	public void validate_workbench_launch() throws Throwable {
@@ -97,15 +99,15 @@ public class UiValidationStepDefs {
 		uiElements.navigateToMenuitem(menuitem);
 		uiElements.verifyTableColumnsAndRows(menuitem);
 	}
-
-	@Then("^verify filter icon for all columns$")
-	public void verify_filter_icon_for_all_columns() throws Throwable {
-	   
+	
+	@Then("^verify filter icon for all columns in (.*) page$")
+	public void verify_filter_icon_for_all_columns_in_page(String menuitem) throws Throwable {
+		uiElements.validateFilterIcons(menuitem);
 	}
 
 	@Then("^validate pagination and complete ui validation$")
 	public void validate_pagination_and_complete_ui_validation() throws Throwable {
-	   
+	   searchOperation.validatePagenation();
 	}
 
 

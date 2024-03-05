@@ -17,7 +17,6 @@ import commonutils.TestPropertyFileRead;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
-import pageclass.PremiumAllocation;
 import utilities.GetDataFromExcel;
 
 import static com.codeborne.selenide.Selenide.open;
@@ -105,26 +104,3 @@ public class HooksTest{
 	}
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-//Configuration.browser = "chrome";
-//Configuration.headless = false;
-//Configuration.timeout = 4000;
-//Configuration.screenshots = false;
-//Configuration.startMaximized = true;
-//Configuration.browserSize = "800x600";
-//Configuration.browserVersion =  "89.0.4389.23";
-/*Configuration.proxyEnabled = true;
-Configuration.proxyHost = "0.0.0.0";
-Configuration.fileDownload = PROXY;*/

@@ -54,12 +54,25 @@ Feature: UI Validation for workbench
     And click on Logo and verify <menuitem> page
     And verify greeting message , title and icons on the page
     And verify table columns and rows for <menuitem>
-    And verify filter icon for all columns
+    And verify filter icon for all columns in <menuitem> page
     Then validate pagination and complete ui validation
+
+    Examples: 
+      | menuitem  |
+      | All Cases |     
+      
+  @allCasesFunctionalityValidation @INSWB-156
+  Scenario Outline: All cases validation
+    #Given Login into Workbench
+    #And enter Password and launch Workbench
+    Then validate workbench launch
+    And navigate to <menuitem>
+    And check policy number data from table
     
     
 
     Examples: 
       | menuitem  |
       | All Cases |     
+      
       

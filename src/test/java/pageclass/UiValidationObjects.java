@@ -424,9 +424,9 @@ public class UiValidationObjects extends GlobalCap {
 		$(searchIcon).shouldBe(Visible.exist, Duration.ofSeconds(10));
 		$(exportIcon).shouldBe(Visible.exist, Duration.ofSeconds(10));
 	}
-	
+
 	// all cases column names
-	
+
 	By policyColumn = By.xpath("//div[text()='Policy #']");
 	By insuredColumn = By.xpath("//div[text()='Insured']");
 	By dobColumn = By.xpath("//div[text()='Date of Birth']");
@@ -437,9 +437,10 @@ public class UiValidationObjects extends GlobalCap {
 	By caseStatusColumn = By.xpath("//div[text()='Case Status']");
 	By statusDate = By.xpath("//div[text()='Status Date']");
 	By other = By.xpath("//div[text()='Other']");
-	
 
 	public void verifyTableColumnsAndRows(String menuitem) {
+		List<WebElement> noOfRows = idriver.findElements(By.xpath("//tr"));
+		int n = noOfRows.size();
 		switch (menuitem) {
 		case "All Cases":
 			$(policyColumn).shouldBe(Visible.exist, Duration.ofSeconds(10));
@@ -453,6 +454,7 @@ public class UiValidationObjects extends GlobalCap {
 			$(statusDate).shouldBe(Visible.exist, Duration.ofSeconds(10));
 			$(other).shouldBe(Visible.exist, Duration.ofSeconds(10));
 			System.out.println("Verified all columns of all cases page");
+			softAssert.assertEquals(n, 11, "no of rows not matched");
 			break;
 		case "Workbasket":
 			break;
@@ -463,8 +465,26 @@ public class UiValidationObjects extends GlobalCap {
 		case "Inactive":
 			break;
 		}
-		List<WebElement> noOfRows = idriver.findElements(By.xpath("//tr"));
-		int n = noOfRows.size();
-		softAssert.assertEquals(n,11,"validated no of rows");
+		softAssert.assertAll();
+	}
+
+	public void validateFilterIcons(String menuitem) {
+       List<WebElement> noOfIcons = idriver.findElements(By.xpath("//*[@data-testid='FilterAltIcon']"));
+       int n = noOfIcons.size();
+       switch (menuitem) {
+		case "All Cases":
+			softAssert.assertEquals(n, 9);
+			System.out.println("Verified no of icons in page");
+			break;
+		case "Workbasket":
+			break;
+		case "Pending":
+			break;
+		case "Issued & Reported":
+			break;
+		case "Inactive":
+			break;
+		}
+		softAssert.assertAll();
 	}
 }

@@ -15,7 +15,7 @@ import io.qameta.allure.selenide.AllureSelenide;
 		"junit:target/cucumber/cucumber-junit-report.xml", "json:target/cucumber/cucumber.json",
 		"io.qameta.allure.cucumberjvm.AllureCucumberJvm",
 		"com.cucumber.listener.ExtentCucumberFormatter:" }, glue = "stepdefinitions", features = "src/test/resources/features", tags = {
-				"@allCasesValidation" }, monochrome = true)
+				"@INSWB-156" }, monochrome = true)
 
 public class BaseTest {
 

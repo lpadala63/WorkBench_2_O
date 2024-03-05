@@ -252,4 +252,15 @@ public class searchOperationObjects extends GlobalCap {
 		softAssert.assertEquals(nextButtonStatus, "true");
 		softAssert.assertAll();
 	}
+	
+	public void validatePagenation() {
+		$(navigateToFirstPage).shouldBe(Visible.exist, Duration.ofSeconds(10));
+		$(navigateToPreviousPage).shouldBe(Visible.exist, Duration.ofSeconds(10));
+		$(firstPage).shouldBe(Visible.exist, Duration.ofSeconds(10));
+		$(secondPage).shouldBe(Visible.exist, Duration.ofSeconds(10));
+		$(thirdPage).shouldBe(Visible.exist, Duration.ofSeconds(10));
+		$(navigateToNextPage).shouldBe(Visible.exist, Duration.ofSeconds(10));
+		$(navigateToLastPage).shouldBe(Visible.exist, Duration.ofSeconds(10));
+		System.out.println("completed pagenation validation" );
+	}
 }
