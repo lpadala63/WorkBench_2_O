@@ -11,4 +11,10 @@ import pageclass.searchOperationObjects;
 public class AllCasesStepDefs {
 	
 	allCasesObjects allCases = new allCasesObjects();
+	
+	@Then("^check policy number data from table$")
+	public void check_policy_number_data_from_table() throws Throwable {
+	   System.out.println("lalalal");
+	}
+
 }
