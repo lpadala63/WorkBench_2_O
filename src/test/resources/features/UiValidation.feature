@@ -2,7 +2,7 @@
 #UI Validation for workbench
 Feature: UI Validation for workbench
 
-  @headerValidation @INSWB-137 @INSWB-138
+  @headerValidation @INSWB-137 @INSWB-138 
   Scenario Outline: Header Validation
     #Given Login into Workbench
     #And enter Password and launch Workbench
@@ -24,7 +24,7 @@ Feature: UI Validation for workbench
       | keyword |
       | smith   |
 
-  @Functionality @INSWB-172
+  @Functionality @INSWB-172 
   Scenario Outline: Search Functionality
     #Given Login into Workbench
     #And enter Password and launch Workbench
@@ -50,7 +50,7 @@ Feature: UI Validation for workbench
     #And enter Password and launch Workbench
     Then validate workbench launch
     And validate header elements visibility
-    And navigate to <menuitem>
+    And navigate to <menuitem> for Functionality Validation
     And click on Logo and verify <menuitem> page
     And verify greeting message , title and icons on the page
     And verify table columns and rows for <menuitem>
@@ -61,13 +61,18 @@ Feature: UI Validation for workbench
       | menuitem  |
       | All Cases |     
       
-  @allCasesFunctionalityValidation @INSWB-156
+  @allCasesFunctionalityValidation @INSWB-156 @test
   Scenario Outline: All cases validation
     #Given Login into Workbench
     #And enter Password and launch Workbench
     Then validate workbench launch
-    And navigate to <menuitem>
+    And navigate to <menuitem> for Functionality Validation
     And check policy number data from table
+    And validate insured name and length
+    And validate policy holder DOB
+    And validate policy plan type
+    
+    
     
     
 

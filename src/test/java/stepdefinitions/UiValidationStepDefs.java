@@ -79,7 +79,7 @@ public class UiValidationStepDefs {
 		uiElements.performBasicFilterFunctionality(keyword);
 	}
 	
-	@Then("^navigate to (.*)$")
+	@Then("^navigate to (.*) for Functionality Validation$")
 	public void navigate_to_menuitem(String menuitem) throws Throwable {
 		uiElements.navigateToMenuitem(menuitem);
 	}

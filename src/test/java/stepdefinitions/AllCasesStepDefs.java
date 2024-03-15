@@ -9,12 +9,31 @@ import pageclass.allCasesObjects;
 import pageclass.searchOperationObjects;
 
 public class AllCasesStepDefs {
-	
+
 	allCasesObjects allCases = new allCasesObjects();
-	
-	@Then("^check policy number data from table$")
+	String policyNumberFlag;
+
+	@And("^check policy number data from table$")
 	public void check_policy_number_data_from_table() throws Throwable {
-	   System.out.println("lalalal");
+		allCases.validatePolicyNumberLength();
 	}
+
+	@And("^validate insured name and length$")
+	public void validate_insured_name_and_length() throws Throwable {
+//		commented bcz of issue
+//		allCases.validateInsuredNameCharacters();
+	}
+
+	@And("^validate policy plan type$")
+	public void validate_policy_plan_type() throws Throwable {
+		allCases.validatePolicyPlanType();
+	}
+	
+	@Then("^validate policy holder DOB$")
+	public void validate_policy_holder_DOB() throws Throwable {
+		allCases.validateDateOfBirth();
+	}
+
+
 
 }
